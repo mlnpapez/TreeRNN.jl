@@ -16,13 +16,13 @@ To use the package, execute the following steps.
  ```
 3. Open the Julia 1.10.2 console and write:
  ```julia
-   using Pkg
- Pkg.activate(".")
- Pkg.instantiate()
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
  ```
 4. Use the package:
  ``` julia
-   using TreeRNN
+using TreeRNN
  ```
 
 The repository contains 12 datasets in JSON format (listed in the table below). All these datasets were downloaded from [CTU Prague Relational Learning Repository](https://relational-data.org/) and converted into the JSON format.
@@ -59,11 +59,12 @@ Execute the following steps to train one of these models on a selected dataset.
  ```
 2. Open the Julia 1.10.2 console and write:
  ```julia
-   using Pkg
- Pkg.activate("scripts")
- Pkg.instantiate()
+using Pkg
+Pkg.activate("scripts")
+Pkg.instantiate()
+Pkg.develop(path=".")
  ```
 3. Use the package:
  ``` julia
-   include("scripts/train.jl")
+include("scripts/train.jl")
  ```
