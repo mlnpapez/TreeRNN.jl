@@ -1,0 +1,6037 @@
+{
+    "x": [
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.750342,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tollerton, Aaron",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Luster, Desmond Dwayne",
+                    "race": "B"
+                }
+            ],
+            "date": 735638,
+            "subject_count": 1,
+            "latitude": 32.65671
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.829362,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cardenas, Steven",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gilstrap, Bryan",
+                    "race": "B"
+                }
+            ],
+            "date": 736049,
+            "subject_count": 1,
+            "latitude": 32.64723
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.764017,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ruben, Fredirick",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 736070,
+            "subject_count": 1,
+            "latitude": 32.79473
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.896428,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Nguyen, Buu",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Evans, Jerry",
+                    "race": "W"
+                }
+            ],
+            "date": 731944,
+            "subject_count": 1,
+            "latitude": 32.881
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.84757,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ragsdale, Barry",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Mims, Carlton",
+                    "race": "B"
+                }
+            ],
+            "date": 732719,
+            "subject_count": 1,
+            "latitude": 33.0048
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.724719,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cole, Bobby",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Rittenhouse, Tony",
+                    "race": "B"
+                }
+            ],
+            "date": 732305,
+            "subject_count": 1,
+            "latitude": 32.89994
+        },
+        {
+            "subject_weapon": "Toy Handun",
+            "longitude": -96.82649,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Jaquez, Christopher",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "Delesantos, Amanda",
+                    "race": "L"
+                }
+            ],
+            "date": 732353,
+            "subject_count": 1,
+            "latitude": 32.74414
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.814373,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Tahbone, Jacqueline",
+                    "race": null
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Robles, Juan",
+                    "race": "L"
+                }
+            ],
+            "date": 732312,
+            "subject_count": 1,
+            "latitude": 32.9306
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.760765,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Oliveros, Eduardo",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Howard, Jacques",
+                    "race": "B"
+                }
+            ],
+            "date": 733150,
+            "subject_count": 1,
+            "latitude": 32.67107
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.888174,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Espinosa, Daniel",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Salgado, Moises",
+                    "race": "L"
+                }
+            ],
+            "date": 733889,
+            "subject_count": 1,
+            "latitude": 32.88101
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.752763,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Mosher, Michael",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Spicer, Oscar",
+                    "race": "B"
+                }
+            ],
+            "date": 734265,
+            "subject_count": 1,
+            "latitude": 32.8664
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.84436,
+            "officer_count": 5,
+            "grand_jury_disposition": "See Summary",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Wilkins, Kenneth",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hackbarth, Dale",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Houston, Timothy",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Deltufo, Harry",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Perez, Adolof",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Tamayo, Alejandro",
+                    "race": "L"
+                }
+            ],
+            "date": 732358,
+            "subject_count": 1,
+            "latitude": 32.68904
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": null,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Padilla, Gilbert",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Chavez, Gabriel",
+                    "race": "L"
+                }
+            ],
+            "date": 733895,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.761852,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bryant, Derek",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Calderon, Richard",
+                    "race": "L"
+                }
+            ],
+            "date": 735377,
+            "subject_count": 1,
+            "latitude": 32.81731
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.8733,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Perez, Fernando",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 731631,
+            "subject_count": 1,
+            "latitude": 32.91115
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.92265,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Banes, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Smith, Andrais",
+                    "race": "B"
+                }
+            ],
+            "date": 734645,
+            "subject_count": 1,
+            "latitude": 32.7334
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.891884,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "McLain, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wrigley, Larry",
+                    "race": "B"
+                }
+            ],
+            "date": 733053,
+            "subject_count": 1,
+            "latitude": 32.78321
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.86715,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Todd, James",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wilson, Terry",
+                    "race": "B"
+                }
+            ],
+            "date": 734649,
+            "subject_count": 1,
+            "latitude": 32.86645
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.855363,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Edwards, Marilyn",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 734649,
+            "subject_count": 2,
+            "latitude": 32.68279
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.737028,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "McGuire, John",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Adams, Joseph",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "LaTour, Richard",
+                    "race": "W"
+                }
+            ],
+            "date": 734650,
+            "subject_count": 1,
+            "latitude": 32.87725
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.85714,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Payne, Brian",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Foreman, Eric",
+                    "race": "B"
+                }
+            ],
+            "date": 733535,
+            "subject_count": 1,
+            "latitude": 32.82618
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.829037,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Spears, Dennis Jr.",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "St. Clair, James Jr.",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Abdulkarim, Ismail",
+                    "race": "W"
+                }
+            ],
+            "date": 734652,
+            "subject_count": 1,
+            "latitude": 32.99856
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.782904,
+            "officer_count": 1,
+            "grand_jury_disposition": "See Summary",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Dayton, Scott",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "Johnson, Camilia",
+                    "race": "B"
+                }
+            ],
+            "date": 734652,
+            "subject_count": 1,
+            "latitude": 32.9275
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.807949,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Moreno, Rogelio",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Deluna, Braulin",
+                    "race": "L"
+                }
+            ],
+            "date": 733536,
+            "subject_count": 1,
+            "latitude": 32.78449
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.864368,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bernal, Jose",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Rivas, Martin",
+                    "race": "L"
+                }
+            ],
+            "date": 735761,
+            "subject_count": 1,
+            "latitude": 32.75905
+        },
+        {
+            "subject_weapon": "Rifle",
+            "longitude": -96.795013,
+            "officer_count": 15,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rieg, Keith",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Lang, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Webb, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Thompson, Stephen",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Babb, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Crow, Jason",
+                    "race": "W"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Arispi, Cynthia",
+                    "race": "L"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Ochoa, Michelle",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Vanderslice, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Nowiki, Thomas",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "King, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Strand, Emmanuel",
+                    "race": "A"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Brower, Jason",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hill, Maurico",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hernandez, Raciel",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Boulware, James",
+                    "race": "W"
+                }
+            ],
+            "date": 735762,
+            "subject_count": 1,
+            "latitude": 32.7673
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.740186,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Burch, Darren",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Delbosque, Juvenal",
+                    "race": "L"
+                }
+            ],
+            "date": 735763,
+            "subject_count": 1,
+            "latitude": 32.78642
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.84111,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Limbaugh, Leland",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Husband, John",
+                    "race": "B"
+                }
+            ],
+            "date": 734656,
+            "subject_count": 1,
+            "latitude": 32.69866
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.858268,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gadomski, Brendan",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Acosta-Serrano, Jose",
+                    "race": "L"
+                }
+            ],
+            "date": 735019,
+            "subject_count": 1,
+            "latitude": 32.86524
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.8127,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rigney, John",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Pasley, Chris",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Reilly, Michael",
+                    "race": "W"
+                }
+            ],
+            "date": 733173,
+            "subject_count": 1,
+            "latitude": 32.78627
+        },
+        {
+            "subject_weapon": "Rock",
+            "longitude": -96.85281,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Kilgore, Roman",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Diamond, Shawn",
+                    "race": "B"
+                }
+            ],
+            "date": 736125,
+            "subject_count": 1,
+            "latitude": 32.8526
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.673222,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "White, Phillip",
+                    "race": null
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lopez, Luis",
+                    "race": "L"
+                }
+            ],
+            "date": 732000,
+            "subject_count": 1,
+            "latitude": 32.7387
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.779494,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Moore, Douglas",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "B"
+                }
+            ],
+            "date": 736126,
+            "subject_count": 1,
+            "latitude": 32.70483
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.763977,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rogers, John",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hutchins, Andrew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Harrison, Jason",
+                    "race": "B"
+                }
+            ],
+            "date": 735398,
+            "subject_count": 1,
+            "latitude": 32.90915
+        },
+        {
+            "subject_weapon": "Screwdriver",
+            "longitude": -96.825258,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Mondy, Michael",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "McClinton, Jacquinn",
+                    "race": "B"
+                }
+            ],
+            "date": 735398,
+            "subject_count": 1,
+            "latitude": 32.65772
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.900299,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Green, Michael",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Indavong, Aenoi",
+                    "race": "A"
+                }
+            ],
+            "date": 732369,
+            "subject_count": 1,
+            "latitude": 32.86314
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.874081,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Anderson, Leonard",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Garcia, Fernando",
+                    "race": "L"
+                }
+            ],
+            "date": 735775,
+            "subject_count": 1,
+            "latitude": 32.80791
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.757478,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Davis, Rashad",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sigler, Clinton",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lewis, Corey",
+                    "race": "B"
+                }
+            ],
+            "date": 733551,
+            "subject_count": 1,
+            "latitude": 32.66415
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.764151,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tena, Edward",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Bowling, Joseph",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sansom, Dameon",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hodge, Rodney",
+                    "race": "B"
+                }
+            ],
+            "date": 735410,
+            "subject_count": 1,
+            "latitude": 32.69553
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.689744,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Freeman, Eric",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Robinson, Darron",
+                    "race": "B"
+                }
+            ],
+            "date": 735038,
+            "subject_count": 1,
+            "latitude": 32.80016
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.827795,
+            "officer_count": 4,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cummings, Robert",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Prince, Stephen",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Howard, Lonnie",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hooker, Matthew",
+                    "race": null
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Cody, Joe",
+                    "race": "W"
+                }
+            ],
+            "date": 735786,
+            "subject_count": 1,
+            "latitude": 32.75613
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.890533,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Howard, Cortenay",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "McDaniel, Kendrick",
+                    "race": "B"
+                }
+            ],
+            "date": 734678,
+            "subject_count": 1,
+            "latitude": 32.66202
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.808497,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Aguinaga, Juan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 731645,
+            "subject_count": 1,
+            "latitude": 32.93499
+        },
+        {
+            "subject_weapon": "Toy Rifle",
+            "longitude": -96.762627,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Houston, Tim",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Deltufo, Chuck",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Villarreal",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ross, Daniel Jr.",
+                    "race": "B"
+                }
+            ],
+            "date": 733192,
+            "subject_count": 1,
+            "latitude": 32.70525
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.664025,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tena, Edward",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wilson, Fred",
+                    "race": "B"
+                }
+            ],
+            "date": 732375,
+            "subject_count": 1,
+            "latitude": 32.84293
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.869793,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Crenshaw, Joshua",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Brown, Desroy",
+                    "race": "B"
+                }
+            ],
+            "date": 736148,
+            "subject_count": 1,
+            "latitude": 32.65628
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.773437,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bowling, Joseph",
+                    "race": "W"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Salazar, Samantha",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Anderson, Edward Jr.",
+                    "race": "B"
+                }
+            ],
+            "date": 735045,
+            "subject_count": 1,
+            "latitude": 32.76472
+        },
+        {
+            "subject_weapon": "Assault Rifle",
+            "longitude": -96.804915,
+            "officer_count": 12,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Edwards, Henry",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Wells, Giovanni",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Junger, Paul",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Lopez, Joe",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Banes, Matthew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Canete, Daniel",
+                    "race": "A"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Scott, Ryan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Michaels, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Borchardt, Jeremy",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Craig, Robert",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Cannon, Elmar",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Stuart, Kristopher",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Micah",
+                    "race": "B"
+                }
+            ],
+            "date": 736152,
+            "subject_count": 1,
+            "latitude": 32.77945
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.75778,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Silvia, Katherine",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Dillard, Joseph",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "B"
+                }
+            ],
+            "date": 734312,
+            "subject_count": 1,
+            "latitude": 32.87317
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.832159,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Berry, Jeffrey",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Arrivillaga, Daniel",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Everardo, Trevino",
+                    "race": "L"
+                }
+            ],
+            "date": 735424,
+            "subject_count": 1,
+            "latitude": 32.74114
+        },
+        {
+            "subject_weapon": "Rifle",
+            "longitude": -96.853141,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Pacheco, Louis",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Session, Tujuan",
+                    "race": "B"
+                }
+            ],
+            "date": 733938,
+            "subject_count": 1,
+            "latitude": 32.72506
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.830217,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bridges, Christopher",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Pennie, Demetrick",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Fuller, Antwuanne",
+                    "race": "B"
+                }
+            ],
+            "date": 731647,
+            "subject_count": 1,
+            "latitude": 32.7209
+        },
+        {
+            "subject_weapon": "Box Cutter",
+            "longitude": -96.895315,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Yzaguirre, David",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lemoine, Dale",
+                    "race": "W"
+                }
+            ],
+            "date": 733199,
+            "subject_count": 1,
+            "latitude": 32.76308
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.79226,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Vanderslice, Christopher",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Cortez, Daniel",
+                    "race": "L"
+                }
+            ],
+            "date": 734699,
+            "subject_count": 1,
+            "latitude": 32.78136
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.851409,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rosen, Brett",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "B"
+                }
+            ],
+            "date": 736168,
+            "subject_count": 1,
+            "latitude": 32.81664
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.718159,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Thayer, Adam",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Weaver, Robert",
+                    "race": "W"
+                }
+            ],
+            "date": 733951,
+            "subject_count": 1,
+            "latitude": 32.92476
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.680953,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Robinson, Jamal",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Pinedo, Gerardo Jr.",
+                    "race": "L"
+                }
+            ],
+            "date": 735066,
+            "subject_count": 1,
+            "latitude": 32.74073
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.733512,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rowden, Brian",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Harper, James",
+                    "race": "B"
+                }
+            ],
+            "date": 734708,
+            "subject_count": 1,
+            "latitude": 32.76369
+        },
+        {
+            "subject_weapon": "BB Rifle",
+            "longitude": -96.84388,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Eaton, Dan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sanchez, Ray",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Thompson, Jamison",
+                    "race": "W"
+                }
+            ],
+            "date": 733214,
+            "subject_count": 1,
+            "latitude": 32.99479
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.803614,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Guynn, Byron",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Bannister, James",
+                    "race": "W"
+                }
+            ],
+            "date": 731292,
+            "subject_count": 1,
+            "latitude": 32.94754
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.654635,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rhodes, Phillip",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hubert, Kyle",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gabaldon, Robeto",
+                    "race": "L"
+                }
+            ],
+            "date": 734718,
+            "subject_count": 1,
+            "latitude": 32.85154
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.847878,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hudson, Antonio",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gaynier, Andrew",
+                    "race": "W"
+                }
+            ],
+            "date": 735455,
+            "subject_count": 1,
+            "latitude": 32.74169
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.856854,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gladden, Kevin",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gonzalez, Jose",
+                    "race": "L"
+                }
+            ],
+            "date": 735456,
+            "subject_count": 1,
+            "latitude": 32.86836
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.859781,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hayden, Kevin",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "McDonald, Earl",
+                    "race": "B"
+                }
+            ],
+            "date": 734340,
+            "subject_count": 1,
+            "latitude": 32.67113
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.662901,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Waskom, David",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Antonio",
+                    "race": "B"
+                }
+            ],
+            "date": 734721,
+            "subject_count": 1,
+            "latitude": 32.86401
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.831946,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bailey, Berkeley",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 735080,
+            "subject_count": 1,
+            "latitude": 33.0073
+        },
+        {
+            "subject_weapon": "Pellet Gun",
+            "longitude": -96.753149,
+            "officer_count": 9,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Terry, Mathew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Neal, Scott",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Joseph, Bryan",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Thomas, Kevin",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Rice, Rachel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Flores, Lucas",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Jones, Rory",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Mills, Tyler",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "King, Joe",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Davis, Bertrand",
+                    "race": "B"
+                }
+            ],
+            "date": 735837,
+            "subject_count": 1,
+            "latitude": 32.77078
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.880946,
+            "officer_count": 1,
+            "grand_jury_disposition": "See Summary",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Thomas, Christopher",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+            ],
+            "date": 733969,
+            "subject_count": 0,
+            "latitude": 32.7862
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.770077,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Jankowski, Jay",
+                    "race": "W"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Herczeg, Michelle",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Groessel, Terence",
+                    "race": "W"
+                }
+            ],
+            "date": 735465,
+            "subject_count": 1,
+            "latitude": 32.92484
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.700939,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rivera, Martin",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Washington, Brandon",
+                    "race": "B"
+                }
+            ],
+            "date": 732757,
+            "subject_count": 1,
+            "latitude": 32.73424
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.781851,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Martinez, Ruben Jr.",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Campbell, Ladarius",
+                    "race": "B"
+                }
+            ],
+            "date": 735466,
+            "subject_count": 1,
+            "latitude": 32.69285
+        },
+        {
+            "subject_weapon": "Rifle",
+            "longitude": -96.886832,
+            "officer_count": 4,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Starr, Patrick",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Jarc, Jason",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Haecker, Todd",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Borchardt, Jeremy",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ruiz, Wesley",
+                    "race": "L"
+                }
+            ],
+            "date": 732758,
+            "subject_count": 1,
+            "latitude": 32.7915
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.866883,
+            "officer_count": 1,
+            "grand_jury_disposition": "See Summary",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Coleman, Alph",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+            ],
+            "date": 733220,
+            "subject_count": 0,
+            "latitude": 32.64745
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.878279,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Wagner, Christopher",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 736201,
+            "subject_count": 1,
+            "latitude": 32.74863
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.665266,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Moreno, Rogelio",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Douglas, Steven",
+                    "race": "B"
+                }
+            ],
+            "date": 735470,
+            "subject_count": 1,
+            "latitude": 32.73419
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.75182,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gamez, Jose",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ramos, Sergio",
+                    "race": "L"
+                }
+            ],
+            "date": 735472,
+            "subject_count": 1,
+            "latitude": 32.93578
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.84641,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cole, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Jenkins, Jocelyn",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Robles, Rodrigo",
+                    "race": "L"
+                }
+            ],
+            "date": 733232,
+            "subject_count": 1,
+            "latitude": 32.7064
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.864537,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "DeWilde, Michael",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Allen, Joel",
+                    "race": "W"
+                }
+            ],
+            "date": 735483,
+            "subject_count": 1,
+            "latitude": 32.82657
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.774734,
+            "officer_count": 2,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hill, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Akin, Theron",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ramirez, Gerardo",
+                    "race": "L"
+                }
+            ],
+            "date": 735862,
+            "subject_count": 1,
+            "latitude": 32.89443
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.829549,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Lewis, Jeffrey",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Richardson, Paulette",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Lewis, Sharlet",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hicks, Lavell",
+                    "race": "B"
+                }
+            ],
+            "date": 731667,
+            "subject_count": 1,
+            "latitude": 32.69084
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.85136,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "White, Jacob",
+                    "race": "A"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Gonzalez, Margarito",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Delagarza, Joe",
+                    "race": "L"
+                }
+            ],
+            "date": 733241,
+            "subject_count": 1,
+            "latitude": 32.83827
+        },
+        {
+            "subject_weapon": "BB Rifle",
+            "longitude": -96.870954,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Dagen, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Aranda, Orlando",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Mejia, Ivan",
+                    "race": "L"
+                }
+            ],
+            "date": 731664,
+            "subject_count": 2,
+            "latitude": 32.83682
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.748462,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Zabriske, Alexander",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Coleman, Sebastian",
+                    "race": "B"
+                }
+            ],
+            "date": 735871,
+            "subject_count": 1,
+            "latitude": 32.67005
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.656826,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Roberts, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gibson, Neiman",
+                    "race": "B"
+                }
+            ],
+            "date": 732030,
+            "subject_count": 1,
+            "latitude": 32.75926
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.685849,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Merta, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Soto, Domingo",
+                    "race": "L"
+                }
+            ],
+            "date": 735117,
+            "subject_count": 1,
+            "latitude": 32.71527
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.682972,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ned, Charles",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Phelps, Farie",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 734871,
+            "subject_count": 1,
+            "latitude": 32.73863
+        },
+        {
+            "subject_weapon": "Toy Handgun",
+            "longitude": -96.826787,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Walls, Ryan",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Cupples, Jimmy Jr.",
+                    "race": "W"
+                }
+            ],
+            "date": 735507,
+            "subject_count": 1,
+            "latitude": 32.81482
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.810215,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Barrett, Russell",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Branch, Bryan",
+                    "race": "B"
+                }
+            ],
+            "date": 735125,
+            "subject_count": 1,
+            "latitude": 32.8076
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": null,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Armstrong, Michael",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Watkins, Caleb",
+                    "race": "B"
+                }
+            ],
+            "date": 732404,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.656448,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Everett, Alexander",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Summers, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "McDaniel, Julian",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hall, William",
+                    "race": "W"
+                }
+            ],
+            "date": 735137,
+            "subject_count": 1,
+            "latitude": 32.83809
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.74732,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Mosher, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Terry, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Harvey, Derrick",
+                    "race": "B"
+                }
+            ],
+            "date": 733266,
+            "subject_count": 1,
+            "latitude": 32.86723
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.803885,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cantu, Richard",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Aquino, Jesse",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Blair, David",
+                    "race": "B"
+                }
+            ],
+            "date": 735143,
+            "subject_count": 1,
+            "latitude": 32.73914
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.718739,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Michael",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "McGee, Gregory",
+                    "race": "B"
+                }
+            ],
+            "date": 735528,
+            "subject_count": 1,
+            "latitude": 32.90941
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.793979,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Walls, Germaine",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Demarcus",
+                    "race": "B"
+                }
+            ],
+            "date": 734411,
+            "subject_count": 1,
+            "latitude": 32.78099
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.871408,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Simonds, Brian",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Montiel, Noe",
+                    "race": "L"
+                }
+            ],
+            "date": 735152,
+            "subject_count": 1,
+            "latitude": 32.74721
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.882629,
+            "officer_count": 3,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Browning, Shannon",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Barrientos, Antonio",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Lujan, Edmundo",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "De Lao, Jeffery",
+                    "race": "L"
+                }
+            ],
+            "date": 735911,
+            "subject_count": 1,
+            "latitude": 32.85879
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.662659,
+            "officer_count": 1,
+            "grand_jury_disposition": "True Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Spencer, Cardan",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Bennett, Bobby",
+                    "race": "W"
+                }
+            ],
+            "date": 735155,
+            "subject_count": 1,
+            "latitude": 32.66901
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.874071,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Walker, James",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Chapman, Nathaniel",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Swify, Amir",
+                    "race": "B"
+                }
+            ],
+            "date": 733281,
+            "subject_count": 1,
+            "latitude": 32.85803
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.791891,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hayden, Kevin",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "Jones, Carystal",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Brooks, Sekeitha",
+                    "race": "B"
+                }
+            ],
+            "date": 735917,
+            "subject_count": 2,
+            "latitude": 32.79271
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.748631,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Shipp, Joshua",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Kelly, Devoncey",
+                    "race": "B"
+                }
+            ],
+            "date": 734803,
+            "subject_count": 1,
+            "latitude": 32.7691
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.840285,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Khan, Arif",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hill, Justen",
+                    "race": "W"
+                }
+            ],
+            "date": 734804,
+            "subject_count": 1,
+            "latitude": 32.75237
+        },
+        {
+            "subject_weapon": "Assault Rifle",
+            "longitude": -96.897332,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Carter, Ira",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Martinez, Harvey",
+                    "race": "L"
+                }
+            ],
+            "date": 733293,
+            "subject_count": 1,
+            "latitude": 32.86305
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.774809,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Shipp, Joshua",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hughes, Thomas",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Collins, Donnell",
+                    "race": "B"
+                }
+            ],
+            "date": 734535,
+            "subject_count": 1,
+            "latitude": 32.76892
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.767489,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bunthavuth, Te",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Glenn, Randolph",
+                    "race": "B"
+                }
+            ],
+            "date": 734535,
+            "subject_count": 1,
+            "latitude": 32.7754
+        },
+        {
+            "subject_weapon": "Taser",
+            "longitude": -96.802025,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ross, John",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Munoz, Salvador",
+                    "race": "L"
+                }
+            ],
+            "date": 735173,
+            "subject_count": 1,
+            "latitude": 32.71797
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.898068,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Fiero, Ernest",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Alardin, Mark",
+                    "race": "L"
+                }
+            ],
+            "date": 731226,
+            "subject_count": 1,
+            "latitude": 32.8639
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.763903,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Jablon, James",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Owens, James",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "McDuff, Bobby",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hibbler, Marcus",
+                    "race": "B"
+                }
+            ],
+            "date": 731689,
+            "subject_count": 2,
+            "latitude": 32.6763
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.790112,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Marvin, Ned",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Mumford, Dennis",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gray, Jerry",
+                    "race": "B"
+                }
+            ],
+            "date": 733671,
+            "subject_count": 1,
+            "latitude": 32.69
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.710725,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Eduardo Oliveros",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wigenton, Marvin",
+                    "race": "B"
+                }
+            ],
+            "date": 733688,
+            "subject_count": 1,
+            "latitude": 32.7148
+        },
+        {
+            "subject_weapon": "OC Spray",
+            "longitude": -96.60936,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Barnes, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Taylor, Robert",
+                    "race": "W"
+                }
+            ],
+            "date": 733676,
+            "subject_count": 1,
+            "latitude": 32.67861
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.865394,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ford, Paul",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Martinez, Able",
+                    "race": "L"
+                }
+            ],
+            "date": 733677,
+            "subject_count": 1,
+            "latitude": 32.73648
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.791435,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Villanueva, Rene",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Jones, Derrick",
+                    "race": "B"
+                }
+            ],
+            "date": 733301,
+            "subject_count": 1,
+            "latitude": 32.69049
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.676431,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "White, Phillip",
+                    "race": null
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Spence, David",
+                    "race": "W"
+                }
+            ],
+            "date": 731328,
+            "subject_count": 1,
+            "latitude": 32.76332
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.675429,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ledezma, Bernadino",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lyons, Joshua",
+                    "race": "B"
+                }
+            ],
+            "date": 734832,
+            "subject_count": 1,
+            "latitude": 32.77789
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.754039,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hughes, Thomas",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Erwin, Reginald",
+                    "race": "B"
+                }
+            ],
+            "date": 734450,
+            "subject_count": 1,
+            "latitude": 32.73976
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.754391,
+            "officer_count": 1,
+            "grand_jury_disposition": "Pending",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Moody, Larry",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Puckett, Jonathan",
+                    "race": "W"
+                }
+            ],
+            "date": 735583,
+            "subject_count": 1,
+            "latitude": 32.86166
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.775044,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tate , Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Mackey, Tobias",
+                    "race": "B"
+                }
+            ],
+            "date": 734074,
+            "subject_count": 1,
+            "latitude": 32.71273
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.660059,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bass, Davey",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Gomez, Antonio",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Williams, Robert",
+                    "race": "B"
+                }
+            ],
+            "date": 734843,
+            "subject_count": 1,
+            "latitude": 32.75227
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.876091,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Pacheco, Louis",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 734457,
+            "subject_count": 1,
+            "latitude": 32.71391
+        },
+        {
+            "subject_weapon": "Simulated Handgun",
+            "longitude": -96.871586,
+            "officer_count": 5,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "McCarrick, Ryan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Brisco, Buddy",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Jobe, Patrick",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Blosser, Steven",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Harmon, Daryell",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Menchaca, Tony",
+                    "race": "L"
+                }
+            ],
+            "date": 734083,
+            "subject_count": 1,
+            "latitude": 32.74954
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.896632,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Foster, Daniel",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ellis, Lenny",
+                    "race": "B"
+                }
+            ],
+            "date": 734851,
+            "subject_count": 1,
+            "latitude": 32.70561
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.749393,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Ferguson, Kesha",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sharkey, Johnathan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wilson, Alerick",
+                    "race": "B"
+                }
+            ],
+            "date": 733697,
+            "subject_count": 1,
+            "latitude": 32.77188
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.657518,
+            "officer_count": 1,
+            "grand_jury_disposition": "True Bill",
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Wilburn, Amy",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Walker, Kelvion",
+                    "race": "B"
+                }
+            ],
+            "date": 735211,
+            "subject_count": 1,
+            "latitude": 32.76831
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.688211,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Michael",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Garcia, Adolfo",
+                    "race": "L"
+                }
+            ],
+            "date": 734471,
+            "subject_count": 1,
+            "latitude": 32.79855
+        },
+        {
+            "subject_weapon": "Pellet Gun",
+            "longitude": -96.76765,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Felini, Michael",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Curtis, Guy",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Williams, Joseph",
+                    "race": "B"
+                }
+            ],
+            "date": 734092,
+            "subject_count": 1,
+            "latitude": 32.92488
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.807184,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Martinez, Jesus",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Cox, Jason",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Malone, Stephen",
+                    "race": "W"
+                }
+            ],
+            "date": 734476,
+            "subject_count": 1,
+            "latitude": 32.77667
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.750995,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Wash, Shawn",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "B"
+                }
+            ],
+            "date": 732430,
+            "subject_count": 1,
+            "latitude": 32.7686
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.718124,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Zarate, Daniel",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Eaglin, Dan",
+                    "race": "B"
+                }
+            ],
+            "date": 734481,
+            "subject_count": 1,
+            "latitude": 32.9125
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.743538,
+            "officer_count": 5,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Womack, Darryl",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Russell, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hurst, Glen",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hales, Ryan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "McCluskey, William",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Stoney, Rawlison",
+                    "race": "W"
+                }
+            ],
+            "date": 734907,
+            "subject_count": 1,
+            "latitude": 32.8651
+        },
+        {
+            "subject_weapon": "Assault Rifle",
+            "longitude": -96.665575,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rangel, Juan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Horton, Kenneth",
+                    "race": "B"
+                }
+            ],
+            "date": 734104,
+            "subject_count": 1,
+            "latitude": 32.73263
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.752516,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ceraso, Gregory",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Stephens, Cedric",
+                    "race": "B"
+                }
+            ],
+            "date": 734498,
+            "subject_count": 1,
+            "latitude": 32.77135
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.71764,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Magiera, Stormy",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Dixon, Derrick",
+                    "race": "B"
+                }
+            ],
+            "date": 734499,
+            "subject_count": 1,
+            "latitude": 32.90855
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.87471,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Deleon, Christopher",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Abdel, Aziz",
+                    "race": "W"
+                }
+            ],
+            "date": 733808,
+            "subject_count": 1,
+            "latitude": 32.72036
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.73654,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Colunga, Jordan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "White, Pascal",
+                    "race": "W"
+                }
+            ],
+            "date": 734123,
+            "subject_count": 1,
+            "latitude": 32.83099
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.911343,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Lopez, Antonio",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Rodriguez, Robert Jr.",
+                    "race": "L"
+                }
+            ],
+            "date": 732440,
+            "subject_count": 1,
+            "latitude": 32.77597
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.769373,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hodack, Steven",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Kimble, Parish",
+                    "race": "B"
+                }
+            ],
+            "date": 733735,
+            "subject_count": 1,
+            "latitude": 32.83568
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.656112,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Haulbrook, Danny",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lopez, Simon",
+                    "race": "L"
+                }
+            ],
+            "date": 734128,
+            "subject_count": 1,
+            "latitude": 32.70258
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.748949,
+            "officer_count": 4,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Melgoza, Greald",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Fontenot, Michael",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Edwards, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Christian, Artie",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Smith, Tommy",
+                    "race": "W"
+                }
+            ],
+            "date": 732812,
+            "subject_count": 1,
+            "latitude": 32.79081
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.794339,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Martinez, Albert",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Melo, Richard",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Almanza, Jose",
+                    "race": "L"
+                }
+            ],
+            "date": 733810,
+            "subject_count": 1,
+            "latitude": 32.78327
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.656941,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Deborst, Paul",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Bacon, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Canete, Daniel",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Banks, William",
+                    "race": "B"
+                }
+            ],
+            "date": 734546,
+            "subject_count": 1,
+            "latitude": 32.73234
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": null,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Woods, Jesse",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Culp, Barrick",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Garcia, David",
+                    "race": "L"
+                }
+            ],
+            "date": 732075,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.822788,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Thompson, Dwayne",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Simpson, Dexter",
+                    "race": "B"
+                }
+            ],
+            "date": 731344,
+            "subject_count": 1,
+            "latitude": 32.65595
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.780444,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Crowley, David",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Zoller, Jonathan",
+                    "race": "W"
+                }
+            ],
+            "date": 733759,
+            "subject_count": 1,
+            "latitude": 32.81484
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.902925,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rutledge, Gregory",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Alford, Joseph",
+                    "race": "B"
+                }
+            ],
+            "date": 733383,
+            "subject_count": 1,
+            "latitude": 32.6912
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.822619,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Rebecca Barrios",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Vasquez, Angel",
+                    "race": "L"
+                }
+            ],
+            "date": 733761,
+            "subject_count": 1,
+            "latitude": 32.945
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.765308,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Welch, Michael",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Anderson, Jarrod",
+                    "race": "W"
+                }
+            ],
+            "date": 732818,
+            "subject_count": 1,
+            "latitude": 32.92496
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.71798,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Burns, Joshua",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Varillas, Salvador",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Perkins, Rakeem",
+                    "race": "B"
+                }
+            ],
+            "date": 735279,
+            "subject_count": 1,
+            "latitude": 32.92425
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.789168,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Seng, Kung",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 733390,
+            "subject_count": 1,
+            "latitude": 32.78471
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.651634,
+            "officer_count": 13,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Lashley, Brian",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Correa, Jason",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Burns, Joshua",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hughes, Antoine",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Prince, Stephen",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Hanson, Samuel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Bacon, Matthew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Stasik, Danny",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Spencer, Cardan",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Tutt, Jon",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Valtadoros, Gregory",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Jameson, Daniel",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Krol, Michael",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Dontrell Terrell",
+                    "race": "B"
+                }
+            ],
+            "date": 733768,
+            "subject_count": 1,
+            "latitude": 32.73905
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": null,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Mondy, Michael",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Smith, James",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Dews, Antonio",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Spearman, Damion",
+                    "race": "B"
+                }
+            ],
+            "date": 732822,
+            "subject_count": 3,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.777416,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Salas, Juan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Torres, Everrado",
+                    "race": "L"
+                }
+            ],
+            "date": 732826,
+            "subject_count": 1,
+            "latitude": 32.8182
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.78443,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tayem, Michael",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Pabis, Jason",
+                    "race": "W"
+                }
+            ],
+            "date": 732458,
+            "subject_count": 1,
+            "latitude": 32.80625
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.836997,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Benson, Ralph",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Woodson, Anthony",
+                    "race": "B"
+                }
+            ],
+            "date": 731731,
+            "subject_count": 1,
+            "latitude": 32.77573
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.688211,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cozby, Melvin",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Sims, Bert",
+                    "race": "W"
+                }
+            ],
+            "date": 731232,
+            "subject_count": 1,
+            "latitude": 32.79855
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.889139,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Carballo, Rolando Jr.",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Alexander, Alphonse",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Yanez, Tami",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "West, Samuel III",
+                    "race": "B"
+                }
+            ],
+            "date": 731367,
+            "subject_count": 1,
+            "latitude": 32.66099
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.713337,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Casey, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hernandez, Rene",
+                    "race": "L"
+                }
+            ],
+            "date": 735283,
+            "subject_count": 1,
+            "latitude": 32.7776
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.617694,
+            "officer_count": 5,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Verbal, Stan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Edwards, Matthew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "McCoy, Bronco",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Swafford, James",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Fry, Brian",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ortiz, Luis",
+                    "race": "L"
+                }
+            ],
+            "date": 731369,
+            "subject_count": 1,
+            "latitude": 32.67422
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": null,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Patino, Michael",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Fillingim, Brian",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Curry, James",
+                    "race": "L"
+                }
+            ],
+            "date": 734922,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.842736,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Richardson, Dale",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Brasher, Cody",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hernandez, Nicolas",
+                    "race": "L"
+                }
+            ],
+            "date": 732842,
+            "subject_count": 1,
+            "latitude": 32.78589
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.7672,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Emberlin, Richard",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ovalle, Leon",
+                    "race": "L"
+                }
+            ],
+            "date": 732847,
+            "subject_count": 1,
+            "latitude": 32.83132
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.854966,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "McDonnold, Samuel",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Henderson, Travis",
+                    "race": "W"
+                }
+            ],
+            "date": 734557,
+            "subject_count": 1,
+            "latitude": 32.99075
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.85641,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "McCormick, James",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Skinner, Dennis",
+                    "race": "B"
+                }
+            ],
+            "date": 731754,
+            "subject_count": 1,
+            "latitude": 32.78976
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.802127,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Madison, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "B"
+                }
+            ],
+            "date": 732864,
+            "subject_count": 1,
+            "latitude": 32.78652
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.688362,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gurski, James",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Evans, Alveree",
+                    "race": "B"
+                }
+            ],
+            "date": 731405,
+            "subject_count": 1,
+            "latitude": 32.72177
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.810818,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Kattner, David",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Sinning, Kevin",
+                    "race": "W"
+                }
+            ],
+            "date": 731772,
+            "subject_count": 1,
+            "latitude": 32.81452
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.798039,
+            "officer_count": 5,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Palk, Devon",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Dorward, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sharkey, Johnathan",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Nilsen, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Banes, Matthew",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Glover, Derrick",
+                    "race": "B"
+                }
+            ],
+            "date": 734875,
+            "subject_count": 1,
+            "latitude": 32.69435
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": null,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rangel, Mark",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Armendariz, Michael",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Vernon, Tony",
+                    "race": "B"
+                }
+            ],
+            "date": 731420,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.875284,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rudloff, Roger",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Payovich, Timothy",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Crow, Jason",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Escalante, Luis",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Cipirano, James",
+                    "race": "L"
+                }
+            ],
+            "date": 734569,
+            "subject_count": 2,
+            "latitude": 32.8664
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.773914,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Staller, Clark",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Clinton, Allen",
+                    "race": "B"
+                }
+            ],
+            "date": 734937,
+            "subject_count": 1,
+            "latitude": 32.71845
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.802392,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hawkins, Joe",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Williams, Michael",
+                    "race": "B"
+                }
+            ],
+            "date": 731788,
+            "subject_count": 1,
+            "latitude": 32.76771
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.672367,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Evans, Derrick",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Keeton, Jonathan",
+                    "race": "B"
+                }
+            ],
+            "date": 731424,
+            "subject_count": 1,
+            "latitude": 32.75068
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.760506,
+            "officer_count": 2,
+            "grand_jury_disposition": "Redden, Craig W/M",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gomez, Mario",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Redden, Craig",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Payne, Charles",
+                    "race": "B"
+                }
+            ],
+            "date": 733413,
+            "subject_count": 1,
+            "latitude": 32.69879
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.745461,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Grimes, Jordan",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Davidson, Johnnie",
+                    "race": "W"
+                }
+            ],
+            "date": 732894,
+            "subject_count": 1,
+            "latitude": 32.9059
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.898998,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Timms, Christopher",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Tyrique",
+                    "race": "B"
+                }
+            ],
+            "date": 734941,
+            "subject_count": 1,
+            "latitude": 32.864
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": null,
+            "officer_count": 1,
+            "grand_jury_disposition": "See Summary",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Poston, Jerry",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Salinas, Nick",
+                    "race": "L"
+                }
+            ],
+            "date": 732900,
+            "subject_count": 1,
+            "latitude": null
+        },
+        {
+            "subject_weapon": "BB Gun",
+            "longitude": -96.717073,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Tholl, Kyle",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Jones, Christopher",
+                    "race": "B"
+                }
+            ],
+            "date": 734942,
+            "subject_count": 1,
+            "latitude": 32.9021
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.773881,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Dominguez, Michael",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Wyatt, Michael",
+                    "race": "B"
+                }
+            ],
+            "date": 732703,
+            "subject_count": 1,
+            "latitude": 32.7697
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.832146,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Nelson, Saint",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+            ],
+            "date": 734577,
+            "subject_count": 0,
+            "latitude": 32.74199
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.798423,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Nichols, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "McHenry, Eric",
+                    "race": "B"
+                }
+            ],
+            "date": 731445,
+            "subject_count": 1,
+            "latitude": 32.80576
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.876324,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cortes, Andrew",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Noyola, Gerardo",
+                    "race": "L"
+                }
+            ],
+            "date": 732915,
+            "subject_count": 1,
+            "latitude": 32.8664
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.7718,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Grabbe, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Mustard, Richard",
+                    "race": "W"
+                }
+            ],
+            "date": 733839,
+            "subject_count": 1,
+            "latitude": 32.91469
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.73456,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Roberts, John",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "James, Michael",
+                    "race": "B"
+                }
+            ],
+            "date": 731454,
+            "subject_count": 1,
+            "latitude": 32.88191
+        },
+        {
+            "subject_weapon": "Assault Rifle",
+            "longitude": -96.806827,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Wilson, Jonathan",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Villanueva, Rene",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Alexander, Gaylon",
+                    "race": "B"
+                }
+            ],
+            "date": 733841,
+            "subject_count": 1,
+            "latitude": 32.69331
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.646849,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Dominguez, Ray",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Watson, Shawn",
+                    "race": "B"
+                }
+            ],
+            "date": 732941,
+            "subject_count": 1,
+            "latitude": 32.8514
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.803756,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Griffin, Sam",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Blackstone, Douglas",
+                    "race": "W"
+                }
+            ],
+            "date": 732177,
+            "subject_count": 1,
+            "latitude": 32.78263
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.779622,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Contreras, Juan",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Washington, Ray",
+                    "race": "B"
+                }
+            ],
+            "date": 732946,
+            "subject_count": 1,
+            "latitude": 32.80756
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.823942,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Loeb, Jeffrey",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Torres, Julio",
+                    "race": "L"
+                }
+            ],
+            "date": 731835,
+            "subject_count": 1,
+            "latitude": 32.82223
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.666523,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Dickerson, Terran",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Black, Gerald",
+                    "race": "B"
+                }
+            ],
+            "date": 733845,
+            "subject_count": 1,
+            "latitude": 32.82859
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.765671,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gaitonde, Nekheel",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Dennis",
+                    "race": "B"
+                }
+            ],
+            "date": 732573,
+            "subject_count": 1,
+            "latitude": 32.7
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.813213,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Christian, Lawrence",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Offutt, Philip",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Sanchez, Steven",
+                    "race": "L"
+                }
+            ],
+            "date": 734220,
+            "subject_count": 1,
+            "latitude": 32.77571
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.654428,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Harris, Mark",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Bishop, Fredrick",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Moss, Marcus",
+                    "race": "B"
+                }
+            ],
+            "date": 732583,
+            "subject_count": 1,
+            "latitude": 32.76506
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.671745,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bowen, Justin",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Harris, Roderick",
+                    "race": "B"
+                }
+            ],
+            "date": 733483,
+            "subject_count": 1,
+            "latitude": 32.70438
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.891379,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Price, Lawrence",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Welch, Eddie",
+                    "race": "W"
+                }
+            ],
+            "date": 731860,
+            "subject_count": 1,
+            "latitude": 32.86167
+        },
+        {
+            "subject_weapon": "Taser",
+            "longitude": -96.900308,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Boudet, Otoniel",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Crow, Jason",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Payovich, Timothy",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Mendoza, Miguel",
+                    "race": "L"
+                }
+            ],
+            "date": 733853,
+            "subject_count": 1,
+            "latitude": 32.86311
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.796936,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "F",
+                    "full_name": "Moore, Jacqueline",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Bullard, Codi",
+                    "race": "W"
+                }
+            ],
+            "date": 735327,
+            "subject_count": 1,
+            "latitude": 32.76867
+        },
+        {
+            "subject_weapon": "Rifle",
+            "longitude": -96.873091,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Chambers, Stanton",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Frierson, Byron",
+                    "race": "B"
+                }
+            ],
+            "date": 731506,
+            "subject_count": 1,
+            "latitude": 32.70646
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.867936,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Johnson, Gregory",
+                    "race": "B"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Huel, Tammy",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "F",
+                    "full_name": "Kemp, Diane",
+                    "race": "B"
+                }
+            ],
+            "date": 731583,
+            "subject_count": 1,
+            "latitude": 32.6636
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.865717,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Crawford, Lance",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Eggleston, Scott",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Gonzales, Manuel",
+                    "race": "L"
+                }
+            ],
+            "date": 731509,
+            "subject_count": 1,
+            "latitude": 32.87111
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.81216,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Carballo, Rolando",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Diaz, Guadalupe",
+                    "race": "L"
+                }
+            ],
+            "date": 731514,
+            "subject_count": 1,
+            "latitude": 32.7095
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.761546,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Gaitonde, Nekheel",
+                    "race": "A"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Paredez, Domingo Jr.",
+                    "race": "L"
+                }
+            ],
+            "date": 731518,
+            "subject_count": 1,
+            "latitude": 32.88685
+        },
+        {
+            "subject_weapon": "Knife",
+            "longitude": -96.692775,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cantu, Oscar",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Clark, David Jr.",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Paniaqua, Pedro",
+                    "race": "L"
+                }
+            ],
+            "date": 731518,
+            "subject_count": 1,
+            "latitude": 32.7097
+        },
+        {
+            "subject_weapon": "Vehicle",
+            "longitude": -96.831751,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ramirez, Ricardo",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Solis, Eduardo",
+                    "race": "L"
+                }
+            ],
+            "date": 734964,
+            "subject_count": 1,
+            "latitude": 32.74415
+        },
+        {
+            "subject_weapon": "Paint Ball Rifle",
+            "longitude": -96.757384,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "St. Clair , Stephen",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Hughes, Gary",
+                    "race": "B"
+                }
+            ],
+            "date": 732622,
+            "subject_count": 1,
+            "latitude": 32.75779
+        },
+        {
+            "subject_weapon": "Shotgun",
+            "longitude": -96.908674,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Brady, Douglas",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Evenden, George",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Fuentes, Francisco",
+                    "race": "L"
+                }
+            ],
+            "date": 731531,
+            "subject_count": 1,
+            "latitude": 32.68642
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.771209,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hess, Christopher",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Helm, Zachary",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Nazareno, Rosendo",
+                    "race": "L"
+                }
+            ],
+            "date": 733495,
+            "subject_count": 1,
+            "latitude": 32.8057
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.776719,
+            "officer_count": 5,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Nelson, Barrett",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Bridges, Christopher",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Sanders, Curtis",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Quezada, Victor",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Lockett, Clarence",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Turner, James",
+                    "race": "B"
+                }
+            ],
+            "date": 732633,
+            "subject_count": 1,
+            "latitude": 32.76197
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.828234,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Woody, Mark",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Linwood, Robert",
+                    "race": "B"
+                }
+            ],
+            "date": 732633,
+            "subject_count": 1,
+            "latitude": 32.68943
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.712453,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Martin, Roger",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Unknown",
+                    "race": "L"
+                }
+            ],
+            "date": 731539,
+            "subject_count": 1,
+            "latitude": 32.73369
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.772993,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Daigrepont, Kevin",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Ramirez, Eric",
+                    "race": "L"
+                }
+            ],
+            "date": 732639,
+            "subject_count": 1,
+            "latitude": 32.98785
+        },
+        {
+            "subject_weapon": "Unarmed",
+            "longitude": -96.910913,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hernandez, Anthony",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Cruz, Jesus",
+                    "race": "L"
+                }
+            ],
+            "date": 732260,
+            "subject_count": 1,
+            "latitude": 32.71769
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.778443,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Jackson, Brian",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Lizcano, Juan",
+                    "race": "L"
+                }
+            ],
+            "date": 732263,
+            "subject_count": 1,
+            "latitude": 32.81616
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.80728,
+            "officer_count": 4,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ortiz, Manuel",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Wilcox, Robert",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Scoggins, Jason",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Evangelista, Derreck",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Schmidt, Michael",
+                    "race": "W"
+                }
+            ],
+            "date": 735235,
+            "subject_count": 1,
+            "latitude": 32.794
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.761447,
+            "officer_count": 2,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Canales, Luis",
+                    "race": "L"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Giron, Jason",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Allen, Tyrone",
+                    "race": "B"
+                }
+            ],
+            "date": 734973,
+            "subject_count": 1,
+            "latitude": 32.9134
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.76224,
+            "officer_count": 8,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Bailey, Pete",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Peebles, Matthew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Jones, Michael",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Lemmons, Harold",
+                    "race": "B"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Fifield, Andrew",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Wellhouse, Todd",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "White, Kelly",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Byas, James",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Scott, Losten",
+                    "race": "B"
+                }
+            ],
+            "date": 733132,
+            "subject_count": 1,
+            "latitude": 32.77
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.875551,
+            "officer_count": 3,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Hamilton, Robert",
+                    "race": "A"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Milligan, Marshall",
+                    "race": "W"
+                },
+                {
+                    "gender": "M",
+                    "full_name": "Huante, Gerardo",
+                    "race": "L"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Mayo, Michael",
+                    "race": "W"
+                }
+            ],
+            "date": 735344,
+            "subject_count": 1,
+            "latitude": 32.66254
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.82847,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Rickerman, Mark",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Keliam Rudd",
+                    "race": "B"
+                }
+            ],
+            "date": 732284,
+            "subject_count": 1,
+            "latitude": 32.74417
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.869793,
+            "officer_count": 1,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Ashley, Larry",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Adams, Robert",
+                    "race": "B"
+                }
+            ],
+            "date": 732293,
+            "subject_count": 1,
+            "latitude": 32.65625
+        },
+        {
+            "subject_weapon": "Hands",
+            "longitude": -96.786995,
+            "officer_count": 2,
+            "grand_jury_disposition": "No Bill",
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Cordero, Daniel",
+                    "race": "L"
+                },
+                {
+                    "gender": "F",
+                    "full_name": "Rumancik, Megan",
+                    "race": "W"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Williams, Corey",
+                    "race": "B"
+                }
+            ],
+            "date": 731939,
+            "subject_count": 1,
+            "latitude": 32.70298
+        },
+        {
+            "subject_weapon": "Handgun",
+            "longitude": -96.783814,
+            "officer_count": 1,
+            "grand_jury_disposition": null,
+            "officers": [
+                {
+                    "gender": "M",
+                    "full_name": "Jefferson, Chad",
+                    "race": "B"
+                }
+            ],
+            "subjects": [
+                {
+                    "gender": "M",
+                    "full_name": "Dang, Thuy",
+                    "race": "A"
+                }
+            ],
+            "date": 732298,
+            "subject_count": 1,
+            "latitude": 32.7854
+        }
+    ],
+    "y": [
+        1,
+        2,
+        2,
+        2,
+        1,
+        2,
+        2,
+        3,
+        1,
+        2,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        3,
+        2,
+        2,
+        1,
+        3,
+        2,
+        3,
+        2,
+        2,
+        1,
+        2,
+        1,
+        2,
+        3,
+        3,
+        2,
+        2,
+        2,
+        1,
+        2,
+        2,
+        3,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        2,
+        2,
+        3,
+        1,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        1,
+        3,
+        1,
+        3,
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        3,
+        3,
+        1,
+        3,
+        3,
+        4,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        3,
+        3,
+        5,
+        2,
+        1,
+        3,
+        2,
+        2,
+        3,
+        3,
+        1,
+        3,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        2,
+        2,
+        2,
+        3,
+        2,
+        3,
+        3,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        1,
+        2,
+        1,
+        1,
+        3,
+        3,
+        2,
+        3,
+        1,
+        2,
+        3,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2,
+        2,
+        3,
+        2,
+        1,
+        2,
+        1,
+        2,
+        2,
+        3,
+        2,
+        3,
+        3,
+        3,
+        2,
+        1,
+        2,
+        2,
+        1,
+        2,
+        2,
+        1,
+        3,
+        1,
+        3,
+        3,
+        3,
+        1,
+        2,
+        2,
+        3,
+        3,
+        2,
+        1,
+        6,
+        1,
+        2,
+        3,
+        2,
+        1,
+        1,
+        4,
+        2,
+        2,
+        3,
+        3,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        3,
+        3,
+        1,
+        2,
+        3,
+        7,
+        3,
+        1,
+        1,
+        1,
+        2,
+        1,
+        4,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1,
+        3,
+        1,
+        2,
+        3,
+        3,
+        2,
+        1,
+        2,
+        3,
+        1,
+        2,
+        3,
+        3,
+        2
+    ]
+}
