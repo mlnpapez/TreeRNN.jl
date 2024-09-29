@@ -13,62 +13,40 @@ Author: Do Viet Anh
 =#
 
 using Random
-using DataStructures
+using LinearAlgebra
 using StatsBase
 
-# Define our vocabulary
-const VOCAB = ['h', 'i', 'd', 'e', 'n']
+
 
 """
-Generate initial and transition probabilities for our vocabulary
+Generate initial probabilities and transition matrix
 """
-function generate_probabilities()
-    initial_probs = Dict{Char, Float64}()
-    transition_probs = Dict{Char, Dict{Char, Float64}}()
-    
-    # Initial probabilities (marginal probabilities)
-    for char in VOCAB
-        initial_probs[char] = rand()
-    end
+function generate_probabilities(vocab_size::Int)
+    # Initial probabilities
+    initial_probs = rand(Float64, vocab_size)
+    initial_probs ./= sum(initial_probs)  # Normalize
 
-    # Normalize initial probabilities (so prob values sum to one)
-    total = sum(values(initial_probs))
-    for (key, value) in initial_probs
-        initial_probs[key] = value / total
-    end
-    
-    # Transition probabilities
-    for char1 in VOCAB
-        transition_probs[char1] = Dict{Char, Float64}()
-        for char2 in VOCAB
-            transition_probs[char1][char2] = rand()
-        end
-        # Normalize transition probabilities for each starting character
-        total = sum(values(transition_probs[char1]))
-        for (key, value) in transition_probs[char1]
-            transition_probs[char1][key] = value / total
-        end
-    end
-    
-    return initial_probs, transition_probs
+    # Transition matrix
+    transition_matrix = rand(Float64, (vocab_size, vocab_size))
+    transition_matrix ./= sum(transition_matrix, dims=2)  # Normalize rows
+
+    return initial_probs, transition_matrix
 end
 
 """
 Generate a single sequence based on defined probabilities
 """
-function generate_sequence(initial_probs, transition_probs)
-    length = rand(2:6)
-    sequence = Char[]
+function generate_sequence(initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64}, max_length::Int)
+    length = rand(2:max_length)
+    sequence = Vector{Int}(undef, length)
     
     # Generate first character
-    first_char = sample(VOCAB, Weights(collect(values(initial_probs))))
-    push!(sequence, first_char)
+    sequence[1] = sample(1:size(initial_probs, 1), Weights(initial_probs))
     
     # Generate subsequent characters
     for i in 2:length
-        prev_char = sequence[end]
-        next_char = sample(VOCAB, Weights(collect(values(transition_probs[prev_char]))))
-        push!(sequence, next_char)
+        prev_char = sequence[i-1]
+        sequence[i] = sample(1:size(transition_matrix, 2), Weights(transition_matrix[prev_char, :]))
     end
     
     return sequence
@@ -77,17 +55,17 @@ end
 """
 Generate a dataset of sequences
 """
-function generate_dataset(initial_probs, transition_probs, num_samples::Int)
-    return [generate_sequence(initial_probs, transition_probs) for _ in 1:num_samples]
+function generate_dataset(initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64}, num_samples::Int, max_length::Int)
+    return [generate_sequence(initial_probs, transition_matrix, max_length) for _ in 1:num_samples]
 end
 
 """
 Calculate the joint probability of a sequence
 """
-function joint_probability(sequence, initial_probs, transition_probs)
+function joint_probability(sequence::Vector{Int}, initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64})
     p = initial_probs[sequence[1]]
     for i in 2:length(sequence)
-        p *= transition_probs[sequence[i-1]][sequence[i]]
+        p *= transition_matrix[sequence[i-1], sequence[i]]
     end
     return p
 end
@@ -95,54 +73,64 @@ end
 """
 Calculate conditional probabilities for a sequence
 """
-function conditional_probabilities(sequence, initial_probs, transition_probs)
-    cond_probs = OrderedDict()
-    cond_probs["P($(sequence[1]))"] = initial_probs[sequence[1]]
+function conditional_probabilities(sequence::Vector{Int}, initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64})
+    # Pre-allocation of vector
+    cond_probs = Vector{Tuple{Int, Union{Nothing, Int}, Float64}}(undef, length(sequence))
+    cond_probs[1] = (1, nothing, initial_probs[sequence[1]])
     for i in 2:length(sequence)
-        prev = join(sequence[1:i-1])
-        cond_probs["P($(sequence[i])|$prev)"] = transition_probs[sequence[i-1]][sequence[i]]
+        cond_probs[i] = (i, sequence[i-1], transition_matrix[sequence[i-1], sequence[i]])
     end
     return cond_probs
 end
 
 function main()
     Random.seed!(42)  # For reproducibility
+    
+    vocab_size = 10
 
     # Generate probabilities
-    initial_probs, transition_probs = generate_probabilities()
+    initial_probs, transition_matrix = generate_probabilities(vocab_size)
 
     println("Generated Probabilities:")
     println("\nInitial Probabilities:")
-    for (char, prob) in sort(collect(initial_probs))
-        println("  P($char) = $(round(prob, digits=4))")
+    for (i, prob) in enumerate(initial_probs)
+        println("  P($i) = $(round(prob, digits=4))")
     end
+    println("\nSum of probabilities: ", sum(initial_probs))
 
-    println("\nTransition Probabilities:")
-    for char1 in sort(collect(keys(transition_probs)))
-        println("  From $char1:")
-        for (char2, prob) in sort(collect(transition_probs[char1]))
-            println("    P($char2|$char1) = $(round(prob, digits=4))")
+    println("\nTransition Matrix:")
+    for i in 1:vocab_size
+        println("  From $i:")
+        for j in 1:vocab_size
+            println("    P($j|$i) = $(round(transition_matrix[i,j], digits=4))")
         end
+    println("Sum of transition probabilities P(X|$i): ", sum(transition_matrix[i,:]), "\n")
     end
 
     # Generate dataset based on generated probabilities
-    num_samples = 5
-    dataset = generate_dataset(initial_probs, transition_probs, num_samples)
+    max_length = 14
+    num_samples = 10000
+    dataset = generate_dataset(initial_probs, transition_matrix, num_samples, max_length)
 
-    println("\nGenerated Dataset with Probabilities:")
-    for (i, sample) in enumerate(dataset)
-        println("\nSample $i: ", join(sample))
+
+    println("\nGenerated Dataset:")
+    for (i, sample) in enumerate(dataset[1:min(10, length(dataset))])
+        println("\nSample $i: ", join(['a' + x - 1 for x in sample]))
         
         # Calculate and print joint probability
-        jp = joint_probability(sample, initial_probs, transition_probs)
+        jp = joint_probability(sample, initial_probs, transition_matrix)
         println("Joint Probability P(X₁:ₙ) = $(round(jp, digits=8))")
         
         # Calculate and print conditional probabilities
-        cp = conditional_probabilities(sample, initial_probs, transition_probs)
+        cp = conditional_probabilities(sample, initial_probs, transition_matrix)
         println("Conditional Probabilities:")
-        for (condition, prob) in cp
-            println("  $condition = $(round(prob, digits=4))")
-        end
+        for (i, prev, prob) in cp
+            if isnothing(prev)
+                println("  P(X$i=$('a' + sample[i] - 1)) = $(round(prob, digits=4))")
+            else
+                println("  P(X$i=$('a' + sample[i] - 1)|X$(i-1)=$('a' + prev - 1)) = $(round(prob, digits=4))")
+            end
+        end 
     end
 end
 

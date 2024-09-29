@@ -13,8 +13,11 @@ Author: Do Viet Anh
 =#
 
 using Flux
-using LinearAlgebra
 using Statistics
+using Flux: DataLoader
+using Statistics: mean
+using LinearAlgebra
+
 
 include("data_generator.jl")
 
@@ -78,31 +81,47 @@ end
 """
 Prepare sequence data for the RNN model
 """
-function prepare_data(sequences)
-    X = []
-    Y = []
+function prepare_data(sequences, vocab_size)
+    # Calculate total number of pairs
+    total_pairs = sum(length(seq) - 1 for seq in sequences)
+    
+    # Pre-allocation of arrays
+    X = zeros(Int32, vocab_size, total_pairs)
+    Y = zeros(Int32, vocab_size, total_pairs)
+    
+    idx = 1
     for seq in sequences
         for i in 1:(length(seq)-1)
-            push!(X, Flux.onehot(seq[i], VOCAB))
-            push!(Y, Flux.onehot(seq[i+1], VOCAB))
+            X[seq[i], idx] = 1
+            Y[seq[i+1], idx] = 1
+            idx += 1
         end
     end
-    return hcat(X...), hcat(Y...)
+    
+    return X, Y
 end
 
 """
-Train the RNN model
+Train the RNN model using mini-batch processing
 """
-function train_model!(model, X, Y, epochs)
-    function loss(x, y)
-        predictions = model(x)
-        return Flux.crossentropy(predictions, y)
-    end
+function train_model!(model, X, Y, epochs, batch_size)
+    data = DataLoader((X, Y), batchsize=batch_size, shuffle=true)
     opt = ADAM()
+    ps = Flux.params(model)
+
+    losses = zeros(Float32, length(data))
+    
     for epoch in 1:epochs
-        Flux.train!(loss, Flux.params(model), [(X, Y)], opt)
+        for (i, (x, y)) in enumerate(data)
+            loss, grads = Flux.withgradient(() -> Flux.crossentropy(model(x), y), ps)
+            Flux.update!(opt, ps, grads)
+            losses[i] = loss
+        end
+        
+        avg_loss = mean(losses)
+        
         if epoch % 10 == 0
-            println("loss(X, Y) =", loss(X, Y))
+            println("Epoch $epoch: average loss = $avg_loss")
         end
     end
 end
@@ -120,12 +139,16 @@ end
 Main function to run the entire RNN pipeline
 """
 function main()
+    vocab_size = 3
+    samples = 10000
+    max_length = 14
+
     # Generate dataset using ALICE
-    initial_probs, transition_probs = generate_probabilities()
-    dataset = generate_dataset(initial_probs, transition_probs, 140)
+    initial_probs, transition_probs = generate_probabilities(vocab_size)
+    dataset = generate_dataset(initial_probs, transition_probs, samples, max_length) 
 
     # Prepare data for the model
-    X, Y = prepare_data(dataset)
+    X, Y = prepare_data(dataset, vocab_size)
     
     println("X type: ", typeof(X))
     println("Y type: ", typeof(Y))
@@ -137,8 +160,11 @@ function main()
     X_train, Y_train = X[:, 1:split_idx], Y[:, 1:split_idx]
     X_test, Y_test = X[:, split_idx+1:end], Y[:, split_idx+1:end]
 
-    # Create and train the model
-    model = RNN(length(VOCAB), 32, length(VOCAB))
+    # Create the model
+    input_size = vocab_size
+    hidden_size = 64
+    output_size = vocab_size
+    model = RNN(input_size, hidden_size, output_size)
     
     # Print model output for a small batch
     small_batch = X[:, 1:5]
@@ -149,7 +175,9 @@ function main()
     println("Initial loss: ", initial_loss)
 
     # Train the model
-    train_model!(model, X_train, Y_train, 100)
+    epochs = 100
+    batch_size = 32
+    train_model!(model, X_train, Y_train, epochs, batch_size)
 
     # Evaluate the model
     train_accuracy = evaluate_model(model, X_train, Y_train)
