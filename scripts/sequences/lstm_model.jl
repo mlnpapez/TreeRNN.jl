@@ -55,9 +55,11 @@ function (m::LSTMCell)(h::Tuple{AbstractVector, AbstractVector}, x::AbstractVect
 end
 
 # Define the full LSTM model structure
-struct LSTM
+mutable struct LSTM
     cell::LSTMCell
     output::Chain
+    h::Vector{Float32}
+    c::Vector{Float32}
 end
 
 Flux.@functor LSTM
@@ -68,7 +70,9 @@ Initialize the full LSTM model
 function LSTM(input_size::Int, hidden_size::Int, output_size::Int)
     return LSTM(
         LSTMCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax)
+        Chain(Dense(hidden_size, output_size), softmax),
+        zeros(Float32, hidden_size),
+        zeros(Float32, hidden_size)
     )
 end
 
@@ -76,12 +80,17 @@ end
 Forward pass for the full LSTM model
 """
 function (m::LSTM)(x::AbstractMatrix)
-    hidden_size = size(m.cell.u, 2)  
-    h = zeros(Float32, hidden_size)
-    c = zeros(Float32, hidden_size)
     outputs = map(1:size(x,2)) do t
-        (h, c), h_out = m.cell((h, c), x[:, t])
+        (m.h, m.c), h_out = m.cell((m.h, m.c), x[:, t])
         m.output(h_out)
     end
     return hcat(outputs...)
+end
+
+"""
+Reset the LSTM model's state
+"""
+function Flux.reset!(m::LSTM)
+    m.h = zeros(Float32, length(m.h))
+    m.c = zeros(Float32, length(m.c))
 end

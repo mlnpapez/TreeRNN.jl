@@ -16,8 +16,6 @@ using Random
 using LinearAlgebra
 using StatsBase
 
-
-
 """
 Generate initial probabilities and transition matrix
 """

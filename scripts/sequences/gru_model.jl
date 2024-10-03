@@ -51,9 +51,10 @@ function (m::GRUCell)(h::AbstractVector, x::AbstractVector)
 end
 
 # Define the full GRU model structure
-struct GRU
+mutable struct GRU
     cell::GRUCell
     output::Chain
+    state::Vector{Float32}
 end
 
 Flux.@functor GRU
@@ -64,7 +65,8 @@ Initialize the full GRU model
 function GRU(input_size::Int, hidden_size::Int, output_size::Int)
     return GRU(
         GRUCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax)
+        Chain(Dense(hidden_size, output_size), softmax),
+        zeros(Float32, hidden_size)
     )
 end
 
@@ -72,11 +74,16 @@ end
 Forward pass for the full GRU model
 """
 function (m::GRU)(x::AbstractMatrix)
-    hidden_size = size(m.cell.u, 2)
-    h = zeros(Float32, hidden_size)
     outputs = map(1:size(x,2)) do t
-        h, h_out = m.cell(h, x[:, t])
+        m.state, h_out = m.cell(m.state, x[:, t])
         m.output(h_out)
     end
     return hcat(outputs...)
+end
+
+"""
+Reset the GRU model's state
+"""
+function Flux.reset!(m::GRU)
+    m.state = zeros(Float32, length(m.state))
 end

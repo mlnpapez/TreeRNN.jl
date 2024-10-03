@@ -64,13 +64,6 @@ function RNN(input_size::Int, hidden_size::Int, output_size::Int)
 end
 
 """
-Reset the RNN's hidden state
-"""
-function Flux.reset!(m::RNN)
-    m.state .= 0
-end
-
-"""
 Forward pass for the full RNN model
 """
 function (m::RNN)(x::AbstractMatrix)
@@ -79,4 +72,11 @@ function (m::RNN)(x::AbstractMatrix)
         m.output(m.state)
     end
     return hcat(outputs...)
+end
+
+"""
+Reset the RNN's hidden state
+"""
+function Flux.reset!(m::RNN)
+    m.state = zeros(length(m.state))
 end

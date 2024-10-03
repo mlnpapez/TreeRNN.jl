@@ -3,11 +3,14 @@ using Statistics
 using Flux: DataLoader, onehotbatch
 using Statistics: mean
 using LinearAlgebra
+using Revise
 
-include("data_generator.jl")
-include("gru_model.jl")
-include("lstm_model.jl")
-include("rnn_model.jl")
+includet("data_generator.jl")
+includet("gru_model.jl")
+includet("lstm_model.jl")
+includet("rnn_model.jl")
+
+@info "Revise is ready"
 
 
 """
@@ -44,6 +47,8 @@ function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
     opt = ADAM()
     ps = Flux.params(model)
 
+    sequence_states = Dict{Int, Vector{Float32}}() # Add dict to save hidden states 
+
     for epoch in 1:epochs
         epoch_loss = 0f0
 
@@ -55,15 +60,23 @@ function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
                     seq_x = x[:, seq_mask]
                     seq_y = y[:, seq_mask]
 
-                    Flux.reset!(model)
+                    if haskey(sequence_states, seq_id)
+                        model.state = sequence_states[seq_id]
+                    else
+                        Flux.reset!(model)
+                    end
                     
                     batch_loss += Flux.crossentropy(model(seq_x), seq_y)
+
+                    sequence_states[seq_id] = model.state
                 end
                 batch_loss / length(unique(indices))  # Average loss per sequence
             end
             Flux.update!(opt, ps, grads)
             epoch_loss += loss
         end
+
+        empty!(sequence_states)
 
         avg_loss = epoch_loss / length(data)
         if epoch % 10 == 0
@@ -86,7 +99,7 @@ Main function to run the entire pipeline
 """
 function main()
     vocab_size = 3
-    samples = 30
+    samples = 200
     max_length = 10
 
     # Generate dataset using ALICE
@@ -112,13 +125,13 @@ function main()
     hidden_size = 64
     output_size = vocab_size
 
-    # model = GRU(input_size, hidden_size, output_size)
+     model = GRU(input_size, hidden_size, output_size)
     # model = LSTM(input_size, hidden_size, output_size)
-    model = RNN(input_size, hidden_size, output_size)
+    # model = RNN(input_size, hidden_size, output_size)
     
     # Define batch size and number of epochs
-    epochs = 50
-    batch_size = 10
+    epochs = 300
+    batch_size = 30
 
     # Check individual batches
     # data = DataLoader((X, Y, sequence_indices), batchsize=batch_size, shuffle=false)
