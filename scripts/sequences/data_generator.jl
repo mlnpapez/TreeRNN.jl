@@ -37,7 +37,7 @@ end
 Generate a single sequence based on defined probabilities
 """
 function generate_sequence(initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64}, max_length::Int)
-    length = rand(2:max_length)
+    length = rand(3:max_length)
     sequence = Vector{Int}(undef, length)
     
     # Generate first character

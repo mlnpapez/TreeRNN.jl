@@ -1,6 +1,6 @@
 using Flux
 using Statistics
-using Flux: DataLoader
+using Flux: DataLoader, onehotbatch
 using Statistics: mean
 using LinearAlgebra
 
@@ -13,45 +13,59 @@ include("rnn_model.jl")
 """
 Prepare sequence data for the sequential model
 """
-function prepare_data(sequences, vocab_size)
+ function prepare_data(sequences, vocab_size)
     # Calculate total number of pairs
     total_pairs = sum(length(seq) - 1 for seq in sequences)
     
     # Pre-allocation of arrays
     X = zeros(Int32, vocab_size, total_pairs)
     Y = zeros(Int32, vocab_size, total_pairs)
+    sequence_indices = zeros(Int32, total_pairs)
     
     idx = 1
-    for seq in sequences
+    for (seq_num, seq) in enumerate(sequences)
         for i in 1:(length(seq)-1)
             X[seq[i], idx] = 1
             Y[seq[i+1], idx] = 1
+            sequence_indices[idx] = seq_num
             idx += 1
         end
     end
-
-    return X, Y
+    
+    return X, Y, sequence_indices
 end 
+
 
 """
 Train the sequential model using mini-batch processing
 """
-function train_model!(model, X, Y, epochs, batch_size)
-    data = DataLoader((X, Y), batchsize=batch_size, shuffle=false)
+function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
+    data = DataLoader((X, Y, sequence_indices), batchsize=batch_size, shuffle=false)
     opt = ADAM()
     ps = Flux.params(model)
 
-    losses = zeros(Float32, length(data))
-    
     for epoch in 1:epochs
-        for (i, (x, y)) in enumerate(data)
-            loss, grads = Flux.withgradient(() -> Flux.crossentropy(model(x), y), ps)
+        epoch_loss = 0f0
+
+        for (x, y, indices) in data
+            loss, grads = Flux.withgradient(ps) do
+                batch_loss = 0f0
+                for seq_id in unique(indices)
+                    seq_mask = indices .== seq_id
+                    seq_x = x[:, seq_mask]
+                    seq_y = y[:, seq_mask]
+
+                    Flux.reset!(model)
+                    
+                    batch_loss += Flux.crossentropy(model(seq_x), seq_y)
+                end
+                batch_loss / length(unique(indices))  # Average loss per sequence
+            end
             Flux.update!(opt, ps, grads)
-            losses[i] = loss
+            epoch_loss += loss
         end
-        
-        avg_loss = mean(losses)
-        
+
+        avg_loss = epoch_loss / length(data)
         if epoch % 10 == 0
             println("Epoch $epoch: average loss = $avg_loss")
         end
@@ -67,30 +81,30 @@ function evaluate_model(model, X, Y)
     return accuracy
 end
 
-
 """
 Main function to run the entire pipeline
 """
 function main()
-    vocab_size = 5
-    samples = 5000
+    vocab_size = 3
+    samples = 30
     max_length = 10
 
     # Generate dataset using ALICE
     initial_probs, transition_probs = generate_probabilities(vocab_size)
     dataset = generate_dataset(initial_probs, transition_probs, samples, max_length) 
 
-    # Prepare data for the model
-    X, Y = prepare_data(dataset, vocab_size)
+    X, Y, sequence_indices = prepare_data(dataset, vocab_size)
     
     println("X type: ", typeof(X))
     println("Y type: ", typeof(Y))
+    println("sequence_indices type: ", typeof(sequence_indices))
     println("X shape: ", size(X))
     println("Y shape: ", size(Y))
+    println("sequence_indices shape: ", size(sequence_indices))
 
     # Split data into train and test sets
     split_idx = Int(floor(0.8 * size(X, 2)))
-    X_train, Y_train = X[:, 1:split_idx], Y[:, 1:split_idx]
+    X_train, Y_train, sequence_indices_train = X[:, 1:split_idx], Y[:, 1:split_idx], sequence_indices[1:split_idx]
     X_test, Y_test = X[:, split_idx+1:end], Y[:, split_idx+1:end]
 
     # Create the model
@@ -102,6 +116,26 @@ function main()
     # model = LSTM(input_size, hidden_size, output_size)
     model = RNN(input_size, hidden_size, output_size)
     
+    # Define batch size and number of epochs
+    epochs = 50
+    batch_size = 10
+
+    # Check individual batches
+    # data = DataLoader((X, Y, sequence_indices), batchsize=batch_size, shuffle=false)
+    #= for (i, (X_batch, Y_batch, indices_batch)) in enumerate(data)
+        if i > 2
+            break
+        end
+        println("Batch $i:")
+        println("X:")
+        display(X_batch)
+        println("\nY:")
+        display(Y_batch)
+        println("\nSequence indices:")
+        println(indices_batch)
+        println("\n----------------------\n")
+    end =#
+
     # Print model output for a small batch
     small_batch = X[:, 1:5]
     println("Model output shape: ", size(model(small_batch)))
@@ -111,9 +145,8 @@ function main()
     println("Initial loss: ", initial_loss)
 
     # Train the model
-    epochs = 100
-    batch_size = 32
-    train_model!(model, X_train, Y_train, epochs, batch_size)
+    train_model!(model, X_train, Y_train, sequence_indices_train, epochs, batch_size)
+    # train_model!(model, X, Y, sequence_indices, epochs, batch_size)
 
     # Evaluate the model
     train_accuracy = evaluate_model(model, X_train, Y_train)

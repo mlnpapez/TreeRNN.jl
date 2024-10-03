@@ -44,9 +44,10 @@ function (m::RNNCell)(h::AbstractVector, x::AbstractVector)
 end
 
 # Define the full RNN model structure
-struct RNN
+mutable struct RNN
     cell::RNNCell
     output::Chain
+    state::Vector{Float32}
 end
 
 Flux.@functor RNN
@@ -57,18 +58,25 @@ Initialize the full RNN model
 function RNN(input_size::Int, hidden_size::Int, output_size::Int)
     RNN(
         RNNCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax)
+        Chain(Dense(hidden_size, output_size), softmax),
+        zeros(Float32, hidden_size)
     )
+end
+
+"""
+Reset the RNN's hidden state
+"""
+function Flux.reset!(m::RNN)
+    m.state .= 0
 end
 
 """
 Forward pass for the full RNN model
 """
 function (m::RNN)(x::AbstractMatrix)
-    h = zeros(Float32, size(m.cell.u, 1))
     outputs = map(1:size(x,2)) do t
-        h = m.cell(h, x[:, t])
-        m.output(h)
+        m.state = m.cell(m.state, x[:, t])
+        m.output(m.state)
     end
     return hcat(outputs...)
 end
