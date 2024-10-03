@@ -67,7 +67,7 @@ end
 Reset the RNN's hidden state
 """
 function Flux.reset!(m::RNN)
-    m.state .= 0
+    m.state = zeros(length(m.state))
 end
 
 """
