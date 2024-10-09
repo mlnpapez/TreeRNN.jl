@@ -58,8 +58,7 @@ end
 mutable struct LSTM
     cell::LSTMCell
     output::Chain
-    h::Vector{Float32}
-    c::Vector{Float32}
+    state::Vector{Float32}  # Combined h and c
 end
 
 Flux.@functor LSTM
@@ -71,8 +70,7 @@ function LSTM(input_size::Int, hidden_size::Int, output_size::Int)
     return LSTM(
         LSTMCell(input_size, hidden_size),
         Chain(Dense(hidden_size, output_size), softmax),
-        zeros(Float32, hidden_size),
-        zeros(Float32, hidden_size)
+        zeros(Float32, 2 * hidden_size)  # Combined h and c
     )
 end
 
@@ -80,8 +78,12 @@ end
 Forward pass for the full LSTM model
 """
 function (m::LSTM)(x::AbstractMatrix)
+    hidden_size = div(length(m.state), 2)  # Calculate hidden size
     outputs = map(1:size(x,2)) do t
-        (m.h, m.c), h_out = m.cell((m.h, m.c), x[:, t])
+        h = m.state[1:hidden_size]         # First half is h
+        c = m.state[hidden_size+1:end]     # Second half is c
+        (new_h, new_c), h_out = m.cell((h, c), x[:, t])
+        m.state = vcat(new_h, new_c)
         m.output(h_out)
     end
     return hcat(outputs...)
@@ -91,6 +93,5 @@ end
 Reset the LSTM model's state
 """
 function Flux.reset!(m::LSTM)
-    m.h = zeros(Float32, length(m.h))
-    m.c = zeros(Float32, length(m.c))
+    m.state = zeros(Float32, length(m.state))
 end

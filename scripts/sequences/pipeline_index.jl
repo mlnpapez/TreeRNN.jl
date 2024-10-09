@@ -1,6 +1,6 @@
 using Flux
 using Statistics
-using Flux: DataLoader, onehotbatch
+using Flux: DataLoader
 using Statistics: mean
 using LinearAlgebra
 using Revise
@@ -51,10 +51,12 @@ function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
 
     for epoch in 1:epochs
         epoch_loss = 0f0
+        total_tokens = 0
 
         for (x, y, indices) in data
             loss, grads = Flux.withgradient(ps) do
-                batch_loss = 0f0
+                total_loss = 0f0
+
                 for seq_id in unique(indices)
                     seq_mask = indices .== seq_id
                     seq_x = x[:, seq_mask]
@@ -66,11 +68,15 @@ function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
                         Flux.reset!(model)
                     end
                     
-                    batch_loss += Flux.crossentropy(model(seq_x), seq_y)
+                    # Sum loss over all tokens in sequence
+                    seq_loss = sum(Flux.crossentropy(model(seq_x[:, i:i]), seq_y[:, i:i]) for i in 1:size(seq_x, 2))
+                    total_loss += seq_loss # Sum loss over all sequences in batch
+                    total_tokens += size(seq_x, 2) # Sum number of tokens over all sequences in batch
 
-                    sequence_states[seq_id] = model.state
+                    sequence_states[seq_id] = copy(model.state)
                 end
-                batch_loss / length(unique(indices))  # Average loss per sequence
+
+                total_loss / total_tokens  # Average loss per token
             end
             Flux.update!(opt, ps, grads)
             epoch_loss += loss
@@ -95,15 +101,38 @@ function evaluate_model(model, X, Y)
 end
 
 """
+Implementing random baseline model that makes random predictions
+"""
+function random_baseline(X, vocab_size)
+    return rand(Float32, vocab_size, size(X, 2))
+end
+
+"""
 Main function to run the entire pipeline
 """
 function main()
     vocab_size = 3
-    samples = 200
+    samples = 400
     max_length = 10
 
     # Generate dataset using ALICE
     initial_probs, transition_probs = generate_probabilities(vocab_size)
+
+    # Print the true distributions
+    println("Initial Probabilities:")
+    println(initial_probs)
+    println("Sum of initial probs: ", sum(initial_probs))
+    
+    println("\nTransition Matrix:")
+    display(transition_probs)  # Using display for better formatting of matrices
+    println()
+
+    # Check row sums of transition matrix
+    row_sums = sum(transition_probs, dims=2)
+    println("Row sums of transition matrix:")
+    display(row_sums)
+    println()
+
     dataset = generate_dataset(initial_probs, transition_probs, samples, max_length) 
 
     X, Y, sequence_indices = prepare_data(dataset, vocab_size)
@@ -125,12 +154,12 @@ function main()
     hidden_size = 64
     output_size = vocab_size
 
-     model = GRU(input_size, hidden_size, output_size)
-    # model = LSTM(input_size, hidden_size, output_size)
+    # model = GRU(input_size, hidden_size, output_size)
+    model = LSTM(input_size, hidden_size, output_size)
     # model = RNN(input_size, hidden_size, output_size)
     
     # Define batch size and number of epochs
-    epochs = 300
+    epochs = 350
     batch_size = 30
 
     # Check individual batches
@@ -167,6 +196,11 @@ function main()
 
     println("Train accuracy: ", train_accuracy)
     println("Test accuracy: ", test_accuracy)
+
+    # Evaluate random baseline
+    random_predictions = random_baseline(X_test, vocab_size)
+    random_accuracy = mean(Flux.onecold(random_predictions) .== Flux.onecold(Y_test))
+    println("Random Baseline Accuracy: ", random_accuracy)
 end
 
 # Run the main function
