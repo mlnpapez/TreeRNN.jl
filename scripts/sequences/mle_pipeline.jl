@@ -39,7 +39,7 @@ end
 """
 # Helper function to compute log-likelihood of a sequence
 """
-function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, initial_state=nothing)
+function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, seq_y, initial_state=nothing)
     if isnothing(initial_state)
         Flux.reset!(model)
     else
@@ -49,7 +49,7 @@ function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMa
     log_likelihood = 0f0
     for i in 1:size(seq_x, 2)
         probs = model(seq_x[:, i:i])
-        true_label = argmax(seq_x[:, i])
+        true_label = argmax(seq_y[:, i])
         log_likelihood += log(probs[true_label])
     end
     return log_likelihood, copy(model.state)
@@ -63,12 +63,13 @@ function calculate_perplexity(log_likelihood::Int, sequence_length::Int)
 end
 
 # Process a batch of sequences
-function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int64}, indices::Vector{Int64}, sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})
+function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix{Int32}, indices::AbstractVector{<:Integer}, sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})
     batch_log_likelihood = 0f0
     
     for seq_id in unique(indices)
         seq_mask = indices .== seq_id
         seq_x = X[:, seq_mask]
+        seq_y = Y[:, seq_mask]
         
         initial_state = if haskey(sequence_states, seq_id)
             sequence_states[seq_id]
@@ -76,7 +77,7 @@ function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int64}, indices::
             zeros(Float32, size(model.state))
         end
         
-        seq_log_likelihood, final_state = sequence_log_likelihood(model, seq_x, initial_state)
+        seq_log_likelihood, final_state = sequence_log_likelihood(model, seq_x, seq_y, initial_state)
         
         
         # Update dictionaries outside of the gradient computation
@@ -105,8 +106,8 @@ end
 """
 Train the sequential model using MLE and mini-batch processing
 """
-function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::Vector{Int64}, epochs::Int, batch_size::Int)
-    data = DataLoader((X, sequence_indices), batchsize=batch_size, shuffle=false)
+function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, Y::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer}, epochs::Int, batch_size::Int)
+    data = DataLoader((X, Y, sequence_indices), batchsize=batch_size, shuffle=false)
     opt = ADAM()
     ps = Flux.params(model)
 
@@ -120,9 +121,9 @@ function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequen
         epoch_log_likelihood = 0f0
         total_sequences = 0
         
-        for (x, indices) in data
+        for (x, y, indices) in data
             loss, grads = Flux.withgradient(ps) do
-                process_batch(model, x, indices, sequence_states, sequence_log_likelihoods, sequence_lengths)
+                process_batch(model, x, y, indices, sequence_states, sequence_log_likelihoods, sequence_lengths)
             end
             
             Flux.update!(opt, ps, grads)
@@ -149,7 +150,7 @@ end
 """
 Evaluate the MLE-trained sequential model using log-likelihood and perplexity
 """
-function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::Vector{Int64})
+function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer})
     total_log_likelihood = 0f0
     total_tokens = 0
 
@@ -222,7 +223,7 @@ function main()
         println("\nTraining $(typeof(model))...")
         
         # Train model
-        @time logs = train_model_mle!(model, X_train, sequence_indices_train, epochs, batch_size)
+        @time logs = train_model_mle!(model, X_train, Y_train, sequence_indices_train, epochs, batch_size)
         
         # Print logs
         println("Training logs:")
