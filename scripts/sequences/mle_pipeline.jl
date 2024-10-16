@@ -1,3 +1,5 @@
+using Distributions
+using Downloads
 using Flux
 using Statistics
 using Flux: DataLoader
@@ -11,10 +13,36 @@ includet("lstm_model.jl")
 
 @info "MLE is up and running"
 
+function load_tiny_shakespeare(sequence_length=50, max_sequences=1000)
+    url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+    local_file = "tiny_shakespeare.txt"
+    Downloads.download(url, local_file)
+
+    # Read the file
+    text = read(local_file, String)
+
+    # Create vocabulary (character-level)
+    vocab = sort(unique(text))
+    vocab_size = length(vocab)
+    char2id = Dict(char => i for (i, char) in enumerate(vocab))
+
+    # Create short sequences
+    sequences = []
+    for i in 1:sequence_length:length(text)-sequence_length
+        if length(sequences) >= max_sequences
+            break
+        end
+        seq = text[i:i+sequence_length-1]
+        push!(sequences, [char2id[char] for char in seq])
+    end
+
+    return sequences, vocab_size, char2id
+end
+
 """
 Prepare sequence data for the sequential model
 """
-function prepare_data(sequences::Vector{Vector{T}}, vocab_size::Int) where T <: Integer
+function prepare_data(sequences, vocab_size::Int) where T <: Integer
     # Calculate total number of pairs
     total_pairs = sum(length(seq) - 1 for seq in sequences)
     
@@ -37,9 +65,9 @@ function prepare_data(sequences::Vector{Vector{T}}, vocab_size::Int) where T <: 
 end
 
 """
-# Helper function to compute log-likelihood of a sequence
+Helper function to compute log-likelihood of a sequence
 """
-function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, seq_y, initial_state=nothing)
+function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, seq_y, initial_state=nothing)::Tuple{Float32, Vector{Float32}}    
     if isnothing(initial_state)
         Flux.reset!(model)
     else
@@ -56,14 +84,11 @@ function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMa
 end
 
 """
-Helper function to compute perplexity
+Process a batch of sequences
 """
-function calculate_perplexity(log_likelihood::Int, sequence_length::Int)
-    return exp(-log_likelihood / sequence_length)
-end
+function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
+    sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})::Float32
 
-# Process a batch of sequences
-function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix{Int32}, indices::AbstractVector{<:Integer}, sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})
     batch_log_likelihood = 0f0
     
     for seq_id in unique(indices)
@@ -97,8 +122,10 @@ Compute average log-likelihood and perplexity for an epoch
 function compute_epoch_metrics(sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})
     total_log_likelihood = sum(values(sequence_log_likelihoods))
     total_tokens = sum(values(sequence_lengths))
+
     avg_log_likelihood_per_token = total_log_likelihood / total_tokens
     perplexity = exp(-avg_log_likelihood_per_token)
+
     return avg_log_likelihood_per_token, perplexity
 end
 
@@ -135,6 +162,7 @@ function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, Y::Mat
         
         if epoch % 10 == 0 || epoch == 1
             log_message = "Epoch $epoch: Avg Log-Likelihood = $avg_log_likelihood, Perplexity = $perplexity"
+            println(log_message)
             push!(logs, log_message)
         end
 
@@ -144,13 +172,13 @@ function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, Y::Mat
         empty!(sequence_lengths)
     end
 
-    return logs
+    # return logs
 end
 
 """
 Evaluate the MLE-trained sequential model using log-likelihood and perplexity
 """
-function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer})
+function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer})::Dict{String, Float64}
     total_log_likelihood = 0f0
     total_tokens = 0
 
@@ -184,24 +212,87 @@ function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequ
     )
 end
 
+"""
+Function to generate sequence
+"""
+function generate_sequence(model::Union{RNN, GRU, LSTM}, start_token::Int, max_length::Int, vocab_size::Int, temperature::Float32)::Vector{Int}
+    sequence = [start_token]
+    Flux.reset!(model)
+    
+    for i in 2:max_length
+        # Get the last token and convert to one-hot
+        last_token = sequence[end]
+        input = Flux.onehot(last_token, 1:vocab_size)
+        
+        # Get model's probs
+        probs = vec(model(reshape(input, :, 1)))
+
+        # Apply temperature scaling
+        scaled_probs = probs .^ (1/temperature)
+        scaled_probs ./= sum(scaled_probs)
+        
+        # Create a Categorical distribution and sample next token
+        next_token = rand(Categorical(scaled_probs))
+        
+        push!(sequence, next_token)
+    end
+    
+    return sequence
+end
+
+"""
+Function to generate multiple sequences
+"""
+function generate_sequences(model::Union{RNN, GRU, LSTM}, num_sequences::Int, max_length::Int, vocab_size::Int, temperature::Float32)
+    sequences = []
+    for i in 1:num_sequences
+        start_token = rand(1:vocab_size)
+        seq = generate_sequence(model, start_token, max_length, vocab_size, temperature::Float32)
+        push!(sequences, seq)
+    end
+    return sequences
+end
+
+"""
+Function to convert number indices back to characters found in text (dataset)
+"""
+function convert_to_chars(sequences, char2id)
+    id2char = Dict(id => char for (char, id) in char2id)
+    char_sequences = []
+    for seq in sequences
+        char_seq = join([id2char[id] for id in seq])
+        push!(char_sequences, char_seq)
+    end
+    return char_sequences
+end
+
 function main()
     # Set random seed for reproducibility
     Random.seed!(36)
 
     # Parameters
-    vocab_size = 3
-    num_samples = 100
-    max_length = 20
-    hidden_size = 32
+    vocab_size = 5
+    num_samples = 200
+    max_length = 50
+    hidden_size = 64
     epochs = 100
     batch_size = 30
+    temperature = 1f1
 
-    # Generate dataset
+    #= Generate dataset
     initial_probs, transition_matrix = generate_probabilities(vocab_size)
-    dataset = generate_dataset(initial_probs, transition_matrix, num_samples, max_length)
+    dataset = generate_dataset(initial_probs, transition_matrix, num_samples, max_length) =#
+
+    # Load dataset
+    dataset, vocab_size, char2id = load_tiny_shakespeare(max_length, num_samples)
 
     # Prepare data
     X, Y, sequence_indices = prepare_data(dataset, vocab_size)
+
+    println("Vocabulary size: ", vocab_size)
+    println("Number of sequences: ", length(dataset))
+    println("Total characters: ", size(X, 2))
+    display(char2id)
 
     # Split data into train and test sets
     split_ratio = 0.8
@@ -215,7 +306,7 @@ function main()
     # Create models
     models = [
         RNN(vocab_size, hidden_size, vocab_size),
-        GRU(vocab_size, hidden_size, vocab_size),
+        # GRU(vocab_size, hidden_size, vocab_size),
         # LSTM(vocab_size, hidden_size, vocab_size)
     ]
 
@@ -226,8 +317,8 @@ function main()
         @time logs = train_model_mle!(model, X_train, Y_train, sequence_indices_train, epochs, batch_size)
         
         # Print logs
-        println("Training logs:")
-        foreach(println, logs)
+        # println("Training logs:")
+        # foreach(println, logs)
 
         # Evaluate model
         train_results = evaluate_model_mle(model, X_train, sequence_indices_train)
@@ -242,9 +333,21 @@ function main()
         for (metric, value) in test_results
             println("$metric: $value")
         end
+
+        # Sequence generation based on model-given probabilities
+        generated_sequences = generate_sequences(model, 5, max_length, vocab_size, temperature)
+        println("Generated sequences:")
+        for (i, seq) in enumerate(generated_sequences)
+            println("Sequence $i: ", seq)
+        end
+
+        char_sequences = convert_to_chars(generated_sequences, char2id)
+        for (i, seq) in enumerate(char_sequences)
+            println("Sequence $i: ", seq)
+        end
     end
 
-    # Compare with true distribution
+    #= Compare with true distribution
     total_tokens = sum(length(seq) for seq in dataset)
     true_log_likelihood = sum(log(joint_probability(seq, initial_probs, transition_matrix)) for seq in dataset)
     true_avg_log_likelihood = true_log_likelihood / total_tokens
@@ -252,7 +355,7 @@ function main()
     
     println("\nTrue Distribution Metrics:")
     println("Average Log-Likelihood: ", true_avg_log_likelihood)
-    println("Perplexity: ", true_perplexity)
+    println("Perplexity: ", true_perplexity) =#
 end
 
 # Run the main function
