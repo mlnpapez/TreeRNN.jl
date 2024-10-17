@@ -266,6 +266,54 @@ function convert_to_chars(sequences, char2id)
     return char_sequences
 end
 
+"""
+Extract the learned transition matrix from a trained RNN, GRU, or LSTM model
+"""
+
+function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::Int)
+    transition_matrix = zeros(Float64, vocab_size, vocab_size)
+    
+    Flux.reset!(model)
+    for i in 1:vocab_size
+        input = Flux.onehot(i, 1:vocab_size)
+        probs = vec(model(reshape(input, :, 1)))
+        transition_matrix[i, :] = probs
+    end
+    
+    # Ensure probabilities are non-negative and sum to 1 for each row
+    transition_matrix = max.(transition_matrix, 0)
+    row_sums = sum(transition_matrix, dims=2)
+    transition_matrix ./= row_sums
+    
+    return transition_matrix
+end
+
+"""
+Compare the learned distribution of a model with the true distribution
+"""
+function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix)
+    vocab_size = size(true_transition_matrix, 1)
+    model_transition_matrix = extract_model_distribution(model, vocab_size)
+    
+    kl_divergences = Float64[]
+    total_kl = 0.0
+    for i in 1:vocab_size
+        true_probs = true_transition_matrix[i, :]
+        model_probs = model_transition_matrix[i, :]
+
+        # Create Categorical distribution from the probs values
+        true_dist = Categorical(true_probs)
+        model_dist = Categorical(model_probs)
+
+        kl = kldivergence(true_dist, model_dist)
+        push!(kl_divergences, kl)
+        total_kl += kl
+    end
+    
+    avg_kl = total_kl / vocab_size
+    return kl_divergences, avg_kl, model_transition_matrix, true_transition_matrix
+end
+
 function main()
     # Set random seed for reproducibility
     Random.seed!(36)
@@ -279,12 +327,12 @@ function main()
     batch_size = 30
     temperature = 1f1
 
-    #= Generate dataset
+    # Generate dataset
     initial_probs, transition_matrix = generate_probabilities(vocab_size)
-    dataset = generate_dataset(initial_probs, transition_matrix, num_samples, max_length) =#
+    dataset = generate_dataset(initial_probs, transition_matrix, num_samples, max_length) #
 
-    # Load dataset
-    dataset, vocab_size, char2id = load_tiny_shakespeare(max_length, num_samples)
+    #= Load dataset
+    dataset, vocab_size, char2id = load_tiny_shakespeare(max_length, num_samples) =#
 
     # Prepare data
     X, Y, sequence_indices = prepare_data(dataset, vocab_size)
@@ -292,7 +340,7 @@ function main()
     println("Vocabulary size: ", vocab_size)
     println("Number of sequences: ", length(dataset))
     println("Total characters: ", size(X, 2))
-    display(char2id)
+    # display(char2id)
 
     # Split data into train and test sets
     split_ratio = 0.8
@@ -334,6 +382,18 @@ function main()
             println("$metric: $value")
         end
 
+        # Compare distributions
+        kl_divergences, avg_kl, model_transition_matrix, true_transition_matrix = compare_distributions(model, transition_matrix)
+
+        for i in eachindex(kl_divergences)
+            println("For character $i:")
+            println("  True probabilities: ", round.(true_transition_matrix[i, :], digits=3))
+            println("  Model probabilities: ", round.(model_transition_matrix[i, :], digits=3))
+            println("  KL divergence: ", round(kl_divergences[i], digits=5))
+            println()
+        end
+        println("Average KL divergence: ", round(avg_kl, digits=5))
+
         # Sequence generation based on model-given probabilities
         generated_sequences = generate_sequences(model, 5, max_length, vocab_size, temperature)
         println("Generated sequences:")
@@ -341,10 +401,10 @@ function main()
             println("Sequence $i: ", seq)
         end
 
-        char_sequences = convert_to_chars(generated_sequences, char2id)
+        #= char_sequences = convert_to_chars(generated_sequences, char2id)
         for (i, seq) in enumerate(char_sequences)
             println("Sequence $i: ", seq)
-        end
+        end =#
     end
 
     #= Compare with true distribution
