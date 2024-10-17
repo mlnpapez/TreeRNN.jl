@@ -289,29 +289,103 @@ function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::In
 end
 
 """
+Extract the empirical transition matrix from the data
+"""
+function extract_empirical_distribution(X::Matrix{Int32}, Y::Matrix{Int32}, vocab_size::Int)
+    transition_counts = zeros(Int, vocab_size, vocab_size)
+    
+    for i in 1:size(X, 2)
+        from_state = argmax(X[:, i])
+        to_state = argmax(Y[:, i])
+        transition_counts[from_state, to_state] += 1
+    end
+    
+    # Convert counts to probabilities
+    transition_matrix = transition_counts ./ sum(transition_counts, dims=2)
+    
+    # Handle zero-count transitions
+    transition_matrix[isnan.(transition_matrix)] .= 0
+    transition_matrix = transition_matrix .+ 1e-10  # Add small value to avoid log(0)
+    transition_matrix ./= sum(transition_matrix, dims=2)  # Renormalize
+    
+    return transition_matrix
+end
+
+"""
 Compare the learned distribution of a model with the true distribution
 """
-function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix)
+function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix, X::Matrix{Int32}, Y::Matrix{Int32})
     vocab_size = size(true_transition_matrix, 1)
     model_transition_matrix = extract_model_distribution(model, vocab_size)
+    empirical_transition_matrix = extract_empirical_distribution(X, Y, vocab_size)
     
-    kl_divergences = Float64[]
-    total_kl = 0.0
+    kl_divergences_model_true = Float64[]
+    kl_divergences_model_empirical = Float64[]
+    kl_divergences_empirical_true = Float64[]
+
+    total_kl_model_true = 0.0
+    total_kl_model_empirical = 0.0
+    total_kl_empirical_true = 0.0
+
     for i in 1:vocab_size
         true_probs = true_transition_matrix[i, :]
         model_probs = model_transition_matrix[i, :]
+        empirical_probs = empirical_transition_matrix[i, :]
 
         # Create Categorical distribution from the probs values
         true_dist = Categorical(true_probs)
         model_dist = Categorical(model_probs)
+        empirical_dist = Categorical(empirical_probs)
 
-        kl = kldivergence(true_dist, model_dist)
-        push!(kl_divergences, kl)
-        total_kl += kl
+        kl_model_true = kldivergence(model_dist, true_dist)
+        kl_model_empirical = kldivergence(model_dist, empirical_dist)
+        kl_empirical_true = kldivergence(empirical_dist, true_dist)
+        
+        push!(kl_divergences_model_true, kl_model_true)
+        push!(kl_divergences_model_empirical, kl_model_empirical)
+        push!(kl_divergences_empirical_true, kl_empirical_true)
+        
+        total_kl_model_true += kl_model_true
+        total_kl_model_empirical += kl_model_empirical
+        total_kl_empirical_true += kl_empirical_true
     end
     
-    avg_kl = total_kl / vocab_size
-    return kl_divergences, avg_kl, model_transition_matrix, true_transition_matrix
+    avg_kl_model_true = total_kl_model_true / vocab_size
+    avg_kl_model_empirical = total_kl_model_empirical / vocab_size
+    avg_kl_empirical_true = total_kl_empirical_true / vocab_size
+
+    return Dict(
+        "kl_divergences_model_true" => round.(kl_divergences_model_true, digits=4),
+        "kl_divergences_model_empirical" => round.(kl_divergences_model_empirical, digits=4),
+        "kl_divergences_empirical_true" => round.(kl_divergences_empirical_true, digits=4),
+        "avg_kl_model_true" => round(avg_kl_model_true, digits=4),
+        "avg_kl_model_empirical" => round(avg_kl_model_empirical, digits=4),
+        "avg_kl_empirical_true" => round(avg_kl_empirical_true, digits=4),
+        "model_transition_matrix" => round.(model_transition_matrix, digits=3),
+        "empirical_transition_matrix" => round.(empirical_transition_matrix, digits=3),
+        "true_transition_matrix" => round.(true_transition_matrix, digits=3)
+    )
+end
+
+"""
+Function to print comparison results
+"""
+function print_comparison_results(results, n=10)
+    println("\nDetailed comparison of transition probs by character obtained by different means (model, theoretical (true), empirical (sampled data):")
+    for i in 1:min(n, size(results["true_transition_matrix"], 1))
+        println("\nTransition probs for index $i:")
+        println("  True probabilities:      ", results["true_transition_matrix"][i, :])
+        println("  Empirical probabilities: ", results["empirical_transition_matrix"][i, :])
+        println("  Model probabilities:     ", results["model_transition_matrix"][i, :])
+        println("\n  KL divergence (Model vs True):      ", results["kl_divergences_model_true"][i])
+        println("  KL divergence (Model vs Empirical): ", results["kl_divergences_model_empirical"][i])
+        println("  KL divergence (Empirical vs True):  ", results["kl_divergences_empirical_true"][i])
+    end
+    
+    println("\nAverage KL divergences:")
+    println("  Model vs True:      ", results["avg_kl_model_true"])
+    println("  Model vs Empirical: ", results["avg_kl_model_empirical"])
+    println("  Empirical vs True:  ", results["avg_kl_empirical_true"])
 end
 
 function main()
@@ -383,20 +457,12 @@ function main()
         end
 
         # Compare distributions
-        kl_divergences, avg_kl, model_transition_matrix, true_transition_matrix = compare_distributions(model, transition_matrix)
-
-        for i in eachindex(kl_divergences)
-            println("For character $i:")
-            println("  True probabilities: ", round.(true_transition_matrix[i, :], digits=3))
-            println("  Model probabilities: ", round.(model_transition_matrix[i, :], digits=3))
-            println("  KL divergence: ", round(kl_divergences[i], digits=5))
-            println()
-        end
-        println("Average KL divergence: ", round(avg_kl, digits=5))
+        comparison_results = compare_distributions(model, transition_matrix, X_train, Y_train)
+        print_comparison_results(comparison_results)
 
         # Sequence generation based on model-given probabilities
         generated_sequences = generate_sequences(model, 5, max_length, vocab_size, temperature)
-        println("Generated sequences:")
+        println("\nGenerated sequences:")
         for (i, seq) in enumerate(generated_sequences)
             println("Sequence $i: ", seq)
         end
