@@ -42,32 +42,30 @@ end
 """
 Prepare sequence data for the sequential model
 """
-function prepare_data(sequences, vocab_size::Int) where T <: Integer
+function prepare_data(sequences, vocab_size::Int)
     # Calculate total number of pairs
     total_pairs = sum(length(seq) - 1 for seq in sequences)
     
     # Pre-allocation of arrays
     X = zeros(Int32, vocab_size, total_pairs)
-    Y = zeros(Int32, vocab_size, total_pairs)
     sequence_indices = zeros(Int32, total_pairs)
     
     idx = 1
     for (seq_num, seq) in enumerate(sequences)
         for i in 1:(length(seq)-1)
             X[seq[i], idx] = 1
-            Y[seq[i+1], idx] = 1
             sequence_indices[idx] = seq_num
             idx += 1
         end
     end
     
-    return X, Y, sequence_indices
+    return X, sequence_indices
 end
 
 """
 Helper function to compute log-likelihood of a sequence
 """
-function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, seq_y, initial_state=nothing)::Tuple{Float32, Vector{Float32}}    
+function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, initial_state=nothing)::Tuple{Float32, Vector{Float32}}    
     if isnothing(initial_state)
         Flux.reset!(model)
     else
@@ -75,9 +73,9 @@ function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMa
     end
 
     log_likelihood = 0f0
-    for i in 1:size(seq_x, 2)
+    for i in 1:(size(seq_x, 2) - 1)
         probs = model(seq_x[:, i:i])
-        true_label = argmax(seq_y[:, i])
+        true_label = argmax(seq_x[:, i +1])
         log_likelihood += log(probs[true_label])
     end
     return log_likelihood, copy(model.state)
@@ -86,15 +84,25 @@ end
 """
 Process a batch of sequences
 """
-function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
-    sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int})::Float32
+function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
+    sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int},  λ::Float32, reg_type::String = "none")::Float32
 
     batch_log_likelihood = 0f0
+
+    # Add regularization
+    reg_term = if reg_type == "none"
+        0f0
+    elseif reg_type == "L1"
+        λ * sum(x -> sum(abs), Flux.params(model))
+    elseif reg_type == "L2"
+        λ * sum(x -> sum(abs2), Flux.params(model))
+    else
+        error("Unknown regularization type")
+    end
     
     for seq_id in unique(indices)
         seq_mask = indices .== seq_id
         seq_x = X[:, seq_mask]
-        seq_y = Y[:, seq_mask]
         
         initial_state = if haskey(sequence_states, seq_id)
             sequence_states[seq_id]
@@ -102,7 +110,7 @@ function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix
             zeros(Float32, size(model.state))
         end
         
-        seq_log_likelihood, final_state = sequence_log_likelihood(model, seq_x, seq_y, initial_state)
+        seq_log_likelihood, final_state = sequence_log_likelihood(model, seq_x, initial_state)
         
         
         # Update dictionaries outside of the gradient computation
@@ -113,7 +121,7 @@ function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, Y::Matrix
         batch_log_likelihood += seq_log_likelihood
     end
     
-    return -batch_log_likelihood  # Negative log-likelihood for minimization
+    return -batch_log_likelihood + reg_term  # Negative log-likelihood for minimization
 end
 
 """
@@ -133,8 +141,8 @@ end
 """
 Train the sequential model using MLE and mini-batch processing
 """
-function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, Y::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer}, epochs::Int, batch_size::Int)
-    data = DataLoader((X, Y, sequence_indices), batchsize=batch_size, shuffle=false)
+function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer}, epochs::Int, batch_size::Int, λ, reg_type)
+    data = DataLoader((X, sequence_indices), batchsize=batch_size, shuffle=false)
     opt = ADAM()
     ps = Flux.params(model)
 
@@ -148,9 +156,9 @@ function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, Y::Mat
         epoch_log_likelihood = 0f0
         total_sequences = 0
         
-        for (x, y, indices) in data
+        for (x, indices) in data
             loss, grads = Flux.withgradient(ps) do
-                process_batch(model, x, y, indices, sequence_states, sequence_log_likelihoods, sequence_lengths)
+                process_batch(model, x, indices, sequence_states, sequence_log_likelihoods, sequence_lengths, λ, reg_type)
             end
             
             Flux.update!(opt, ps, grads)
@@ -178,23 +186,20 @@ end
 """
 Evaluate the MLE-trained sequential model using log-likelihood and perplexity
 """
-function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer})::Dict{String, Float64}
+function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, indices::Vector{Int32})::Dict{String, Float64}
     total_log_likelihood = 0f0
     total_tokens = 0
 
-    # Group the data by sequences
-    unique_sequences = unique(sequence_indices)
-    
-    for seq_id in unique_sequences
-        seq_mask = sequence_indices .== seq_id
+    for seq_id in unique(indices)
+        seq_mask = indices .== seq_id
         seq_x = X[:, seq_mask]
         
         Flux.reset!(model)
         
         seq_log_likelihood = 0f0
-        for t in 1:(size(seq_x, 2) - 1)  # We predict up to the second-to-last token
-            probs = model(seq_x[:, t:t])
-            true_next_token = argmax(seq_x[:, t+1])  # The next token is the "target"
+        for i in 1:(size(seq_x, 2) - 1)  # We predict up to the second-to-last token
+            probs = model(seq_x[:, i:i])
+            true_next_token = argmax(seq_x[:, i+1])  # The next token is the "target"
             seq_log_likelihood += log(probs[true_next_token])
         end
         
@@ -269,7 +274,6 @@ end
 """
 Extract the learned transition matrix from a trained RNN, GRU, or LSTM model
 """
-
 function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::Int)
     transition_matrix = zeros(Float64, vocab_size, vocab_size)
     
@@ -281,6 +285,9 @@ function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::In
     end
     
     # Ensure probabilities are non-negative and sum to 1 for each row
+    # softmax
+    # všude použít log likelihood nebo probabilities
+    #
     transition_matrix = max.(transition_matrix, 0)
     row_sums = sum(transition_matrix, dims=2)
     transition_matrix ./= row_sums
@@ -291,12 +298,12 @@ end
 """
 Extract the empirical transition matrix from the data
 """
-function extract_empirical_distribution(X::Matrix{Int32}, Y::Matrix{Int32}, vocab_size::Int)
+function extract_empirical_distribution(X::Matrix{Int32}, vocab_size::Int)
     transition_counts = zeros(Int, vocab_size, vocab_size)
     
-    for i in 1:size(X, 2)
+    for i in 1:(size(X, 2) - 1)
         from_state = argmax(X[:, i])
-        to_state = argmax(Y[:, i])
+        to_state = argmax(X[:, i + 1])
         transition_counts[from_state, to_state] += 1
     end
     
@@ -314,11 +321,11 @@ end
 """
 Compare the learned distribution of a model with the true distribution
 """
-function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix, X::Matrix{Int32}, Y::Matrix{Int32})
+function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix, X::Matrix{Int32})
     vocab_size = size(true_transition_matrix, 1)
     model_transition_matrix = extract_model_distribution(model, vocab_size)
-    empirical_transition_matrix = extract_empirical_distribution(X, Y, vocab_size)
-    
+    empirical_transition_matrix = extract_empirical_distribution(X, vocab_size)
+
     kl_divergences_model_true = Float64[]
     kl_divergences_model_empirical = Float64[]
     kl_divergences_empirical_true = Float64[]
@@ -397,8 +404,10 @@ function main()
     num_samples = 200
     max_length = 50
     hidden_size = 64
-    epochs = 100
+    epochs = 10
     batch_size = 30
+    λ = 0.01
+    reg_type = "L2"
     temperature = 1f1
 
     # Generate dataset
@@ -409,7 +418,7 @@ function main()
     dataset, vocab_size, char2id = load_tiny_shakespeare(max_length, num_samples) =#
 
     # Prepare data
-    X, Y, sequence_indices = prepare_data(dataset, vocab_size)
+    X, sequence_indices = prepare_data(dataset, vocab_size)
 
     println("Vocabulary size: ", vocab_size)
     println("Number of sequences: ", length(dataset))
@@ -420,10 +429,14 @@ function main()
     split_ratio = 0.8
     split_idx = Int(floor(split_ratio * size(X, 2)))
     
-    X_train, Y_train = X[:, 1:split_idx], Y[:, 1:split_idx]
-    X_test, Y_test = X[:, split_idx+1:end], Y[:, split_idx+1:end]
+    X_train = X[:, 1:split_idx]
+    X_test = X[:, split_idx+1:end]
     sequence_indices_train = sequence_indices[1:split_idx]
-    sequence_indices_test = sequence_indices[split_idx+1:end] .- split_idx  # Adjust indices for test set
+    sequence_indices_test = sequence_indices[split_idx+1:end]
+
+    # Adjust indices for test set
+    unique_train_indices = unique(sequence_indices_train)
+    sequence_indices_test = [findfirst(==(i), unique_train_indices) for i in sequence_indices_test]
 
     # Create models
     models = [
@@ -436,7 +449,7 @@ function main()
         println("\nTraining $(typeof(model))...")
         
         # Train model
-        @time logs = train_model_mle!(model, X_train, Y_train, sequence_indices_train, epochs, batch_size)
+        @time logs = train_model_mle!(model, X_train, sequence_indices_train, epochs, batch_size, λ, reg_type)
         
         # Print logs
         # println("Training logs:")
@@ -457,7 +470,7 @@ function main()
         end
 
         # Compare distributions
-        comparison_results = compare_distributions(model, transition_matrix, X_train, Y_train)
+        comparison_results = compare_distributions(model, transition_matrix, X_train)
         print_comparison_results(comparison_results)
 
         # Sequence generation based on model-given probabilities
