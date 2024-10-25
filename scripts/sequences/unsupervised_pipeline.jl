@@ -10,6 +10,7 @@ includet("data_generator.jl")
 includet("rnn_model.jl")
 includet("gru_model.jl")
 includet("lstm_model.jl")
+includet("stacked_model.jl")
 
 @info "Unsupervised learning is up and running"
 
@@ -65,7 +66,7 @@ end
 """
 Helper function to compute log-likelihood of a sequence
 """
-function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMatrix, initial_state=nothing)::Tuple{Float32, Vector{Float32}}    
+function sequence_log_likelihood(model::Union{GRU, LSTM, RNN, StackedModel}, seq_x::AbstractMatrix, initial_state=nothing)::Tuple{Float32, Vector{Float32}}    
     if isnothing(initial_state)
         Flux.reset!(model)
     else
@@ -84,7 +85,7 @@ end
 """
 Process a batch of sequences
 """
-function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
+function process_batch(model::Union{GRU, LSTM, RNN, StackedModel}, X::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
     sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int},  λ, reg_type::String = "none")::Float32
 
     batch_log_likelihood = 0f0
@@ -141,7 +142,7 @@ end
 """
 Train the sequential model using MLE and mini-batch processing
 """
-function train_model_mle!(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer}, epochs::Int, batch_size::Int, λ, reg_type)
+function train_model_mle!(model::Union{RNN, GRU, LSTM, StackedModel}, X::Matrix{Int32}, sequence_indices::AbstractVector{<:Integer}, epochs::Int, batch_size::Int, λ, reg_type)
     data = DataLoader((X, sequence_indices), batchsize=batch_size, shuffle=false)
     opt = ADAM()
     ps = Flux.params(model)
@@ -186,7 +187,7 @@ end
 """
 Evaluate the MLE-trained sequential model using log-likelihood and perplexity
 """
-function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, indices)::Dict{String, Float64}
+function evaluate_model_mle(model::Union{RNN, GRU, LSTM, StackedModel}, X::Matrix{Int32}, indices)::Dict{String, Float64}
     total_log_likelihood = 0f0
     total_tokens = 0
 
@@ -220,7 +221,7 @@ end
 """
 Function to generate sequence
 """
-function generate_sequence(model::Union{RNN, GRU, LSTM}, start_token::Int, max_length::Int, vocab_size::Int, temperature::Float32)::Vector{Int}
+function generate_sequence(model::Union{RNN, GRU, LSTM, StackedModel}, start_token::Int, max_length::Int, vocab_size::Int, temperature::Float32)::Vector{Int}
     sequence = [start_token]
     Flux.reset!(model)
     
@@ -248,7 +249,7 @@ end
 """
 Function to generate multiple sequences
 """
-function generate_sequences(model::Union{RNN, GRU, LSTM}, num_sequences::Int, max_length::Int, vocab_size::Int, temperature::Float32)
+function generate_sequences(model::Union{RNN, GRU, LSTM, StackedModel}, num_sequences::Int, max_length::Int, vocab_size::Int, temperature::Float32)
     sequences = []
     for i in 1:num_sequences
         start_token = rand(1:vocab_size)
@@ -274,7 +275,7 @@ end
 """
 Extract the learned transition matrix from a trained RNN, GRU, or LSTM model
 """
-function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::Int)
+function extract_model_distribution(model::Union{RNN, GRU, LSTM, StackedModel}, vocab_size::Int)
     logit_matrix = zeros(Float64, vocab_size, vocab_size)
     
     Flux.reset!(model)
@@ -316,7 +317,7 @@ end
 """
 Compare the learned distribution of a model with the true distribution
 """
-function compare_distributions(model::Union{RNN, GRU, LSTM}, true_transition_matrix, X::Matrix{Int32})
+function compare_distributions(model::Union{RNN, GRU, LSTM, StackedModel}, true_transition_matrix, X::Matrix{Int32})
     vocab_size = size(true_transition_matrix, 1)
     model_transition_matrix = extract_model_distribution(model, vocab_size)
     empirical_transition_matrix = extract_empirical_distribution(X, vocab_size)
@@ -434,14 +435,25 @@ function main()
     sequence_indices_test = [findfirst(==(i), unique_train_indices) for i in sequence_indices_test]
 
     # Create models
+    # Define StackedModel
+    stackedModel = StackedModel(
+        vocab_size,
+        [(:RNN, hidden_size), (:GRU, hidden_size), (:RNN, hidden_size)],  # layer configuration example
+        vocab_size
+    )
+
     models = [
         # RNN(vocab_size, hidden_size, vocab_size),
-         GRU(vocab_size, hidden_size, vocab_size),
-        # LSTM(vocab_size, hidden_size, vocab_size)
+        # GRU(vocab_size, hidden_size, vocab_size),
+        # LSTM(vocab_size, hidden_size, vocab_size),
+        stackedModel
     ]
 
     for (i, model) in enumerate(models)
         println("\nTraining $(typeof(model))...")
+        if (model isa StackedModel)
+            println("This is stacked model of $(typeof.(model.layers))") 
+        end
         
         # Train model
         @time logs = train_model_mle!(model, X_train, sequence_indices_train, epochs, batch_size, λ, reg_type)
