@@ -61,11 +61,11 @@ end
 Calculate the joint probability of a sequence
 """
 function joint_probability(sequence::Vector{Int}, initial_probs::Vector{Float64}, transition_matrix::Matrix{Float64})
-    p = initial_probs[sequence[1]]
+    log_p = log(initial_probs[sequence[1]])
     for i in 2:length(sequence)
-        p *= transition_matrix[sequence[i-1], sequence[i]]
+        log_p += log(transition_matrix[sequence[i-1], sequence[i]])
     end
-    return p
+    return exp(log_p)
 end
 
 """
@@ -81,7 +81,7 @@ function conditional_probabilities(sequence::Vector{Int}, initial_probs::Vector{
     return cond_probs
 end
 
-function main()
+ function main()
     Random.seed!(42)  # For reproducibility
     
     vocab_size = 10

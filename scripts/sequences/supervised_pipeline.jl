@@ -10,7 +10,7 @@ includet("gru_model.jl")
 includet("lstm_model.jl")
 includet("rnn_model.jl")
 
-@info "Revise is ready"
+@info "Sueprvised learning is ready"
 
 
 """
@@ -36,7 +36,7 @@ Prepare sequence data for the sequential model
     end
     
     return X, Y, sequence_indices
-end 
+end
 
 
 """
@@ -69,7 +69,7 @@ function train_model!(model, X, Y, sequence_indices, epochs, batch_size)
                     end
                     
                     # Sum loss over all tokens in sequence
-                    seq_loss = sum(Flux.crossentropy(model(seq_x[:, i:i]), seq_y[:, i:i]) for i in 1:size(seq_x, 2))
+                    seq_loss = sum(Flux.logitcrossentropy(model(seq_x[:, i:i]), seq_y[:, i:i]) for i in 1:size(seq_x, 2))
                     total_loss += seq_loss # Sum loss over all sequences in batch
                     total_tokens += size(seq_x, 2) # Sum number of tokens over all sequences in batch
 
@@ -95,7 +95,7 @@ end
 Evaluate the sequential model's accuracy
 """
 function evaluate_model(model, X, Y)
-    predictions = model(X)
+    predictions = Flux.softmax(model(X))
     accuracy = mean(Flux.onecold(predictions) .== Flux.onecold(Y))
     return accuracy
 end
@@ -183,7 +183,7 @@ function main()
     println("Model output shape: ", size(model(small_batch)))
 
     # Print initial loss
-    initial_loss = Flux.crossentropy(model(X), Y)
+    initial_loss = Flux.logitcrossentropy(model(X), Y)
     println("Initial loss: ", initial_loss)
 
     # Train the model

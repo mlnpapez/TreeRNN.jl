@@ -8,10 +8,10 @@ using Revise
 
 includet("data_generator.jl")
 includet("rnn_model.jl")
-includet("gru_model.jl") 
-includet("lstm_model.jl") 
+includet("gru_model.jl")
+includet("lstm_model.jl")
 
-@info "MLE is up and running"
+@info "Unsupervised learning is up and running"
 
 function load_tiny_shakespeare(sequence_length=50, max_sequences=1000)
     url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
@@ -74,9 +74,9 @@ function sequence_log_likelihood(model::Union{GRU, LSTM, RNN}, seq_x::AbstractMa
 
     log_likelihood = 0f0
     for i in 1:(size(seq_x, 2) - 1)
-        probs = model(seq_x[:, i:i])
+        logits = model(seq_x[:, i:i])
         true_label = argmax(seq_x[:, i +1])
-        log_likelihood += log(probs[true_label])
+        log_likelihood += Flux.logsoftmax(logits)[true_label]
     end
     return log_likelihood, copy(model.state)
 end
@@ -85,7 +85,7 @@ end
 Process a batch of sequences
 """
 function process_batch(model::Union{GRU, LSTM, RNN}, X::Matrix{Int32}, indices::AbstractVector{<:Integer}, 
-    sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int},  λ::Float32, reg_type::String = "none")::Float32
+    sequence_states::Dict{Int, Vector{Float32}}, sequence_log_likelihoods::Dict{Int, Float32}, sequence_lengths::Dict{Int, Int},  λ, reg_type::String = "none")::Float32
 
     batch_log_likelihood = 0f0
 
@@ -186,7 +186,7 @@ end
 """
 Evaluate the MLE-trained sequential model using log-likelihood and perplexity
 """
-function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, indices::Vector{Int32})::Dict{String, Float64}
+function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, indices)::Dict{String, Float64}
     total_log_likelihood = 0f0
     total_tokens = 0
 
@@ -198,9 +198,9 @@ function evaluate_model_mle(model::Union{RNN, GRU, LSTM}, X::Matrix{Int32}, indi
         
         seq_log_likelihood = 0f0
         for i in 1:(size(seq_x, 2) - 1)  # We predict up to the second-to-last token
-            probs = model(seq_x[:, i:i])
+            logits = model(seq_x[:, i:i])
             true_next_token = argmax(seq_x[:, i+1])  # The next token is the "target"
-            seq_log_likelihood += log(probs[true_next_token])
+            seq_log_likelihood += Flux.logsoftmax(logits)[true_next_token]
         end
         
         total_log_likelihood += seq_log_likelihood
@@ -230,11 +230,11 @@ function generate_sequence(model::Union{RNN, GRU, LSTM}, start_token::Int, max_l
         input = Flux.onehot(last_token, 1:vocab_size)
         
         # Get model's probs
-        probs = vec(model(reshape(input, :, 1)))
+        logits = vec(model(reshape(input, :, 1)))
 
         # Apply temperature scaling
-        scaled_probs = probs .^ (1/temperature)
-        scaled_probs ./= sum(scaled_probs)
+        scaled_logits = logits / temperature
+        scaled_probs = softmax(scaled_logits)
         
         # Create a Categorical distribution and sample next token
         next_token = rand(Categorical(scaled_probs))
@@ -275,22 +275,17 @@ end
 Extract the learned transition matrix from a trained RNN, GRU, or LSTM model
 """
 function extract_model_distribution(model::Union{RNN, GRU, LSTM}, vocab_size::Int)
-    transition_matrix = zeros(Float64, vocab_size, vocab_size)
+    logit_matrix = zeros(Float64, vocab_size, vocab_size)
     
     Flux.reset!(model)
     for i in 1:vocab_size
         input = Flux.onehot(i, 1:vocab_size)
-        probs = vec(model(reshape(input, :, 1)))
-        transition_matrix[i, :] = probs
+        logits = vec(model(reshape(input, :, 1)))
+        logit_matrix[i, :] = logits
     end
-    
-    # Ensure probabilities are non-negative and sum to 1 for each row
-    # softmax
-    # všude použít log likelihood nebo probabilities
-    #
-    transition_matrix = max.(transition_matrix, 0)
-    row_sums = sum(transition_matrix, dims=2)
-    transition_matrix ./= row_sums
+
+    # Convert logits to probabilities using softmax
+    transition_matrix = softmax(logit_matrix, dims=2)
     
     return transition_matrix
 end
@@ -403,11 +398,11 @@ function main()
     vocab_size = 5
     num_samples = 200
     max_length = 50
-    hidden_size = 64
+    hidden_size = 32
     epochs = 10
     batch_size = 30
     λ = 0.01
-    reg_type = "L2"
+    reg_type = "none"
     temperature = 1f1
 
     # Generate dataset
@@ -440,8 +435,8 @@ function main()
 
     # Create models
     models = [
-        RNN(vocab_size, hidden_size, vocab_size),
-        # GRU(vocab_size, hidden_size, vocab_size),
+        # RNN(vocab_size, hidden_size, vocab_size),
+         GRU(vocab_size, hidden_size, vocab_size),
         # LSTM(vocab_size, hidden_size, vocab_size)
     ]
 

@@ -65,7 +65,7 @@ Initialize the full GRU model
 function GRU(input_size::Int, hidden_size::Int, output_size::Int)
     return GRU(
         GRUCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax),
+        Chain(Dense(hidden_size, output_size)),
         zeros(Float32, hidden_size)
     )
 end

@@ -69,7 +69,7 @@ Initialize the full LSTM model
 function LSTM(input_size::Int, hidden_size::Int, output_size::Int)
     return LSTM(
         LSTMCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax),
+        Chain(Dense(hidden_size, output_size)),
         zeros(Float32, 2 * hidden_size)  # Combined h and c
     )
 end

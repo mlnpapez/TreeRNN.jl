@@ -15,7 +15,6 @@ Author: Do Viet Anh
 using Flux
 using LinearAlgebra
 
-
 # Define the RNN cell structure
 struct RNNCell{T}
     w::Matrix{T}  # Input-to-hidden weights
@@ -58,7 +57,7 @@ Initialize the full RNN model
 function RNN(input_size::Int, hidden_size::Int, output_size::Int)
     RNN(
         RNNCell(input_size, hidden_size),
-        Chain(Dense(hidden_size, output_size), softmax),
+        Chain(Dense(hidden_size, output_size)),
         zeros(Float32, hidden_size)
     )
 end
