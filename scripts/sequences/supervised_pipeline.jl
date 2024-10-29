@@ -10,7 +10,7 @@ includet("gru_model.jl")
 includet("lstm_model.jl")
 includet("rnn_model.jl")
 
-@info "Sueprvised learning is ready"
+@info "Supervised learning is ready"
 
 
 """
