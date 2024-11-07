@@ -65,7 +65,7 @@ end
 """
 Forward pass for the full RNN model
 """
-function (m::RNN)(x::AbstractMatrix)
+function (m::RNN)(x::AbstractVecOrMat{T}) where T <: Real
     outputs = map(1:size(x,2)) do t
         m.state = m.cell(m.state, x[:, t])
         m.output(m.state)

@@ -49,7 +49,7 @@ Forward pass for the StackedModel
 Takes an input matrix where each column is a token (timestep)
 Returns the output after passing through all layers
 """
-function (m::StackedModel)(x::AbstractMatrix)
+function (m::StackedModel)(x::AbstractVecOrMat{T}) where T <: Real
     # Initialize input for first layer
     current_input = copy(x)
     

@@ -77,7 +77,7 @@ end
 """
 Forward pass for the full LSTM model
 """
-function (m::LSTM)(x::AbstractMatrix)
+function (m::LSTM)(x::AbstractVecOrMat{T}) where T <: Real
     hidden_size = div(length(m.state), 2)  # Calculate hidden size
     outputs = map(1:size(x,2)) do t
         h = m.state[1:hidden_size]         # First half is h

@@ -73,7 +73,7 @@ end
 """
 Forward pass for the full GRU model
 """
-function (m::GRU)(x::AbstractMatrix)
+function (m::GRU)(x::AbstractVecOrMat{T}) where T <: Real
     outputs = map(1:size(x,2)) do t
         m.state, h_out = m.cell(m.state, x[:, t])
         m.output(h_out)
