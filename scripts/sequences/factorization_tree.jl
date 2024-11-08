@@ -68,7 +68,6 @@ function ConditionSet()
     )
 end
 
-#=
 mutable struct ProcessingCounter
     level_counts::Dict{Int, Int}  
 end
@@ -76,7 +75,7 @@ end
 function increment_counter!(counter::ProcessingCounter, depth::Int)
     counter.level_counts[depth] = get(counter.level_counts, depth, 0) + 1
     return counter.level_counts[depth]
-end =#
+end 
 
 function compute_log_probs(logits::AbstractMatrix)
     if size(logits, 1) == 1
