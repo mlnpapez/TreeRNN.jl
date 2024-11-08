@@ -165,6 +165,67 @@ include("../scripts/models/input_adapter.jl")
         @test log_prob_l2r[1] ≤ 0
         @test log_prob_r2l[1] ≤ 0
     end
+
+    @testset "Handling different inputs" begin
+        base_model = RNN(5, 10, 1)
+        adapted_model = InputAdapter(base_model, 5)
+
+
+        array_data1 = reshape(rand(Float32, 5), :, 1)
+        array_data2 = reshape(rand(Float32, 5), :, 1)
+        array_node1 = Mill.ArrayNode(array_data1)
+        array_node2 = Mill.ArrayNode(array_data2)
+        
+        sample = Mill.ProductNode((
+            a = array_node1,
+            b = array_node2
+        ))
+
+        # Create tree - automatically uses model's input size
+        tree = build_factorization_tree(sample, adapted_model)
+        prob, data = compute_probability(tree, tree.root; direction=:left_to_right)
+
+        @testset "Variable size inputs" begin
+            # Test different input sizes
+            x = rand(Float32, rand(1:12), 1)
+            
+            output = tree.model(x)
+
+            output_dim = size(output, 1)
+            batch_dim = size(output, 2)
+            
+            @test output_dim == 1  # Check output dimension
+            @test batch_dim == 1  # Check batch dimension
+        end
+    
+        @testset "Vector vs Matrix inputs" begin
+            # Vector input
+            vector_input = rand(Float32, 7)
+            output_v = tree.model(vector_input)
+            @test length(output_v) == 1  # Should output scalar
+            
+            # Matrix input
+            matrix_input = rand(Float32, 7, 3)
+            output_m = tree.model(matrix_input)
+            @test size(output_m, 1) == 1  # Check output dimension
+            @test size(output_m, 2) == 3  # Check batch dimension preserved
+        end
+    
+        @testset "Edge cases" begin
+            # Single dimension
+            x1 = rand(Float32, 1, 1)
+            @test_nowarn tree.model(x1)
+            
+            # Large dimension
+            x2 = rand(Float32, 100, 1)
+            @test_nowarn tree.model(x2)
+            
+            # Multiple batches
+            x3 = rand(Float32, 7, 10)
+            output = tree.model(x3)
+            @test size(output, 2) == 10
+        end
+    end
     
     @testset "Complex Hierarchical Structure" begin    
         
