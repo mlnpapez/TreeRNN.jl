@@ -5,16 +5,14 @@ using Zygote
 using LinearAlgebra
 using Revise
 
-includet("rnn_model.jl")
-includet("lstm_model.jl")
-includet("gru_model.jl")
-includet("stacked_model.jl")
+includet("../models/rnn_model.jl")
+includet("../models/lstm_model.jl")
+includet("../models/gru_model.jl")
+includet("../models/stacked_model.jl")
+includet("../models/input_adapter.jl")
 
-
-# Types for factorization
 abstract type AbstractFactorizationNode end
 
-# Factorization nodes wrapping Mill nodes
 struct ArrayFactorization <: AbstractFactorizationNode
     node::Mill.ArrayNode
 end
@@ -29,44 +27,36 @@ struct ProductFactorization <: AbstractFactorizationNode
     children::Vector{AbstractFactorizationNode}
 end
 
-# Define possible model types
-const SequentialModel = Union{RNN, LSTM, GRU, StackedModel}
+const SequentialModel = Union{BaseSequentialModel, InputAdapter}
 
-# Main tree structure for handling factorization
 mutable struct FactorizationTree{T<:SequentialModel}
-    model::T  # Sequential model (RNN, LSTM, GRU, or StackedModel)
+    model::T  
     root::AbstractFactorizationNode
-    Tp::Vector{Mill.ArrayNode} # Array nodes visited in DFS
+    Tp::Vector{Mill.ArrayNode} 
 end
 
-# Main build function
-function build_factorization_tree(mill_node::Union{Mill.ArrayNode, Mill.BagNode, Mill.ProductNode}, model)
-    # Create factorization tree with empty Tp
+function build_factorization_tree(mill_node::Union{Mill.ArrayNode, Mill.BagNode, Mill.ProductNode}, base_model::SequentialModel)
     root = build_node(mill_node)
-    return FactorizationTree{typeof(model)}(model, root, Mill.ArrayNode[])
+    return FactorizationTree{typeof(base_model)}(base_model, root, Mill.ArrayNode[])
 end
 
-# Recursive build function for different node types
 function build_node(node::Mill.ArrayNode)
     return ArrayFactorization(node)
 end
 
 function build_node(node::Mill.BagNode)
-    # Recursively build children
     children = AbstractFactorizationNode[build_node(node.data)]
     return BagFactorization(node, children)
 end
 
 function build_node(node::Mill.ProductNode)
-    # Recursively build all children
     children = AbstractFactorizationNode[build_node(child) for child in node.data]
     return ProductFactorization(node, children)
 end
 
-# Condition tracking structure
 struct ConditionSet
-    Tp::Vector{Mill.ArrayNode}  # Array nodes from DFS
-    T_siblings::Vector{Mill.AbstractMillNode} # Siblings for chain rule (T<w)
+    Tp::Vector{Mill.ArrayNode}  
+    T_siblings::Vector{Mill.AbstractMillNode} 
     path::Vector{AbstractFactorizationNode}
 end
 
@@ -78,160 +68,174 @@ function ConditionSet()
     )
 end
 
-# Basic probability computation 
+#=
+mutable struct ProcessingCounter
+    level_counts::Dict{Int, Int}  
+end
+
+function increment_counter!(counter::ProcessingCounter, depth::Int)
+    counter.level_counts[depth] = get(counter.level_counts, depth, 0) + 1
+    return counter.level_counts[depth]
+end =#
+
+function compute_log_probs(logits::AbstractMatrix)
+    if size(logits, 1) == 1
+        return Flux.logsigmoid.(logits)
+    else
+        return Flux.logsoftmax(logits; dims=1)
+    end
+end
+
 function compute_probability(tree::FactorizationTree, node::AbstractFactorizationNode; direction::Symbol=:left_to_right)
-    # Initialize empty conditions
     conditions = ConditionSet()
 
-    # Compute probabilities through DFS
-    prob, data = _compute_probability(tree, node, conditions, direction)
-    
-    # Update tree's Tp with all array nodes found during computation
+    counter = ProcessingCounter(Dict{Int,Int}())
+
+    log_prob, _, data = _compute_probability(tree, node, conditions, direction, nothing, counter)
+    prob = exp(log_prob[1])
     append!(tree.Tp, conditions.Tp)
 
-    # Print summary
-    println("\n=== Computation Summary ===")
-    println("Tree structure: ", typeof(tree.root))
-    println("Total array nodes found: ", length(tree.Tp))
-    println("Traversal direction: ", direction)
-
-    return prob, data
+    return log_prob, data
 end
 
-# Array node probability computation
-function _compute_probability(tree::FactorizationTree, node::ArrayFactorization, conditions::ConditionSet, direction::Symbol)
-    # Add to DFS path
+function _compute_probability(tree::FactorizationTree, node::ArrayFactorization, conditions::ConditionSet, direction::Symbol, slice_indices, counter::ProcessingCounter)
     push!(conditions.path, node)
-    
-    # Use node data and RNN state (which maintains Tp conditioning)
-    # flattening data as vector
-    # input_data = reshape(node.node.data, :, 1)
 
-    # Model state contains conditioning on Tp (previously visited array nodes)
-    prob = tree.model(node.node.data)
-    
-    # Add this array node to Tp
+    data = isnothing(slice_indices) ? node.node.data : node.node.data[:, slice_indices]
+
+    prediction_signal =  ones(Float32, size(data)) * -1.0f0  
+    predicted_array_logits = tree.model(prediction_signal)  
+
+    if size(predicted_array_logits, 1) != size(data, 1)
+        output_adapter = Chain(
+            Dense(size(predicted_array_logits, 1), size(data, 1)), 
+            identity  
+        )
+        predicted_array_logits = output_adapter(predicted_array_logits)
+    end
+
+    log_array_prob = compute_log_probs(predicted_array_logits)
+
+    tree.model(data)
+
     push!(conditions.Tp, node.node)
-    
-    return prob, node.node.data
+
+    return log_array_prob[1], log_array_prob, node.node.data
 end
 
-# Bag node probability computation
-function _compute_probability(tree::FactorizationTree, node::BagFactorization, conditions::ConditionSet, direction::Symbol)
+function _compute_probability(tree::FactorizationTree, node::BagFactorization, conditions::ConditionSet, direction::Symbol, slice_indices, counter::ProcessingCounter)
     push!(conditions.path, node)
-    println("\n=== Processing Bag Node ===")
-    println("DFS state - Current Tp size: ", length(conditions.Tp))
-    
-    # Get bag node structure
+
     data_node = node.node.data
-    bags = node.node.bags
-    println("Bag structure: ", length(bags), " bags")
-    
-    # Save state with current Tp for conditional independence
-    initial_Tp_state = copy(tree.model.state)
-    
-    # Process each bag independently
-    all_probs = Float32[]
-    for (bag_idx, bag) in enumerate(bags)
-        println("\nProcessing bag ", bag_idx, "/", length(bags))
-        bag_probs = Float32[]
-        
-        # Reset state for conditional independence
-        tree.model.state = copy(initial_Tp_state)
+    bags = node.node.bags 
 
-        # Fresh conditions for independence
+    initial_Tp_state = copy(tree.model.state)
+
+    scalar_bag_log_probs = Float32[]       
+    all_bag_distributions = []            
+
+    accumulated_arrays = Dict{Mill.ArrayNode, Vector{Int}}() 
+
+    for bag_idx in (!isnothing(slice_indices) ? bags[slice_indices] : bags[1])
+
+        tree.model.state = copy(initial_Tp_state)
         instance_condition = ConditionSet(
-            Mill.ArrayNode[],  # Empty Tp for this instance
-            [],               # No T<w needed in bag nodes
+            Mill.ArrayNode[],  
+            [],               
             copy(conditions.path)
         )
-        
-        println("Processing bag elements: ", length(bag), " elements")
-        for i in bag
-            # Process each child with same conditions (independence)
-            prob, child_data = _compute_probability(tree, node.children[1], instance_condition, direction)
-            push!(bag_probs, prob[1])
+
+        bag_data = node.node.data[bag_idx]  
+        printtree(bag_data)
+
+        log_prob, prob_distribution, child_data = _compute_probability(
+            tree, node.children[1], instance_condition, direction, bag_idx, counter)
+
+        for array_node in instance_condition.Tp
+            if haskey(accumulated_arrays, array_node)
+                push!(accumulated_arrays[array_node], bag_idx)
+            else
+                accumulated_arrays[array_node] = [bag_idx]
+            end
         end
 
-        # Update main Tp with array nodes from this bag
-        println("Updating DFS Tp: ", length(conditions.Tp), " -> ", length(conditions.Tp) + length(instance_condition.Tp))
-        append!(conditions.Tp, instance_condition.Tp)
+        push!(scalar_bag_log_probs, log_prob[1])
+        push!(all_bag_distributions, prob_distribution)  
 
-        # Multiply independent probabilities within bag
-        push!(all_probs, prod(bag_probs))
+        append!(conditions.Tp, instance_condition.Tp)
     end
-    
-    total_prob = reshape([prod(all_probs)], :, 1)
-    return total_prob, data_node.data
+
+    for (array_node, indices) in accumulated_arrays
+        if length(unique(indices)) != length(indices)
+            n = length(indices)  
+            accumulated_arrays[array_node] = collect(1:n)
+        end
+
+    end
+
+    tree.model.state = copy(initial_Tp_state)  
+    ordered_indices = sort(unique(vcat([indices for indices in values(accumulated_arrays)]...)))
+
+    for idx in ordered_indices
+        for array_node in keys(accumulated_arrays)
+            if idx in accumulated_arrays[array_node]
+                sliced_data = array_node.data[:, idx]
+                tree.model(sliced_data) 
+            end
+        end
+    end
+
+    total_scalar_log_prob = reshape([sum(scalar_bag_log_probs)], :, 1)
+
+    return total_scalar_log_prob, all_bag_distributions, data_node.data
 end
 
-# Product node probability computation
-function _compute_probability(tree::FactorizationTree, node::ProductFactorization, conditions::ConditionSet, direction::Symbol)
+function _compute_probability(tree::FactorizationTree, node::ProductFactorization, conditions::ConditionSet, direction::Symbol, slice_indices, counter::ProcessingCounter)
     push!(conditions.path, node)
-    println("\n=== Processing Product Node ===")
-    println("DFS Path depth: ", length(conditions.path))
-    println("Current Tp size: ", length(conditions.Tp))
-    
-    # Get children in appropriate traversal order
-    children = direction == :right_to_left ? reverse(collect(node.children)) : collect(node.children)
-    
-    # Setup for chain rule factorization
-    current_siblings = []  # T<w for chain rule
-    child_probs = Float32[]
-    all_data = []
-    accumulated_array_nodes = Mill.ArrayNode[]  # Collect for Tp
-    
-    # Save state with current Tp
-    initial_Tp_state = copy(tree.model.state)
-    
-    # Process each child
-    for (child_idx, child) in enumerate(children)
-        println("\n--- Processing Child ", child_idx, "/", length(children), " ---")
-        println("Child type: ", typeof(child))
-        is_direct = node == conditions.path[end]
-        println("Direct child of current product node: ", is_direct)
 
-        # Reset to Tp state for each child
-        tree.model.state = copy(initial_Tp_state)
-        
-        # Setup child conditions
-        child_condition = ConditionSet(
-            copy(conditions.Tp),    # Pass current Tp
-            current_siblings,       # Pass T<w for chain rule
+    factorization_order = direction == :right_to_left ? reverse(collect(node.children)) : collect(node.children)
+
+    processed_siblings = []  
+    full_probability_distributions = []  
+    scalar_log_probs = Float32[]  
+    processed_data = []
+    array_node_tracker = Mill.ArrayNode[]  
+
+    conditioned_state = copy(tree.model.state)
+
+    for (child_idx, current_child) in enumerate(factorization_order)
+
+        tree.model.state = copy(conditioned_state)
+
+        factor_conditions = ConditionSet(
+            Mill.ArrayNode[],      
+            processed_siblings,        
             copy(conditions.path)
         )
-        
-        # Process child
-        prob, data = _compute_probability(tree, child, child_condition, direction)
-        push!(child_probs, prob[1])
-        
-        # Handle array nodes based on child type and position
-        if is_direct
-            if isa(child, ArrayFactorization)
-                println("Direct array child: adding to T<w and accumulating")
-                push!(current_siblings, child.node)          # For chain rule
-                push!(accumulated_array_nodes, child.node)   # For future Tp
-            else
-                println("Direct non-array child: accumulating its descendants")
-                append!(accumulated_array_nodes, child_condition.Tp)
-            end
+
+        conditional_log_prob, prob_distribution, child_data = _compute_probability(
+            tree, current_child, factor_conditions, direction, slice_indices, counter
+        )
+
+        push!(scalar_log_probs, conditional_log_prob[1])  
+        push!(full_probability_distributions, prob_distribution)  
+
+
+
+        if isa(current_child, ArrayFactorization)
+            push!(processed_siblings, current_child.node)
+            push!(array_node_tracker, current_child.node)
         else
-            # Non-direct children: all array nodes go to accumulation
-            if isa(child, ArrayFactorization)
-                push!(accumulated_array_nodes, child.node)
-            end
-            append!(accumulated_array_nodes, child_condition.Tp)
+            append!(array_node_tracker, factor_conditions.Tp)
         end
-        
-        push!(all_data, data)
+
+        conditioned_state = copy(tree.model.state)
+        push!(processed_data, child_data)
     end
-    
-    # Update main Tp with all accumulated array nodes
-    println("\nFinalizing product node computation")
-    println("Updating DFS Tp: ", length(conditions.Tp), " -> ", 
-            length(conditions.Tp) + length(accumulated_array_nodes))
-    append!(conditions.Tp, accumulated_array_nodes)
-    
-    total_prob = reshape([prod(child_probs)], :, 1)
-    return total_prob, all_data
+
+    append!(conditions.Tp, array_node_tracker)
+
+    joint_log_prob = reshape([sum(scalar_log_probs)], :, 1)
+
+    return joint_log_prob, full_probability_distributions, processed_data
 end

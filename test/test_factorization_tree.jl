@@ -1,10 +1,14 @@
 using Test
 using Zygote
-include("../scripts/sequences/factorization_tree.jl")
-include("../scripts/sequences/rnn_model.jl")
-include("../scripts/sequences/lstm_model.jl")
-include("../scripts/sequences/gru_model.jl")
-include("../scripts/sequences/stacked_model.jl")
+using Distributions
+
+#include("../scripts/sequences/factorization_tree.jl")
+include("../scripts/sequences/factor_tree_with_print.jl")
+include("../scripts/models/rnn_model.jl")
+include("../scripts/models/lstm_model.jl")
+include("../scripts/models/gru_model.jl")
+include("../scripts/models/stacked_model.jl")
+include("../scripts/models/input_adapter.jl")
 
 @testset "FactorizationTree Tests" begin
     # Test ConditionSet construction
@@ -23,6 +27,7 @@ include("../scripts/sequences/stacked_model.jl")
         
         tree = build_factorization_tree(array_node, model)
         prob, data = compute_probability(tree, tree.root)  # Use default direction
+        println(prob)
         @test size(prob, 1) == 1
         @test data == array_data
         @test length(tree.Tp) == 1
@@ -64,13 +69,13 @@ include("../scripts/sequences/stacked_model.jl")
         
         # Test both directions
         tree_l2r = build_factorization_tree(product_node, model)
-        prob_l2r, data_l2r = compute_probability(tree_l2r, tree_l2r.root; direction=:left_to_right)
-        @test size(prob_l2r, 1) == 1
+        log_prob_l2r, data_l2r = compute_probability(tree_l2r, tree_l2r.root; direction=:left_to_right)
+        @test size(log_prob_l2r, 1) == 1
         @test length(tree_l2r.Tp) == 2
 
         tree_r2l = build_factorization_tree(product_node, model)
-        prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
-        @test size(prob_r2l, 1) == 1
+        log_prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
+        @test size(log_prob_r2l, 1) == 1
         @test length(tree_r2l.Tp) == 2
     end
 
@@ -89,12 +94,12 @@ include("../scripts/sequences/stacked_model.jl")
         
         # Test left-to-right
         tree = build_factorization_tree(product_node, model)
-        prob_l2r, data_l2r = compute_probability(tree, tree.root; direction=:left_to_right)
+        log_prob_l2r, data_l2r = compute_probability(tree, tree.root; direction=:left_to_right)
         @test length(tree.Tp) == 2
         
         # Test right-to-left
         tree = build_factorization_tree(product_node, model)
-        prob_r2l, data_r2l = compute_probability(tree, tree.root; direction=:right_to_left)
+        log_prob_r2l, data_r2l = compute_probability(tree, tree.root; direction=:right_to_left)
         @test length(tree.Tp) == 2
     end
 
@@ -132,7 +137,7 @@ include("../scripts/sequences/stacked_model.jl")
         tree = build_factorization_tree(root, model)
         
         # Test left-to-right traversal
-        prob_l2r, data_l2r = compute_probability(tree, tree.root; direction=:left_to_right)
+        log_prob_l2r, data_l2r = compute_probability(tree, tree.root; direction=:left_to_right)
         
         # Verify Tp contents and order
         # For left-to-right traversal:
@@ -149,113 +154,131 @@ include("../scripts/sequences/stacked_model.jl")
         
         # Test right-to-left traversal
         tree_r2l = build_factorization_tree(root, model)
-        prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
+        log_prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
         
         # Verify size is same (should still have all array nodes)
         @test length(tree_r2l.Tp) == 5
     
         # Verify probabilities are meaningful
-        @test size(prob_l2r, 1) == 1
-        @test size(prob_r2l, 1) == 1
-        #@test 0 ≤ prob_l2r[1] ≤ 1
-        #@test 0 ≤ prob_r2l[1] ≤ 1
+        @test size(log_prob_l2r, 1) == 1
+        @test size(log_prob_r2l, 1) == 1
+        @test log_prob_l2r[1] ≤ 0
+        @test log_prob_r2l[1] ≤ 0
     end
     
     @testset "Complex Hierarchical Structure" begin    
-        #=
-        # Create multiple product children for bag node
-        function create_product_child()
-            # Create array nodes
-            Tv31 = Mill.ArrayNode(reshape(rand(Float32, array_dim), :, 1))
-            Tv32 = Mill.ArrayNode(reshape(rand(Float32, array_dim), :, 1))
-            Tv33 = Mill.ArrayNode(reshape(rand(Float32, array_dim), :, 1))
+        
+        # Helper function to generate data from a distribution
+        function generate_from_dist(dist, rows, cols)
+            return Float32.(rand(dist, rows, cols))
+        end
+
+        # Creating a synthetic MUTAG sample
+        function create_test_sample()
+            # Fixed number of observations at each level
+            n_atoms = 3  # Instead of 26 as in real mutag sample
+            n_bonds = 6  # Instead of 56 (total bonds across all atoms)
             
-            # Create product node
-            return product_node = Mill.ProductNode((
-                Tv31 = Tv31,
-                Tv32 = Tv32,
-                Tv33 = Tv33
+            # First create all bond products (they must have same n_bonds observations)
+            function create_bond_products()
+                # Create single product node with n_bonds observations
+                return Mill.ProductNode((
+                    element = Mill.ArrayNode(generate_from_dist(Normal(10.0, 3.0), 8, n_bonds)),
+                    type_bond = Mill.ArrayNode(generate_from_dist(Normal(0.0, 1.0), 7, n_bonds)),
+                    type_atom = Mill.ArrayNode(generate_from_dist(Normal(5.0, 2.0), 12, n_bonds)),
+                    charge = Mill.ArrayNode(generate_from_dist(Normal(0.0, 1.5), 1, n_bonds))
+                ))
+            end
+            
+            # Create atoms (all must have n_atoms observations)
+            # Each atom's bonds must be divided from total n_bonds
+            bond_products = create_bond_products()
+            
+            # Create bag nodes for bonds - divide n_bonds among atoms
+            # For n_atoms=3, n_bonds=4: [1:1, 2:3, 4:6] means:
+            # - first atom has 1 bond
+            # - second atom has 2 bonds
+            # - third atom has 3 bonds
+            bonds_bag = Mill.BagNode(bond_products, Mill.AlignedBags([1:1, 2:3, 4:6]))
+            
+            # Create main product node with n_atoms observations
+            atoms_product = Mill.ProductNode((
+                element = Mill.ArrayNode(generate_from_dist(Normal(10.0, 3.0), 8, n_atoms)),
+                bonds = bonds_bag,  # This has n_atoms observations because of AlignedBags
+                type_atom = Mill.ArrayNode(generate_from_dist(Normal(5.0, 2.0), 37, n_atoms)),
+                charge = Mill.ArrayNode(generate_from_dist(Normal(0.0, 1.5), 1, n_atoms))
             ))
             
+            # Create main atoms bag node
+            atoms = Mill.BagNode(atoms_product, Mill.AlignedBags([1:n_atoms]))
+            
+            # Random size for top-level arrays
+            random_size = rand(5:8)
+            
+            # Create root product node (must have 1 observation like atoms bag)
+            root = Mill.ProductNode((
+                lumo = Mill.ArrayNode(generate_from_dist(Normal(-5.0, 2.0), random_size, 1)),
+                inda = Mill.ArrayNode(generate_from_dist(LogNormal(2.0, 0.5), random_size, 1)),
+                logp = Mill.ArrayNode(generate_from_dist(Normal(-5.0, 2.0), random_size, 1)),
+                ind1 = Mill.ArrayNode(rand(Float32, random_size, 1)),
+                atoms = atoms  # 1 observation
+            ))
+            
+            return root
         end
         
-        Tv341 = Mill.ArrayNode(rand(Float32, array_dim, 2))
-        Tv342 = Mill.ArrayNode(rand(Float32, array_dim, 2))
-        Tv343 = Mill.ArrayNode(rand(Float32, array_dim, 2))
+        sample1 = create_test_sample()
+        sample2 = create_test_sample()
 
-        product_node = Mill.ProductNode((
-                Tv341 = Tv341,
-                Tv342 = Tv342,
-                Tv343 = Tv343
-        )) 
+        # Create model with input adapter (to handle data vectors with diffrent input dimension)
+        base_model = GRU(5, 10, 10)
+        adapted_model = InputAdapter(base_model, 5)
 
-        # Create multiple product children
-        n_bag_children = 4  # Number of children in bag node
-        product_children = [create_product_child() for _ in 1:n_bag_children] =#
-        
-        # Create leaf array nodes with random data
-        array_dim = 5
-        Tv1 = Mill.ArrayNode(rand(Float32, array_dim, 4))
-        Tv2 = Mill.ArrayNode(rand(Float32, array_dim, 4))
-        Tv4 = Mill.ArrayNode(rand(Float32, array_dim, 4))
+        @testset "DFS Traversal From Left to Right" begin 
+            println("Synthetic MUTAG sample (Mill structure): \n")
+            printtree(sample1)
 
-        n_bag_children = 4  # Number of children/bags in bag node
-        #  Create arrays and combine all arrays data for bag node
-        all_data = hcat([rand(Float32, array_dim) for _ in 1:(3*n_bag_children)]...)
-        data_node = Mill.ArrayNode(all_data)
-        
-        # Create bag node with proper bags
-        # Each product node's data takes up 3 columns
-        bags = Mill.AlignedBags([1:3, 4:6, 7:9, 10:12])  # Four bags, each with three columns
-        Tv3 = Mill.BagNode(data_node, bags)
-        
-        # Create root product node
-        root = Mill.ProductNode((
-        Tv1 = Tv1,    # 3 Observations
-        Tv2 = Tv2,    # 3 observations
-        Tv3 = Tv3,    # 4 bags
-        Tv4 = Tv4     # 3 observations
-        ))
+            # Create tree - automatically uses model's input size
+            tree_l2r = build_factorization_tree(sample1, adapted_model)
 
-        # Create and test tree
-        model = GRU(array_dim, 10, 1)
-        # gru = GRU(array_dim, 10, 1)
+            # Test left-to-right traversal
+            log_prob_l2r, data_l2r = compute_probability(tree_l2r, tree_l2r.root; direction=:left_to_right)
+            
+            # Verify Tp contents (number of leaves/array nodes)
+            expected_Tp_length = 37 # 4 top arrays + (3 atoms products obs * 3 array nodes types) + (6 bonds product obs * 4 array nodes type)
+            @test length(tree_l2r.Tp) == expected_Tp_length
+            
+            # First two should be lumo and inda
+            @test tree_l2r.Tp[1] == sample1[:lumo]
+            @test tree_l2r.Tp[2] == sample1[:inda]
 
-        tree = build_factorization_tree(root, model)
-        
-        # Test left-to-right traversal
-        prob_l2r, data_l2r = compute_probability(tree, tree.root; direction=:left_to_right)
-        
-        # Verify Tp contents
-        # Expected: Tv1, Tv2, Tv4 and 9 array nodes (3 from each product child)
-        expected_Tp_length = 3 + (3 * n_bag_children)
-        @test length(tree.Tp) == expected_Tp_length
-        
-        # First two should be Tv1, Tv2
-        @test tree.Tp[1] == Tv1
-        @test tree.Tp[2] == Tv2
-        
-        # Test right-to-left traversal
-        tree_r2l = build_factorization_tree(root, model)
-        prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
-        
-        # Should have same number of nodes in Tp
-        @test length(tree_r2l.Tp) == expected_Tp_length
-        
-        # Verify probabilities
-        @test size(prob_l2r, 1) == 1
-        @test size(prob_r2l, 1) == 1 #
-        #@test 0 ≤ prob_l2r[1] ≤ 1
-        #@test 0 ≤ prob_r2l[1] ≤ 1
+            # Verify probabilities
+            @test size(log_prob_l2r, 1) == 1
+            @test log_prob_l2r[1] ≤ 0
 
-        println("Probability of Tv using dfs in l2r direction: ", prob_l2r[1])
-        println("Probability of Tv using dfs in r2l direction: ", prob_r2l[1])
+            println("\nProbability of observing values using dfs in l2r direction: ", log_prob_l2r[1])
+        end
+        
+        @testset "DFS Traversal From Left to Right" begin
+            println("Synthetic MUTAG sample (Mill structure): \n")
+            printtree(sample1)
 
-        # Additional tests for bag node independence
-        # Each bag child should be independent but conditioned on Tp
-        @test length(bags) == n_bag_children
+            # Test right-to-left traversal
+            tree_r2l = build_factorization_tree(sample1, adapted_model)
+            log_prob_r2l, data_r2l = compute_probability(tree_r2l, tree_r2l.root; direction=:right_to_left)
+            
+            # Should have same number of nodes in Tp
+            # Verify Tp contents (number of leaves/array nodes)
+            expected_Tp_length = 37 # 4 top arrays + (3 atoms products obs * 3 array nodes types) + (6 bonds product obs * 4 array nodes type)
+            @test length(tree_r2l.Tp) == expected_Tp_length
+            
+            # Verify probabilities
+            @test size(log_prob_r2l, 1) == 1
+            @test log_prob_r2l[1] ≤ 0
+
+            println("Probability of observing values using dfs in r2l direction: ", log_prob_r2l[1], "\n")
+        end
     end
-
      # Potential additional tests:
     # 1. Order of nodes in Tp (based on traversal direction)
 end

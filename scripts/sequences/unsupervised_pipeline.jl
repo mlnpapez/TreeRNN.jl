@@ -7,10 +7,10 @@ using LinearAlgebra
 using Revise
 
 includet("data_generator.jl")
-includet("rnn_model.jl")
-includet("gru_model.jl")
-includet("lstm_model.jl")
-includet("stacked_model.jl")
+includet("../models/rnn_model.jl")
+includet("../models/gru_model.jl")
+includet("../models/lstm_model.jl")
+includet("../models/stacked_model.jl")
 
 @info "Unsupervised learning is up and running"
 
