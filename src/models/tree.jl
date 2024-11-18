@@ -1,4 +1,5 @@
 using Revise
+using Profile
 
 abstract type AbstractTree{C} end
 
@@ -29,15 +30,15 @@ function (m::Tree)(x::AbstractProductNode, seq_model)
     else
         results = map((m, x)->m(x, seq_model), m.children, x.data)
         # Split embeddings and log_probs maintaining structure
-        embs = NamedTuple{keys(x.data)}(first.(values(results)))
+        @time embs = NamedTuple{keys(x.data)}(first.(values(results)))
         # Now embs is like:
         # (element = 5×batch, type_bond = 5×batch, ...)
 
-        log_probs = last.(values(results))
+        @time log_probs = last.(values(results))
         println(typeof(log_probs))
 
         # Sum log probabilities for joint prob
-        joint_log_probs = reduce(.+, log_probs)  # sum along array nodes
+        @time joint_log_probs = reduce(.+, log_probs)  # sum along array nodes
         println("\nJoint log probs matrix for product node: ", size(joint_log_probs))
         display(joint_log_probs)
 
@@ -50,7 +51,8 @@ function (m::Tree)(x::AbstractBagNode, seq_model)
     println("\nBag node number of unit ranges/obs: ", length(x.bags))
 
     # 1. Expand state before processing child
-    expanded_state = expand_hidden_state(seq_model.state, x.bags)
+    println("Expanded state: ")
+    @time expanded_state = expand_hidden_state(seq_model.state, x.bags)
     seq_model.state = expanded_state
     #println("Expanded state: ", size(expanded_state))
     #display(expanded_state)
@@ -59,13 +61,17 @@ function (m::Tree)(x::AbstractBagNode, seq_model)
     child_emb, child_log_probs = m.children(x.data, seq_model)
     
     # 3. Reduce state after child processing
-    reduced_state = mapreduce(b->sum(seq_model.state[:, b], dims=2), hcat, x.bags)
+    println("Reduced state: ")
+    #@time reduced_state = mapreduce(b->sum(seq_model.state[:, b], dims=2), hcat, x.bags)
+
+    @time reduced_state = reduce_hidden_state(seq_model.state, x.bags)
     seq_model.state = reduced_state
     #println("Reduced state: ")
     #display(reduced_state)
     
     # Aggregate log probs by bags
-    joint_log_probs = mapreduce(b->sum(child_log_probs[:, b], dims=2), hcat, x.bags)
+    #@time joint_log_probs = mapreduce(b->sum(child_log_probs[:, b], dims=2), hcat, x.bags)
+    @time joint_log_probs = aggregate_log_probs(child_log_probs, x.bags)
     println("\nJoint log probs matrix for bag node: ", size(joint_log_probs))
     display(joint_log_probs)
 
@@ -74,7 +80,7 @@ function (m::Tree)(x::AbstractBagNode, seq_model)
     return emb, joint_log_probs
 end
 function (m::Tree)(x::ArrayNode, seq_model)
-    log_probs = get_log_probs(seq_model, x.data)
+    @time log_probs = get_log_probs(seq_model, x.data)
     println("\nSize of log_probs matrix for array node: ", size(log_probs))
     display(log_probs)
 
@@ -83,7 +89,7 @@ function (m::Tree)(x::ArrayNode, seq_model)
     println("Array embedding: ", size(emb), "\n")
 
     # Use passed seq_model here
-    h = seq_model(emb)
+    @time h = seq_model(emb)
     println("\nSize of hidden state of seq model after processing array embedding: ", size(h))
 
     return emb, log_probs

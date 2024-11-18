@@ -124,3 +124,25 @@ function expand_hidden_state(h::AbstractMatrix{T}, bags::Union{AlignedBags{Int64
 
     return expanded_h
 end
+# Add function to reduce hidden state according to bags
+function reduce_hidden_state(h::AbstractMatrix{T}, bags::Union{AlignedBags{Int64}, Nothing}) where T <: Real
+    n_features = size(h, 1)
+    n_bags = length(bags)
+
+    reduced_h = zeros(T, n_features, n_bags)
+    
+    for (bag_idx, bag_range) in enumerate(bags)
+        reduced_h[:, bag_idx] = sum(view(h, :, bag_range), dims=2)
+    end
+    return reduced_h
+end
+# Add function to sum log probs of bag children according to bags
+function aggregate_log_probs(log_probs::AbstractMatrix{T}, bags) where T <: Real
+    n_bags = length(bags)
+    aggregated = zeros(T, 1, n_bags)  # 1×n_bags for log probs
+    
+    for (i, bag) in enumerate(bags)
+        aggregated[1, i] = sum(log_probs[1, bag])
+    end
+    return aggregated
+end

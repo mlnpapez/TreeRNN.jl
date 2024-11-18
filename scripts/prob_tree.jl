@@ -56,4 +56,10 @@ function test_prob_model()
     m_bonds = TreeGRU(Float32, nh, ni, subtree_bonds, hidden_size)
 
     emb_bonds = m_bonds(subtree_bonds)
+    
+    p = Flux.params(m_bonds)
+
+    for i in 1:length(p)
+        println("\nSize of model params: ", length(p[i]))
+    end    
 end
