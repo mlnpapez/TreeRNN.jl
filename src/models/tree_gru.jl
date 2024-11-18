@@ -53,4 +53,13 @@ end
 
 latent_empty(m::TreeGRUCell{T}) where {T<:Real} = zeros(T, size(m.w, 1) ÷ 3, 1)
 
-TreeGRU(type, no, ni, x) = TreeRecur(Tree(TreeGRUCell{type}(no, ni), x, ni))
+#TreeGRU(type, no, ni, x) = TreeRecur(Tree(TreeGRUCell{type}(no, ni), x, ni))
+
+function TreeGRU(type, no, ni, x, hidden_size)
+    #Initialize trees
+    tree = Tree(TreeGRUCell{type}(no, ni), x, ni)
+    #Initialize seq model
+    seq_model = GRU(no, hidden_size, numobs(x))
+
+    return TreeRecur(tree, seq_model)
+end

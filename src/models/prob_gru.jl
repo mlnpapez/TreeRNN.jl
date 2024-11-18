@@ -1,37 +1,52 @@
 export GRU, GRUCell
 
-using Distributions
-
 struct GRUCell{T}
     w::Matrix{T}  # Input weights
     u::Matrix{T}  # Hidden weights
     b::Vector{T}  # Bias
 end
 
+
+function GRUCell(input_size::Int, hidden_size::Int; init=Flux.glorot_uniform)
+    return GRUCell(
+        init(3 * hidden_size, input_size),
+        init(3 * hidden_size, hidden_size),
+        init(3 * hidden_size)
+    )
+end
+
 Flux.@functor GRUCell
 
 # GRU forward pass
 function (m::GRUCell{T})(h::AbstractMatrix{T}, x::AbstractMatrix{T}) where {T<:Real}
-    # Get parts of weights/biases
-    w = _exc(m.w, 1, 3)  # exclude first part
-    b = _exc(m.b, 1, 3)
-    u = _exc(m.u, 1, 3)
+    # Split weights, include input weights
+    wr, wh, wz = _expand(m.w, Val(3))  # input weights
+    ur, uh, uz = _expand(m.u, Val(3))  # hidden weights
+    br, bh, bz = _expand(m.b, Val(3))  # biases
 
-    println("Size w: ", size(w))
-    println("Size b: ", size(b))
-    println("Size u: ", size(u))
-    println("Size h: ", size(h))
-    println("Size x: ", size(x))
+    # Reset gate
+    r = sigmoid.(wr*x .+ ur*h .+ br)
 
-    # Transform input AND previous state
-    g = w*x .+ u*h .+ b  # matrix multiplication
+    # Create reset state
+    h_reset = r .* h
+    
+    #println("Size h_reset: ", size(h_reset))
+    
+    # Candidate state
+    ĥ = tanh.(wh*x .+ uh*h_reset .+ bh)
 
-    # Split into two parts
-    ĥ, z = _expand(g, Val(2))
+    #println("Size ĥ: ", size(ĥ))
+    
+    # Update gate
+    z = sigmoid.(wz*x .+ uz*h .+ bz)
+    
+    #println("Size z: ", size(z))
 
-    # GRU update using previous state AND candidate hidden state
-    h_new = (1 .- sigmoid(z)) .* tanh.(ĥ) .+ sigmoid(z) .* h
+    # Final update
+    h_new = z .* h + (1 .- z) .* ĥ
 
+    #println("Size h_new: ", size(h_new))
+    
     return h_new
 end
 
@@ -43,64 +58,56 @@ end
 
 Flux.@functor GRU
 
-function GRU(input_size::Int, hidden_size::Int, T=Float32)
+function GRU(input_size::Int, hidden_size::Int, batch_size::Int, T=Float32)
     return GRU(
-        GRUCell{T}(
-            randn(T, hidden_size * 3, input_size),  # w
-            randn(T, hidden_size * 3, hidden_size), # u
-            zeros(T, hidden_size * 3)               # b
-        ),
-        zeros(T, hidden_size, 1),
+        GRUCell(input_size, hidden_size),
+        zeros(T, hidden_size, batch_size), # initialize with right batch size
         Dense(hidden_size => 1)
     )
 end
-
+    
 # Forward pass
-function (m::GRU)(x::AbstractMatrix{T}, bags::Union{AlignedBags{Int64}, Nothing}=nothing) where T <: Real
-    println("Size x in GRU: ", size(x))
-    println("Size m.state in GRU before if: ", size(m.state))
-    # Expand state if needed (entering bag node processing)
-    if bags !== nothing
-        # Expand state according to bags
-        m.state = expand_hidden_state(m.state, bags)
-    end
-    println("Size m.state in GRU after if: ", size(m.state))
+function (m::GRU)(x::AbstractMatrix{T}) where T <: Real
     # Pass both state and input to cell
     m.state = m.cell(m.state, x)
     return m.state
 end
 
 # Extended get_probs to handle data type
-function get_log_probs(m::GRU, h::Matrix{T}, data) where T
+function get_log_probs(m::GRU, data)
     n_dims = size(data, 1)
-    
+
     # Create layer based on data type and size
     if data isa OneHotMatrix  # Categorical
-        m.prob_layer = Dense(size(h,1) => n_dims)
+        m.prob_layer = Dense(size(m.state, 1) => n_dims)
     else  # Gaussian (Float32 Matrix)
-        m.prob_layer = Dense(size(h,1) => 2)  # mean, std
+        m.prob_layer = Dense(size(m.state, 1) => 2)  # mean, std
     end
     
-    logits = m.prob_layer(h)
+    println(m.prob_layer)
+
+    logits = m.prob_layer(m.state)
     
     # Transform to probabilities based on type
     if data isa OneHotMatrix
-        return logsoftmax(logits)  # n_dims × batch_size
+        log_probs = logsoftmax(logits)  # n_dims (categories) × batch_size
+
+        # Multiply with one-hot to select actual categories
+        scalar_log_probs = sum(log_probs .* data, dims=1)  # 1×batch_size
+        return scalar_log_probs
     else
         μ = logits[1, :]
-        σ = exp.(logits[2, :])
+        σ = exp.(logits[2, :])  # transform from logσ to σ
+        x = data[1, :]          # actual values
+        log_probs = -0.5 * (log(2π) .+ 2*log.(σ) .+ ((x .- μ)./σ).^2)
         
-        # For each observation:
-        log_probs = map(1:size(data,2)) do i
-            logpdf(Normal(μ[i], σ[i]), data[1,i])
-        end
-        
-        return reshape(log_probs, 1, :)
+        return reshape(log_probs, 1, :) # 1×4893 matrix
+        # Each column is log probability of actual value
     end
 end
 
 # Add function to expand hidden state according to bags
-function expand_hidden_state(h::Matrix{T}, bags::Union{AlignedBags{Int64}, Nothing}) where T
+function expand_hidden_state(h::AbstractMatrix{T}, bags::Union{AlignedBags{Int64}, Nothing}) where T <: Real
     # h: 8×4893 (hidden state for each bag)
     # bags: vector of ranges like [1:3, 4:6, ...] mapping 4893 -> 10486
     
@@ -111,8 +118,9 @@ function expand_hidden_state(h::Matrix{T}, bags::Union{AlignedBags{Int64}, Nothi
     
     # Copy each column according to bags
     for (bag_idx, bag_range) in enumerate(bags)
+        # Expand model state according to bags
         expanded_h[:, bag_range] .= h[:, bag_idx:bag_idx]
     end
-    
+
     return expanded_h
 end
