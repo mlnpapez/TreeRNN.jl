@@ -123,6 +123,12 @@ end
 
 obj(m, x, y, n) = Flux.Losses.logitcrossentropy(m(x), OneHotArrays.onehotbatch(y, 1:n))
 
+# New objective for unsupervised
+function obj_unsupervised(m, x)
+    _, log_probs = m(x)
+    return -mean(log_probs)  # minimize (mean) negative log likelihood
+end
+
 function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
                 y_trn::Ai, y_val::Ai, y_tst::Ai,
                 o, nepoc::Int, bsize::Int, ne::Int, config_exp=nothing, config_wat=nothing, folder=""; p::Flux.Params=Flux.params(m), ftype::Type=Float32) where {Ar<:Mill.AbstractMillNode,Ai<:AbstractArray{<:Int,1}}
@@ -135,7 +141,7 @@ function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
     for e in 1:nepoc
         t̄_trn = @elapsed begin
             for (x_trn, y_trn) in d_trn
-                g = gradient(()->obj(m, x_trn, y_trn, ne), p)
+                g = gradient(()->obj_unsupervised(m, x_trn), p)
                 Flux.Optimise.update!(o, p, g)
             end
         end

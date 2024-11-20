@@ -74,8 +74,8 @@ function (m::GRU)(x::AbstractMatrix{T}) where T <: Real
 end
 
 # Extended get_probs to handle data type
-function get_log_probs(m::GRU, data)
-    n_dims = size(data, 1)
+function get_log_probs(logits::AbstractMatrix{T}, data) where T <: Real
+    #= n_dims = size(data, 1)
 
     # Create layer based on data type and size
     if data isa OneHotMatrix  # Categorical
@@ -86,11 +86,11 @@ function get_log_probs(m::GRU, data)
     
     println(m.prob_layer)
 
-    logits = m.prob_layer(m.state)
+    logits = m.prob_layer(m.state) =#
     
     # Transform to probabilities based on type
-    if data isa OneHotMatrix
-        log_probs = logsoftmax(logits)  # n_dims (categories) × batch_size
+    if data isa OneHotArray
+        log_probs = logsoftmax(logits)  # (categories) × batch_size
 
         # Multiply with one-hot to select actual categories
         scalar_log_probs = sum(log_probs .* data, dims=1)  # 1×batch_size
@@ -110,39 +110,20 @@ end
 function expand_hidden_state(h::AbstractMatrix{T}, bags::Union{AlignedBags{Int64}, Nothing}) where T <: Real
     # h: 8×4893 (hidden state for each bag)
     # bags: vector of ranges like [1:3, 4:6, ...] mapping 4893 -> 10486
-    
-    n_features, _ = size(h)
-    total_obs = sum(length.(bags))  # 10486
-    
-    expanded_h = zeros(T, n_features, total_obs)
-    
-    # Copy each column according to bags
-    for (bag_idx, bag_range) in enumerate(bags)
-        # Expand model state according to bags
-        expanded_h[:, bag_range] .= h[:, bag_idx:bag_idx]
-    end
 
-    return expanded_h
+    # Create index mapping
+    indices = vcat([fill(i, length(bag)) for (i,bag) in enumerate(bags)]...)
+
+    # Use indexing to create new array
+    return h[:, indices]
 end
+
 # Add function to reduce hidden state according to bags
 function reduce_hidden_state(h::AbstractMatrix{T}, bags::Union{AlignedBags{Int64}, Nothing}) where T <: Real
-    n_features = size(h, 1)
-    n_bags = length(bags)
-
-    reduced_h = zeros(T, n_features, n_bags)
-    
-    for (bag_idx, bag_range) in enumerate(bags)
-        reduced_h[:, bag_idx] = sum(view(h, :, bag_range), dims=2)
-    end
-    return reduced_h
+    return reduce(hcat, map(bag -> sum(h[:, bag], dims=2), bags))
 end
+
 # Add function to sum log probs of bag children according to bags
 function aggregate_log_probs(log_probs::AbstractMatrix{T}, bags) where T <: Real
-    n_bags = length(bags)
-    aggregated = zeros(T, 1, n_bags)  # 1×n_bags for log probs
-    
-    for (i, bag) in enumerate(bags)
-        aggregated[1, i] = sum(log_probs[1, bag])
-    end
-    return aggregated
+    return reduce(hcat, map(bag -> sum(log_probs[:, bag], dims=2), bags))
 end

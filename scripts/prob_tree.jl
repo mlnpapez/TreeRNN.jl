@@ -49,7 +49,7 @@ function test_prob_model()
 
     println("\n----------Start bonds example-----------")
 
-    subtree_bonds = x[:atoms].data[:bonds]
+    subtree_bonds = x
 
     printtree(subtree_bonds)
 
@@ -58,8 +58,8 @@ function test_prob_model()
     emb_bonds = m_bonds(subtree_bonds)
     
     p = Flux.params(m_bonds)
-
+    println(length(p))
     for i in 1:length(p)
-        println("\nSize of model params: ", length(p[i]))
+        println("\nSize of model params", i ,": ", length(p[i]))
     end    
 end

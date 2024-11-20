@@ -57,7 +57,7 @@ latent_empty(m::TreeGRUCell{T}) where {T<:Real} = zeros(T, size(m.w, 1) ÷ 3, 1)
 
 function TreeGRU(type, no, ni, x, hidden_size)
     #Initialize trees
-    tree = Tree(TreeGRUCell{type}(no, ni), x, ni)
+    tree = Tree(TreeGRUCell{type}(no, ni), x, hidden_size, ni)
     #Initialize seq model
     seq_model = GRU(no, hidden_size, numobs(x))
 
