@@ -121,13 +121,33 @@ function evaluate(m, x_trn::Ar, x_val::Ar, x_tst::Ar, y_trn::Ai, y_val::Ai, y_ts
        con_bin_trn, con_bin_val, con_bin_tst)
 end
 
+# New evaluation for unsupervised
+function evaluate_unsupervised(m, x_trn::Ar, x_val::Ar, x_tst::Ar) where {Ar<:Mill.AbstractMillNode}
+    # Run trained model on each dataset
+    # Returns (embeddings, log_probs) but we only care about log_probs here
+    _, log_probs_trn = m(x_trn)  # 1×121 for mutagenesis
+    _, log_probs_val = m(x_val)
+    _, log_probs_tst = m(x_tst)
+    
+    # Probably just take means of log probabilities as simply as it sounds
+    # That's it - how likely is our data under the trained model?
+    avg_ll_trn = mean(log_probs_trn)  # single number
+    avg_ll_val = mean(log_probs_val)
+    avg_ll_tst = mean(log_probs_tst)
+
+    # Perplexity is just exp(-avg_ll)
+    ppl_trn = exp(-avg_ll_trn)
+    ppl_val = exp(-avg_ll_val)
+    ppl_tst = exp(-avg_ll_tst)
+
+    return (; avg_ll_trn, avg_ll_val, avg_ll_tst,
+            ppl_trn, ppl_val, ppl_tst)
+end
+
 obj(m, x, y, n) = Flux.Losses.logitcrossentropy(m(x), OneHotArrays.onehotbatch(y, 1:n))
 
 # New objective for unsupervised
-function obj_unsupervised(m, x)
-    _, log_probs = m(x)
-    return -mean(log_probs)  # minimize (mean) negative log likelihood
-end
+obj_unsupervised(m, x) = -mean(m(x)[2])  # minimize (mean) negative log likelihood
 
 function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
                 y_trn::Ai, y_val::Ai, y_tst::Ai,
@@ -141,7 +161,7 @@ function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
     for e in 1:nepoc
         t̄_trn = @elapsed begin
             for (x_trn, y_trn) in d_trn
-                g = gradient(()->obj_unsupervised(m, x_trn), p)
+                g = gradient(()->obj(m, x_trn, y_trn, ne), p)
                 Flux.Optimise.update!(o, p, g)
             end
         end
@@ -172,6 +192,42 @@ function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
             o_val = eval.acc_val
         end
     end
+end
+
+# New gd! for unsupervised
+function gd_unsupervised!(
+    m, x_trn::Ar, x_val::Ar, x_tst::Ar,
+    o, nepoc::Int, bsize::Int;
+    p::Flux.Params=Flux.params(m)
+) where {Ar<:Mill.AbstractMillNode}
+
+    epoch_times = Float32[]
+
+    # Create data loader
+    d_trn = Flux.DataLoader((x_trn,); batchsize=bsize)
+    
+    for e in 1:nepoc
+        time_start = time()
+
+        # Training epoch
+        for (x_batch,) in d_trn
+            g = gradient(()->obj_unsupervised(m, x_batch), p)
+            Flux.Optimise.update!(o, p, g)
+        end
+
+        # Basic evaluation each epoch
+        eval = evaluate_unsupervised(m, x_trn, x_val, x_tst)
+        
+        epoch_time = time() - time_start
+        push!(epoch_times, epoch_time)
+
+        # Print progress
+        @printf("Epoch: %i | Time: %.2fs | Train LL: %.3f | Val LL: %.3f | Test LL: %.3f\n",
+            e, epoch_time, eval.avg_ll_trn, eval.avg_ll_val, eval.avg_ll_tst)
+    end
+
+    println("Average epoch time: $(mean(epoch_times)) seconds")
+    println("Total training time: $(sum(epoch_times)) seconds")
 end
 
 function cell_builder(ctype::Symbol)

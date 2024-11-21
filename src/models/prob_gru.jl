@@ -53,16 +53,14 @@ end
 mutable struct GRU{T}
     cell::GRUCell{T}
     state::Matrix{T}
-    prob_layer::Dense
 end
 
 Flux.@functor GRU
 
-function GRU(input_size::Int, hidden_size::Int, batch_size::Int, T=Float32)
+function GRU(input_size::Int, hidden_size::Int, batch_size::Int)
     return GRU(
         GRUCell(input_size, hidden_size),
-        zeros(T, hidden_size, batch_size), # initialize with right batch size
-        Dense(hidden_size => 1)
+        zeros(Float32, hidden_size, batch_size), # initialize with right batch size
     )
 end
     
@@ -75,18 +73,6 @@ end
 
 # Extended get_probs to handle data type
 function get_log_probs(logits::AbstractMatrix{T}, data) where T <: Real
-    #= n_dims = size(data, 1)
-
-    # Create layer based on data type and size
-    if data isa OneHotMatrix  # Categorical
-        m.prob_layer = Dense(size(m.state, 1) => n_dims)
-    else  # Gaussian (Float32 Matrix)
-        m.prob_layer = Dense(size(m.state, 1) => 2)  # mean, std
-    end
-    
-    println(m.prob_layer)
-
-    logits = m.prob_layer(m.state) =#
     
     # Transform to probabilities based on type
     if data isa OneHotArray
