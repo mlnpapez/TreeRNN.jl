@@ -59,7 +59,7 @@ function TreeGRU(type, no, ni, x, hidden_size)
     #Initialize trees
     tree = Tree(TreeGRUCell{type}(no, ni), x, hidden_size, ni)
     #Initialize seq model
-    seq_model = GRU(no, hidden_size, numobs(x))
+    seq_model = GRU(ni, hidden_size, numobs(x))
 
     return TreeRecur(tree, seq_model)
 end

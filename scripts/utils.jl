@@ -198,36 +198,85 @@ end
 function gd_unsupervised!(
     m, x_trn::Ar, x_val::Ar, x_tst::Ar,
     o, nepoc::Int, bsize::Int;
-    p::Flux.Params=Flux.params(m)
+    p::Flux.Params=Flux.params(m), ftype::Type=Float32, 
+    patience::Int=10
 ) where {Ar<:Mill.AbstractMillNode}
 
-    epoch_times = Float32[]
+    #epoch_times = Float32[]
+    no_improve = 0
+
+    # Initialize tracking arrays for training metrics
+    t_trn = ftype[]  # training time
+    ll_trn = ftype[]  # log likelihoods
+    ll_val = ftype[]
+    ll_tst = ftype[]
 
     # Create data loader
     d_trn = Flux.DataLoader((x_trn,); batchsize=bsize)
+
+    # Tracking best model
+    final = :maximum_iterations
+    best_ll_val = -ftype(Inf)
+    best_ll_trn = -ftype(Inf)
+    best_model = deepcopy(m)  # Store best model
     
     for e in 1:nepoc
-        time_start = time()
+        #time_start = time()
 
         # Training epoch
-        for (x_batch,) in d_trn
-            g = gradient(()->obj_unsupervised(m, x_batch), p)
-            Flux.Optimise.update!(o, p, g)
+        t̄_trn = @elapsed begin
+            for (x_batch,) in d_trn
+                g = gradient(()->obj_unsupervised(m, x_batch), p)
+                Flux.Optimise.update!(o, p, g)
+            end
         end
 
         # Basic evaluation each epoch
         eval = evaluate_unsupervised(m, x_trn, x_val, x_tst)
+
+        # Track improvement
+        ll_diff = eval.avg_ll_trn - best_ll_trn
+        best_ll_trn = eval.avg_ll_trn
+
+        # Early stopping conditions
+        abs(ll_diff) <= -ftype(1e-4) && (final = :absolute_tolerance; break)
+        isnan(eval.avg_ll_trn)       && (final = :nan;                break)
+
+          # Record metrics every other epoch
+        if mod(e, 1) == 0
+            push!(t_trn, t̄_trn)
+            push!(ll_trn, eval.avg_ll_trn)
+            push!(ll_val, eval.avg_ll_val)
+            push!(ll_tst, eval.avg_ll_tst)
+        end
+
+        # Save best model based on validation likelihood
+        if eval.avg_ll_val > best_ll_val
+            no_improve = 0  # Reset counter if improved
+            best_ll_val = eval.avg_ll_val
+            best_model = deepcopy(m)
+        else
+            no_improve += 1  # Increment counter if no improvement
+        end
+
+        # Stop if no improvement for `patience` epochs
+        if no_improve >= patience
+            println("Early stopping at epoch $e - no improvement for $patience epochs")
+            break
+        end
         
-        epoch_time = time() - time_start
-        push!(epoch_times, epoch_time)
+        #epoch_time = time() - time_start
+        #push!(epoch_times, epoch_time)
 
         # Print progress
         @printf("Epoch: %i | Time: %.2fs | Train LL: %.3f | Val LL: %.3f | Test LL: %.3f\n",
-            e, epoch_time, eval.avg_ll_trn, eval.avg_ll_val, eval.avg_ll_tst)
+            e, t̄_trn, eval.avg_ll_trn, eval.avg_ll_val, eval.avg_ll_tst)
     end
 
-    println("Average epoch time: $(mean(epoch_times)) seconds")
-    println("Total training time: $(sum(epoch_times)) seconds")
+    println("Average epoch time: $(mean(t_trn)) seconds")
+    println("Total training time: $(sum(t_trn)) seconds")
+
+    return best_model, (; t_trn, ll_trn, ll_val, ll_tst, final)
 end
 
 function cell_builder(ctype::Symbol)

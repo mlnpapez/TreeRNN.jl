@@ -50,8 +50,9 @@ function train_rnns()
     nh = 5
     #no = length(unique(y))
     hidden_size = 10
-    nepoc = 4
+    nepoc = 150
     bsize = 121
+    patience = 15
 
     m = TreeGRU(Float32, nh, ni, x_trn, hidden_size)
 
@@ -66,7 +67,7 @@ function train_rnns()
     end  =#
     
     #gd!(m, x_trn, x_val, x_tst, y_trn, y_val, y_tst, Adam(0.01), nepoc, bsize, no)
-    @time gd_unsupervised!(m, x_trn, x_val, x_tst, Adam(0.01), nepoc, bsize)
+    @time gd_unsupervised!(m, x_trn, x_val, x_tst, Adam(0.01), nepoc, bsize; patience)
 end
 
 # train_hmil()

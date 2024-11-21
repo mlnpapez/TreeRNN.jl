@@ -94,16 +94,14 @@ function (m::Tree)(x::ArrayNode, seq_model)
     log_probs = get_log_probs(logits, x.data)
     # println("\nSize of log_probs matrix for array node: ", size(log_probs))
     # display(log_probs)
-
-    emb = m.children(x.data) |> m.cell
-
-    # println("Array embedding: ", size(emb), "\n")
+    emb_linear_dense_layer = m.children(x.data)
 
     # Use passed seq_model here
-    h = seq_model(emb)
+    h = seq_model(emb_linear_dense_layer)
     # println("\nSize of hidden state of seq model after processing array embedding: ", size(h))
-
-    return emb, log_probs
+    
+    emb_tree_cell = emb_linear_dense_layer |> m.cell
+    return emb_tree_cell, log_probs
 end
 
 a2(x)    = reshape(hcat(x...), size(x[1])..., :)
