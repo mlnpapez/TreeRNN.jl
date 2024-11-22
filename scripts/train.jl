@@ -7,6 +7,7 @@ using Revise
 using Profile
 
 include("utils.jl")
+include("prob_tree.jl")
 
 dirdata = "data/"
 
@@ -42,6 +43,7 @@ function train_rnns()
     x = reduce(catobs, e.(x))
     x_trn, x_val, x_tst, y_trn, y_val, y_tst = split_data(x, y, 1) # rand(1:1000)
 
+    #printtree(x[1])
     #printtree(x_trn)
     #printtree(x_val)
     #printtree(x_tst)
@@ -50,7 +52,7 @@ function train_rnns()
     nh = 5
     #no = length(unique(y))
     hidden_size = 10
-    nepoc = 150
+    nepoc = 100
     bsize = 121
     patience = 15
 
@@ -67,7 +69,34 @@ function train_rnns()
     end  =#
     
     #gd!(m, x_trn, x_val, x_tst, y_trn, y_val, y_tst, Adam(0.01), nepoc, bsize, no)
-    @time gd_unsupervised!(m, x_trn, x_val, x_tst, Adam(0.01), nepoc, bsize; patience)
+    @time best_model, _ = gd_unsupervised!(m, x_trn, x_val, x_tst, Adam(0.01), nepoc, bsize; patience)
+
+    println(typeof(best_model))
+    original = x_trn
+
+    printtree(original)
+
+    # Generate new structure
+    new_structure = generate_from_structure(original, best_model)
+
+    # Print both structures to compare
+    println("Original structure:")
+    printtree(original)
+    display(original[:lumo])
+    display(original[:inda])
+    display(original[:ind1])
+    display(original[:atoms].data[:element])
+    display(original[:atoms].data[:bonds].data[:element])
+    display(original[:atoms].data[:bonds].data[:type_bond])
+
+    println("\nGenerated structure:")
+    printtree(new_structure)
+    display(new_structure[:lumo])
+    display(new_structure[:inda])
+    display(new_structure[:ind1])
+    display(new_structure[:atoms].data[:element])
+    display(new_structure[:atoms].data[:bonds].data[:element])
+    display(original[:atoms].data[:bonds].data[:type_bond])
 end
 
 # train_hmil()
