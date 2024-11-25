@@ -22,7 +22,7 @@ includet("../src/models/prob_gru.jl")
 dirdata = "data"
 
 """
-Generate new Mill structure guided by existing Mill structure.
+Generate new Mill SAMPLE guided by existing Mill structure.
 Simply creates new content matching original dimensions.
 """
 function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree}, seq_model=nothing)
@@ -30,14 +30,14 @@ function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree},
     # Extract seq_model from TreeRecur if first call and reset its state
     if m isa TreeRecur
         seq_model = m.seq_model
-        println("Size of hidden state: ", size(seq_model.state))
+        # println("Size of hidden state: ", size(seq_model.state))
 
         # Reset state directly
         hidden_size = size(seq_model.state, 1)
         batch_size = numobs(x)
         seq_model.state = zeros(Float32, hidden_size, batch_size)
-        println("Reset state shape: ", size(seq_model.state))
-        println("State sum: ", sum(seq_model.state))          # Should be 0.0
+        # println("Reset state shape: ", size(seq_model.state))
+        # println("State sum: ", sum(seq_model.state))          # Should be 0.0
         m = m.tree
     end
     
@@ -47,22 +47,24 @@ function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree},
     if x isa ArrayNode
         # Get original dimensions
         feature_dim, batch_size = size(x.data)
+        # println(typeof(x.data))
+        # display(x.data)
 
         # Direct access to current tree's prob_layer
         logits = m.prob_layer(seq_model.state)
         
-        println("Size of logits: ", size(logits))
+        # println("Size of logits: ", size(logits))
 
         # Create random content matching original dimensions
         if x.data isa OneHotArray
 
             # For categorical data, random one-hot vectors
             probs = softmax(logits)
-            println("Size of probs: ", size(probs))
+            # println("Size of probs: ", size(probs))
 
             # Sample from categorical distribution for each column
             sampled = [rand(Categorical(probs[:,i])) for i in 1:batch_size]
-            println("Size of sampled: ", size(sampled))
+            # println("Size of sampled: ", size(sampled))
             # display(sampled)
 
             new_data = Flux.onehotbatch(sampled, 1:feature_dim)
@@ -82,7 +84,7 @@ function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree},
 
             # Sample from Gaussian
             sampled = μ .+ σ .* randn(Float32, size(x.data,2))
-            println("Size of sampled: ", size(sampled))
+            # println("Size of sampled: ", size(sampled))
             # display(sampled)
 
             new_data = reshape(sampled, size(x.data)...)
@@ -105,11 +107,11 @@ function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree},
         return ProductNode(NamedTuple{keys(x.data)}(new_children))
 
     elseif x isa BagNode
-        println("Original state shape: ", size(seq_model.state))  # e.g., 80×4893
+        # println("Original state shape: ", size(seq_model.state))  # e.g., 80×4893
 
         # Expand state according to bags
         expanded_state = expand_hidden_state(seq_model.state, x.bags)
-        println("Expanded state shape: ", size(expanded_state))   # e.g., 80×10486
+        # println("Expanded state shape: ", size(expanded_state))   # e.g., 80×10486
         seq_model.state = expanded_state
 
         # Generate new content for bag's data
@@ -117,9 +119,9 @@ function generate_from_structure(x::AbstractMillNode, m::Union{TreeRecur, Tree},
 
         # Reduce state back
         reduced_state = reduce_hidden_state(seq_model.state, x.bags)
-        println("Reduced state shape: ", size(reduced_state))     # Back to 80×4893
+        # println("Reduced state shape: ", size(reduced_state))     # Back to 80×4893
         # Verify reduction works correctly
-        println("Sum before/after: ", sum(seq_model.state), " / ", sum(reduced_state))
+        # println("Sum before/after: ", sum(seq_model.state), " / ", sum(reduced_state))
         seq_model.state = reduced_state
 
         # Keep original bag structure
@@ -141,61 +143,61 @@ function test_sampling()
 
     subtree_charge = x[:atoms].data[:charge]
     printtree(subtree_charge)
-    println(typeof(subtree_charge.data))
+    # println(typeof(subtree_charge.data))
 
-    println("Number of obs in node: ", numobs(subtree_charge))
+    # println("Number of obs in node: ", numobs(subtree_charge))
 
     random_matrix = rand(Float32, 1, 4893)
-    println("Random matrix: ", typeof(random_matrix))
+    # println("Random matrix: ", typeof(random_matrix))
     
 
 
     bags = x[:atoms].data[:bonds].bags
-    println("Number of bags/unit ranges: ", size(bags))
+    # println("Number of bags/unit ranges: ", size(bags))
 
     # Build supervised model as before
     ni, nh, hidden_size = 80, 5, 10
 
     m_charge = TreeGRU(Float32, nh, ni, subtree_charge, hidden_size)
 
-    println(typeof(m_charge.tree.prob_layer))
+    # println(typeof(m_charge.tree.prob_layer))
 
     emb_charge, log_prob_embs = m_charge(subtree_charge)
-    println("Embedding size: ", size(emb_charge))
+    # println("Embedding size: ", size(emb_charge))
 
 
-    println("\n----------Start bonds example-----------")
+    # println("\n----------Start bonds example-----------")
 
     subtree_bonds = x[1]
     
-    #println(fieldnames(ProductNode))
+    ## println(fieldnames(ProductNode))
 
-    println(typeof(subtree_bonds))
+    # println(typeof(subtree_bonds))
     printtree(subtree_bonds)
 
     m_bonds = TreeGRU(Float32, nh, ni, subtree_bonds, hidden_size)
 
     emb_bonds = m_bonds(subtree_bonds)
 
-    #println(typeof(m_bonds.tree.children[:element].prob_layer))
+    ## println(typeof(m_bonds.tree.children[:element].prob_layer))
 
     # Generate new structure
     new_structure = generate_from_structure(subtree_bonds, m_bonds)
 
     # Print both structures to compare
-    println("Original structure:")
+    # println("Original structure:")
     printtree(subtree_bonds)
-    #println(subtree_bonds.bags[1:10])
+    ## println(subtree_bonds.bags[1:10])
     ## display(subtree_bonds[:element])
     
-    println("\nGenerated structure:")
+    # println("\nGenerated structure:")
     printtree(new_structure)
-    #println(new_structure.bags[1:10])
+    ## println(new_structure.bags[1:10])
     ## display(new_structure[:element])
     
     #=p = Flux.params(m_bonds)
-    println(length(p))
+    # println(length(p))
     for i in 1:length(p)
-        println("\nSize of model params", i ,": ", length(p[i]))
+        # println("\nSize of model params", i ,": ", length(p[i]))
     end    =#
 end

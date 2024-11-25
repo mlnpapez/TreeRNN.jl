@@ -1,5 +1,5 @@
 using Mill
-using Flux
+using Flux: Optimise
 using Random
 using Printf
 using Statistics
@@ -197,12 +197,11 @@ end
 # New gd! for unsupervised
 function gd_unsupervised!(
     m, x_trn::Ar, x_val::Ar, x_tst::Ar,
-    o, nepoc::Int, bsize::Int;
+    initial_lr::Float64, nepoc::Int, bsize::Int;
     p::Flux.Params=Flux.params(m), ftype::Type=Float32, 
-    patience::Int=10
+    patience::Int=10, decay_steps::Int=100 
 ) where {Ar<:Mill.AbstractMillNode}
 
-    #epoch_times = Float32[]
     no_improve = 0
 
     # Initialize tracking arrays for training metrics
@@ -214,14 +213,27 @@ function gd_unsupervised!(
     # Create data loader
     d_trn = Flux.DataLoader((x_trn,); batchsize=bsize)
 
+    #= Learning rate scheduler
+    lr_schedule = Flux.Optimise.ExpDecay(
+        initial_lr,    # Initial learning rate
+        0.5,         # Decay factor
+        decay_steps,  # Steps between decays
+        1e-5          # Minimum learning rate
+    ) =#
+
+    # Initialize optimizer with schedule
+    #o = Flux.Optimise.Optimiser(Adam(initial_lr), lr_schedule)
+    o = Adam(0.01)
+
     # Tracking best model
     final = :maximum_iterations
     best_ll_val = -ftype(Inf)
-    best_ll_trn = -ftype(Inf)
     best_model = deepcopy(m)  # Store best model
     
     for e in 1:nepoc
-        #time_start = time()
+        # Get current decay factor
+        #current_decay = lr_schedule.decay  # Call scheduler to get current value
+        #current_lr = initial_lr * current_decay
 
         # Training epoch
         t̄_trn = @elapsed begin
@@ -234,15 +246,7 @@ function gd_unsupervised!(
         # Basic evaluation each epoch
         eval = evaluate_unsupervised(m, x_trn, x_val, x_tst)
 
-        # Track improvement
-        ll_diff = eval.avg_ll_trn - best_ll_trn
-        best_ll_trn = eval.avg_ll_trn
-
-        # Early stopping conditions
-        abs(ll_diff) <= -ftype(1e-4) && (final = :absolute_tolerance; break)
-        isnan(eval.avg_ll_trn)       && (final = :nan;                break)
-
-          # Record metrics every other epoch
+        # Record metrics every other epoch
         if mod(e, 1) == 0
             push!(t_trn, t̄_trn)
             push!(ll_trn, eval.avg_ll_trn)
@@ -264,9 +268,8 @@ function gd_unsupervised!(
             println("Early stopping at epoch $e - no improvement for $patience epochs")
             break
         end
-        
-        #epoch_time = time() - time_start
-        #push!(epoch_times, epoch_time)
+        # Early stopping conditions
+        isnan(eval.avg_ll_trn)       && (final = :nan;                break)
 
         # Print progress
         @printf("Epoch: %i | Time: %.2fs | Train LL: %.3f | Val LL: %.3f | Test LL: %.3f\n",
