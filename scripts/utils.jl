@@ -1,5 +1,5 @@
 using Mill
-using Flux
+using Flux: Optimise
 using Random
 using Printf
 using Statistics
@@ -121,7 +121,33 @@ function evaluate(m, x_trn::Ar, x_val::Ar, x_tst::Ar, y_trn::Ai, y_val::Ai, y_ts
        con_bin_trn, con_bin_val, con_bin_tst)
 end
 
+# New evaluation for unsupervised
+function evaluate_unsupervised(m, x_trn::Ar, x_val::Ar, x_tst::Ar) where {Ar<:Mill.AbstractMillNode}
+    # Run trained model on each dataset
+    # Returns (embeddings, log_probs) but we only care about log_probs here
+    _, log_probs_trn = m(x_trn)  # 1×121 for mutagenesis
+    _, log_probs_val = m(x_val)
+    _, log_probs_tst = m(x_tst)
+    
+    # Probably just take means of log probabilities as simply as it sounds
+    # That's it - how likely is our data under the trained model?
+    avg_ll_trn = mean(log_probs_trn)  # single number
+    avg_ll_val = mean(log_probs_val)
+    avg_ll_tst = mean(log_probs_tst)
+
+    # Perplexity is just exp(-avg_ll)
+    ppl_trn = exp(-avg_ll_trn)
+    ppl_val = exp(-avg_ll_val)
+    ppl_tst = exp(-avg_ll_tst)
+
+    return (; avg_ll_trn, avg_ll_val, avg_ll_tst,
+            ppl_trn, ppl_val, ppl_tst)
+end
+
 obj(m, x, y, n) = Flux.Losses.logitcrossentropy(m(x), OneHotArrays.onehotbatch(y, 1:n))
+
+# New objective for unsupervised
+obj_unsupervised(m, x) = -mean(m(x)[2])  # minimize (mean) negative log likelihood
 
 function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
                 y_trn::Ai, y_val::Ai, y_tst::Ai,
@@ -166,6 +192,94 @@ function gd!(m, x_trn::Ar, x_val::Ar, x_tst::Ar,
             o_val = eval.acc_val
         end
     end
+end
+
+# New gd! for unsupervised
+function gd_unsupervised!(
+    m, x_trn::Ar, x_val::Ar, x_tst::Ar,
+    initial_lr::Float64, nepoc::Int, bsize::Int;
+    p::Flux.Params=Flux.params(m), ftype::Type=Float32, 
+    patience::Int=10, decay_steps::Int=100 
+) where {Ar<:Mill.AbstractMillNode}
+
+    no_improve = 0
+
+    # Initialize tracking arrays for training metrics
+    t_trn = ftype[]  # training time
+    ll_trn = ftype[]  # log likelihoods
+    ll_val = ftype[]
+    ll_tst = ftype[]
+
+    # Create data loader
+    d_trn = Flux.DataLoader((x_trn,); batchsize=bsize)
+
+    #= Learning rate scheduler
+    lr_schedule = Flux.Optimise.ExpDecay(
+        initial_lr,    # Initial learning rate
+        0.5,         # Decay factor
+        decay_steps,  # Steps between decays
+        1e-5          # Minimum learning rate
+    ) =#
+
+    # Initialize optimizer with schedule
+    #o = Flux.Optimise.Optimiser(Adam(initial_lr), lr_schedule)
+    o = Adam(0.01)
+
+    # Tracking best model
+    final = :maximum_iterations
+    best_ll_val = -ftype(Inf)
+    best_model = deepcopy(m)  # Store best model
+    
+    for e in 1:nepoc
+        # Get current decay factor
+        #current_decay = lr_schedule.decay  # Call scheduler to get current value
+        #current_lr = initial_lr * current_decay
+
+        # Training epoch
+        t̄_trn = @elapsed begin
+            for (x_batch,) in d_trn
+                g = gradient(()->obj_unsupervised(m, x_batch), p)
+                Flux.Optimise.update!(o, p, g)
+            end
+        end
+
+        # Basic evaluation each epoch
+        eval = evaluate_unsupervised(m, x_trn, x_val, x_tst)
+
+        # Record metrics every other epoch
+        if mod(e, 1) == 0
+            push!(t_trn, t̄_trn)
+            push!(ll_trn, eval.avg_ll_trn)
+            push!(ll_val, eval.avg_ll_val)
+            push!(ll_tst, eval.avg_ll_tst)
+        end
+
+        # Save best model based on validation likelihood
+        if eval.avg_ll_val > best_ll_val
+            no_improve = 0  # Reset counter if improved
+            best_ll_val = eval.avg_ll_val
+            best_model = deepcopy(m)
+        else
+            no_improve += 1  # Increment counter if no improvement
+        end
+
+        # Stop if no improvement for `patience` epochs
+        if no_improve >= patience
+            println("Early stopping at epoch $e - no improvement for $patience epochs")
+            break
+        end
+        # Early stopping conditions
+        isnan(eval.avg_ll_trn)       && (final = :nan;                break)
+
+        # Print progress
+        @printf("Epoch: %i | Time: %.2fs | Train LL: %.3f | Val LL: %.3f | Test LL: %.3f\n",
+            e, t̄_trn, eval.avg_ll_trn, eval.avg_ll_val, eval.avg_ll_tst)
+    end
+
+    println("Average epoch time: $(mean(t_trn)) seconds")
+    println("Total training time: $(sum(t_trn)) seconds")
+
+    return best_model, (; t_trn, ll_trn, ll_val, ll_tst, final)
 end
 
 function cell_builder(ctype::Symbol)
